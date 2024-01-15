@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 // Import the tokenBlacklist array from your authController
-import { tokenBlacklist } from '../controllers/authController'; // Update the path accordingly
+import { tokenBlacklist } from '../controllers/authController'; 
 
 const authenticateUser = (req: any, res: Response, next: NextFunction) => {
   const authToken = req.header('Authorization');

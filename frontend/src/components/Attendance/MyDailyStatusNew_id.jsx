@@ -3,7 +3,6 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export const MyDailyStatusNew_id = (props) => {
     const { state } = useLocation();
-    console.log(state?.item,"hellllloooosss")
     const data =state.item;
   return (
     <div>

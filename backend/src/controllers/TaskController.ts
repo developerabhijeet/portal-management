@@ -33,7 +33,6 @@ const taskController = {
   async getTaskById(req: Request, res: Response) {
     try {
       const task = await Task.findById(req.params.id);
-      console.log(task,"taskkkkk=====>>>")
       if (task) {
         res.json(task);
       } else {

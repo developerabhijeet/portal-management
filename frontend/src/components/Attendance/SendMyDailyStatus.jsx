@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
-
+import { BaseURL } from "../../Utils/utils";
 const SendMyDailyStatus = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
@@ -19,10 +19,10 @@ const SendMyDailyStatus = () => {
     const getData = async () => {
      
       try {
-        const response = await axios.get("http://localhost:4500/auth/getEmail");
+        const response = await axios.get(`${BaseURL}/auth/getEmail`);
         setEmail(response.data.emails);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        alert(error);
       } 
     };
     getData();
@@ -42,7 +42,7 @@ const SendMyDailyStatus = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:4500/tasks",
+        `${BaseURL}/tasks`,
         {
           email: emailData,
           dueDate: startDate,
@@ -59,7 +59,7 @@ const SendMyDailyStatus = () => {
       );
       navigate("/daily_status_updates");
     } catch (error) {
-      console.error("API call error", error);
+     alert(error);
     }
   };
 
@@ -97,6 +97,7 @@ const SendMyDailyStatus = () => {
                   <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} required dateFormat="dd/MM/yy" />
                 </div>
               </div>
+              <div>
               <div>
                 <div>
                   <h6>+ ADD YOUR TASK DETAILS</h6>
@@ -136,6 +137,7 @@ const SendMyDailyStatus = () => {
                 <button type="text" className="daily-status-btn">
                   + ADD MORE TASK
                 </button>
+              </div>
               </div>
               <div>
                 <div className="daily-statusSave">

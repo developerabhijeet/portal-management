@@ -34,7 +34,6 @@ const authController = {
         process.env.JWT_TOKEN,
         { expiresIn: "5h" }
       );
-      // console.log(token,"tokeeeee======")
       res
         .cookie("access_token", token, {
           httpOnly: true,
@@ -61,8 +60,8 @@ const authController = {
       res.clearCookie("access_token");
       tokenBlacklist.push(token);
       res.status(200).json("Logged out successfully");
-    } catch (err) {
-      console.error("Logout error:", err);
+    } catch (err:any) {
+      alert(err);
       res.status(500).json({ error: "An error occurred during logout." });
     }
   },
@@ -80,7 +79,7 @@ const authController = {
   
       res.status(200).json({ emails });
     } catch (error) {
-      console.error("Error retrieving user emails:", error);
+      alert(error);
       res.status(500).json({ error: "Internal server error" });
     }
    }

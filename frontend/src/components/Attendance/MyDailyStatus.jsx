@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { MyDailyStatusNew_id } from "./MyDailyStatusNew_id";
+import { BaseURL } from "../../Utils/utils";
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
-  // console.log(token, '=================P')
   useEffect(() => {
     const Get_Daily_Status = async () => {
       try {
         const response = await axios
-          .get("http://localhost:4500/tasks", {
+          .get(`${BaseURL}/tasks`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => setData(res.data));
       } catch (error) {
-        console.error({ error: "data is not fouuuuuuuund" });
+       alert(error);
       }
     };
     Get_Daily_Status();
   }, []);
-
-  const json = {
-    name: "chandrpraskhasss",
-  };
-
   const handleNavigate = (item) => {
     navigate("/daily_status_updates_details/", {
       state: {
@@ -53,7 +48,6 @@ export const MyDailyStatus = ({}) => {
             ? data.map((item, index) => {
                 return (
                   <tr key={index}>
-                    {console.log(data, "data++++++=====>>")}
                     <td>{item.email}</td>
                     <td>{item.date}</td>
                     <td></td>

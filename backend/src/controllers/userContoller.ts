@@ -6,7 +6,6 @@ import bcrypt from 'bcryptjs'
 const userController = {
   async signUp(req: Request, res: Response) {
       const {email,password,username}   = req.body;
-      // console.log(req.body)
       try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
@@ -23,12 +22,6 @@ const userController = {
     }
 
   },
-
-  async getUser(req: Request, res: Response){
-    const {email,passwword,username} =req.body;
-
-    
-  }
 };
 
 export default userController;
