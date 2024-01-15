@@ -1,40 +1,38 @@
 {
-  "name": "node-training",
+  "name": "BE",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/app.ts"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.17",
+    "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
-    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.5.3",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/bcryptjs": "^2.4.4",
-    "@types/body-parser": "^1.19.3",
-    "@types/compression": "^1.7.3",
-    "@types/cookie-parser": "^1.4.4",
-    "@types/cors": "^2.8.14",
-    "@types/express": "^4.17.17",
-    "@types/jsonwebtoken": "^9.0.3",
-    "@types/uuid": "^9.0.4",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.3",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript-cookie": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.6",
+    "@types/jest": "^29.5.3",
+    "@types/supertest": "^2.0.12",
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6"
   }
 }

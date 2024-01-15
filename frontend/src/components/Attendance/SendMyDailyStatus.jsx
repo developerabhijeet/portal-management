@@ -3,62 +3,65 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Select from 'react-select';
+import { BaseURL } from "../../Utils/utils";
 const SendMyDailyStatus = () => {
   const [startDate, setStartDate] = useState(new Date());
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState([]);
   const [project_status, setProjectStatus] = useState("");
   const [status, setStatus] = useState("");
   const [working_hour, setWorkingHour] = useState("");
   const [task, setTask] = useState("");
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [emailData, setEmailData] = useState([]);
   const navigate = useNavigate();
-
-  const handleFilter = (value) => {
-    const res = data.filter((f) => f.email.toLowerCase().includes(value));
-    setFilteredData(res);
-  };
-
-  const handleStatusSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:4500/post_daily_status",{ withCredentials: true }, {
-        email,
-        date: startDate,
-        project_status,
-        status,
-        working_hour,
-        task,
-      });
-      const { success, message } = response.data;
-      if (success) {
-
-      } else {
-        console.log(message);
-      }
-    } catch (error) {
-      console.error("Login error", error);
-    }
-    navigate("/daily_status_updates");
-  };
 
   useEffect(() => {
     const getData = async () => {
+     
       try {
-        const response = await axios.get("http://localhost:4500/getEmail");
-        setData(response.data);
-        setFilteredData(response.data);
+        const response = await axios.get(`${BaseURL}/auth/getEmail`);
+        setEmail(response.data.emails);
       } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
+        alert(error);
+      } 
     };
     getData();
   }, []);
 
+  const createEmailObjects = (emailArray) => (
+    emailArray.map(email => ({ value: email, label: email }))
+  );
+
+  const handleEmail = (selectedOptions) => {
+    const usersEmail = selectedOptions.map((e) => e.value);
+    setEmailData(usersEmail);
+  };
+
+  const handleStatusSubmit = async (e) => {
+    const token =localStorage.getItem("jwtToken");
+    e.preventDefault();
+    try {
+      await axios.post(
+        `${BaseURL}/tasks`,
+        {
+          email: emailData,
+          dueDate: startDate,
+          project_status,
+          status,
+          working_hour,
+          task,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`},
+            'Content-Type': 'application/json',
+          },
+      );
+      navigate("/daily_status_updates");
+    } catch (error) {
+     alert(error);
+    }
+  };
 
   return (
     <>
@@ -77,21 +80,15 @@ const SendMyDailyStatus = () => {
             <div>
               <div>
                 <p>To</p>
-                <input
-                  className="toinputbox"
-                  placeholder="Search for..."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                <Select
+                  isMulti
+                  options={createEmailObjects(email)}
+                  isClearable
+                  isSearchable
+                  noOptionsMessage={() => "email not found"}
+                  onChange={handleEmail}
                 />
               </div>
-              {/* {isLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  this.props && this.props.partners.length > 0 ?
-                  filteredData &&filteredData.length>0?.map((item, index) => (
-                    <p key={index}>{item.email}</p>
-                  ))
-                )} */}
               <div>
                 <p>CC</p>
                 <p>status@bestpeers.com</p>
@@ -100,6 +97,7 @@ const SendMyDailyStatus = () => {
                   <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} required dateFormat="dd/MM/yy" />
                 </div>
               </div>
+              <div>
               <div>
                 <div>
                   <h6>+ ADD YOUR TASK DETAILS</h6>
@@ -139,6 +137,7 @@ const SendMyDailyStatus = () => {
                 <button type="text" className="daily-status-btn">
                   + ADD MORE TASK
                 </button>
+              </div>
               </div>
               <div>
                 <div className="daily-statusSave">

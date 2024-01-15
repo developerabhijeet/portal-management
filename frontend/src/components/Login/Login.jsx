@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Await, useNavigate } from "react-router-dom";
 import axios from "axios"
 import '../Login/Login.css'
+import { BaseURL } from "../../Utils/utils";
 const Login = (props) => {
     const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
@@ -9,7 +10,6 @@ const Login = (props) => {
         password: ""
     })
     const handleLoginChange = (e) => {
-        // console.log(e);
         const { name, value } = e.target;
         setLoginData((prevData) => ({
             ...prevData,
@@ -19,18 +19,16 @@ const Login = (props) => {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4500/login", loginData);
+            const response = await axios.post(`${BaseURL}/auth/login`, loginData);
             if (response.data) {
-                console.log(response.data)
                 localStorage.setItem("jwtToken", response.data.token);
-                localStorage.setItem("isLoggedIn", "true");
                 navigate("/");
                 
             } else {
-                console.log("Username and/or password are incorrect");
+                alert("Username and/or password are incorrect");
             }
         } catch (error) {
-            console.error("Login error", error);
+            alert("Login error", error);
         }
         setLoginData({ email: "", password: "" });
     };
@@ -38,7 +36,6 @@ const Login = (props) => {
 
     const handleLogout = () => {
         localStorage.removeItem("jwtToken");
-        localStorage.removeItem("isLoggedIn");
         navigate("/login");
     };
     return (
