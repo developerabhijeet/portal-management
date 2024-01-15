@@ -19,11 +19,10 @@ const Login = (props) => {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4500/login", loginData);
+            const response = await axios.post("http://localhost:4500/auth/login", loginData);
             if (response.data) {
                 console.log(response.data)
                 localStorage.setItem("jwtToken", response.data.token);
-                localStorage.setItem("isLoggedIn", "true");
                 navigate("/");
                 
             } else {

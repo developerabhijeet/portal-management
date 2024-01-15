@@ -7,7 +7,7 @@ export const MyDailyStatusNew_id = (props) => {
     const data =state.item;
   return (
     <div>
-        <h2>Status Update on {data.date}</h2>
+        <h2>Status Update on {data.dueDate}</h2>
         <div>
             <ul>
                 <li><b>in Time</b></li>
