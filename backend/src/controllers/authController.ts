@@ -35,12 +35,17 @@ const authController = {
         { expiresIn: "5h" }
       );
       res
+      res
         .cookie("access_token", token, {
           httpOnly: true,
           expiresIn: "10h",
         })
+        .cookie("username", user.username, {
+          httpOnly: true,
+          expiresIn: "10h",
+        })
         .status(200)
-        .json({ token });
+        .json({ token, username: user.username });
     } catch (err) {
       res.status(500).json(err);
     }
