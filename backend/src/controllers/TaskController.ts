@@ -2,15 +2,21 @@ import { Request, Response } from 'express';
 import Task from '../models/Task';
 
 const taskController = {
-  async createTask(req: any, res: Response) {
+  async  createTask(req:any, res:Response) {
     try {
-      const task = await Task.create({...req.body, user: req.user._id,});
+      const newTaskData = {
+        ...req.body,
+        user: req.user._id,
+        createdAt: new Date(),
+      };
+  
+      const task = await Task.create(newTaskData);
       res.status(201).json(task);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: 'An error occurred while creating the task.' });
     }
   },
-
   async getAllTasks(req: any, res: Response) {
     try {
       const { page , perPage , completed, sortByDueDate, sortByCompleted } = req.query;
@@ -42,7 +48,6 @@ const taskController = {
       res.status(500).json({ error: 'An error occurred while fetching the task.' });
     }
   },
-
   
   async updateTask(req: Request, res: Response) {
     try {

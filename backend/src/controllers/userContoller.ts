@@ -14,7 +14,7 @@ const userController = {
         username:username,
         password: hash,
       });
-
+      res.json({newUser: { email: newUser.email,username:newUser.username,password:newUser.password} });
       await newUser.save();
       res.status(200).send({ data: "user has been created" });
     } catch (error) {

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "font-awesome/css/font-awesome.min.css";
-import {  useNavigate } from "react-router-dom";
-import { MyDailyStatusNew_id } from "./MyDailyStatusNew_id";
+import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../Utils/utils";
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
@@ -17,7 +16,7 @@ export const MyDailyStatus = ({}) => {
           })
           .then((res) => setData(res.data));
       } catch (error) {
-       alert(error);
+        alert(error);
       }
     };
     Get_Daily_Status();
