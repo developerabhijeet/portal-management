@@ -1,46 +1,42 @@
 const cron = require("node-cron");
 const nodemailer = require("nodemailer");
-// const UserModel = require('./models/user'); // Import your user model
-
+const UserModel = require("./models/user");
 const sendMail = {
   mail: async (req: any, res: any) => {
     cron.schedule("08 00 * * *", async () => {
       try {
-        // const usersToEmail = await UserModel.find({ email: { $nin: ['excluded@email.com'] } });
-        const usersToEmail = [
-          "chkushwaha@bestpeers.com",
-          "prichourasiya@bestpeers.com",
-        ];
+        const usersToEmail = await UserModel.find({
+          email: { $nin: ["excluded@email.com"] },
+        });
 
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
-            user: "chkushwaha@bestpeers.com",
-            pass: "ppbe cugb xjno msqi",
+            user: "portal9589@gmail.com",
+            pass: "your email verification password here",
           },
         });
 
         var htmlContent = `
-          <html>
-            <head>
-              <style>
-                /* Add any styling here */
-              </style>
-            </head>
-            <body>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png" alt="Logo" style="max-width: 100px;">
-              <h1>Daily status missing</h1>
-              <p>Please fill out your daily status</p>
-              <!-- Add any additional text or content here -->
-            </body>
-          </html>
-        `;
+  <html>
+    <head>
+      <style>
+      </style>
+    </head>
+    <body>
+      <img src="">
+      <h1>Last Reminder :: You missed your daily status update at ${new Date().toLocaleDateString()}</h1>
+      <p>Please fill out your daily status</p>
+    
+    </body>
+  </html>
+`;
 
         const emailPromises = usersToEmail.map(async (user) => {
           const mailOptions = {
-            from: "chkushwaha@bestpeers.com",
+            from: "portal9589@gmail.com",
             to: user,
-            subject: "You are missing the daily status",
+            subject: `Last Reminder :: You missed your daily status update at ${new Date().toLocaleDateString()}`,
             html: htmlContent,
           };
 
