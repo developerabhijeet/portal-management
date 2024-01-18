@@ -1,51 +1,56 @@
-const cron = require("node-cron");
-const nodemailer = require("nodemailer");
-const UserModel = require("./models/user");
+import cron from "node-cron";
+import nodemailer from "nodemailer";
+import { Request } from "express";
+import Task from "../models/Task";
+import User from "../models/User";
+
 const sendMail = {
-  mail: async (req: any, res: any) => {
-    cron.schedule("08 00 * * *", async () => {
+  mail: async (req: Request<any>, res: any) => {
+    cron.schedule("12 9 * * *", async () => {
       try {
-        const usersToEmail = await UserModel.find({
-          email: { $nin: ["excluded@email.com"] },
+        const users = await User.find();
+        const tasks = await Task.find();
+        
+        users.forEach(async (user) => {
+          const matchingTask = tasks.find((task) => task.user.equals(user._id));
+          
+          // Compare dueDate with current date
+          const currentDate = new Date().toLocaleDateString();
+          if (matchingTask && matchingTask.dueDate === currentDate) {
+          } else {
+            const transporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: "your gmail account here ",
+                pass: "your gmail account verification code here",
+              },
+            });
+            const linkUrl = "http://localhost:3000/send_daily_status";
+
+            const htmlContent = `
+              <html>
+                <head>
+                </head>
+                <body>
+                  <img src="">
+                  <h1>Last Reminder :: You missed your daily status update at ${currentDate}</h1>
+                  <p>Please fill out your daily status</p>
+                  <p>Click <a href="${linkUrl}">here</a> to submit your status.</p>
+                </body>
+              </html>
+            `;
+            
+            const mailOptions = {
+              from: "sender email",
+              to: user.email,
+              subject: `Last Reminder :: You missed your daily status update at ${currentDate}`,
+              html: htmlContent,
+            };
+
+            await transporter.sendMail(mailOptions);
+          }
         });
 
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: "portal9589@gmail.com",
-            pass: "your email verification password here",
-          },
-        });
-
-        var htmlContent = `
-  <html>
-    <head>
-      <style>
-      </style>
-    </head>
-    <body>
-      <img src="">
-      <h1>Last Reminder :: You missed your daily status update at ${new Date().toLocaleDateString()}</h1>
-      <p>Please fill out your daily status</p>
-    
-    </body>
-  </html>
-`;
-
-        const emailPromises = usersToEmail.map(async (user) => {
-          const mailOptions = {
-            from: "portal9589@gmail.com",
-            to: user,
-            subject: `Last Reminder :: You missed your daily status update at ${new Date().toLocaleDateString()}`,
-            html: htmlContent,
-          };
-
-          return transporter.sendMail(mailOptions);
-        });
-
-        await Promise.all(emailPromises);
-
-        console.log("Emails sent successfully.");
       } catch (error) {
         console.error("Error sending emails:", error);
       }
@@ -54,3 +59,4 @@ const sendMail = {
 };
 
 export default sendMail;
+

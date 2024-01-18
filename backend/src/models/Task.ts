@@ -19,25 +19,20 @@ const taskSchema = new Schema<ITask>({
   },
   status: {
     type: String,
-    
+    required:true,
   },
   tasks: {
     type:[Object],
-    
+    required:true,
   },
   project_status: {
     type: String,
-    
-  },
-  dueDate: {
-    type: String,
     required:true,
-    unique:true,
-    
   },
+  dueDate:  { type: String,},
   working_hour:{
     type:String,
-    
+    required:true,
   },
   completed: {
     type: Boolean,

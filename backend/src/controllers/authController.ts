@@ -13,44 +13,43 @@ type RequestType = {
 
 const authController = {
   async login(req: Request<RequestType>, res: any) {
-    const { email, password} = req.body;
+    const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email: email });
-      const isPasswordChecked = await bcrypt.compare(password, user.password);
+        const user = await User.findOne({ email: email });
 
-      if(!email){
-        return res
-        .status(404)
-        .json({errorMessage: "user is not found"});
-      }
+        if (!user) {
+            return res
+                .status(404)
+                .json({ errorMessage: "User not found" });
+        }
 
-      if (!isPasswordChecked) {
-        return res
-          .status(404)
-          .json({ errorMessage: "password is not matched" });
-      }
-      const token = jwt.sign(
-        { email: user.email, _id: user._id },
-        process.env.JWT_TOKEN,
-        { expiresIn: "5h" }
-      );
-      res
-      res
-        .cookie("access_token", token, {
-          httpOnly: true,
-          expiresIn: "10h",
-        })
-        .cookie("username", user.username, {
-          httpOnly: true,
-          expiresIn: "10h",
-        })
-        .status(200)
-        .json({ token, username: user.username });
-    } catch (err) {
-      res.status(500).json(err);
-    }
+        const isPasswordChecked = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordChecked) {
+            return res
+                .status(404)
+                .json({ errorMessage: "Password is not matched" });
+        }
+
+        const token = jwt.sign(
+            { email: user.email, _id: user._id },
+            process.env.JWT_TOKEN,
+            { expiresIn: "5h" }
+        );
+
+        res
+            .cookie("access_token", token, {
+                httpOnly: true,
+                expiresIn: "10h",
+            })
   
-  },
+            .status(200)
+            .json({ token, });
+    } catch (err) {
+        res.status(500).json({ errorMessage: "Internal Server Error" });
+    }
+},
+
 
   async logout(req, res) {
     try {

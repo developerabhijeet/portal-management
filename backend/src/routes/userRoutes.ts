@@ -5,7 +5,7 @@ import sendMail from '../controllers/sendEmail';
 
 const router = express.Router();
 
-router.post('/signup', userController.signUp, sendMail.mail); 
+router.post('/signup', userController.signUp); 
 router.get('/sendEmail', sendMail.mail); 
 
 
