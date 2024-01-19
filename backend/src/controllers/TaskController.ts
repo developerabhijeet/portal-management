@@ -1,15 +1,17 @@
 import { Request, Response } from 'express';
 import Task from '../models/Task';
-
+// import Cookies from 'cookies';
+import cookieParser from "cookie-parser"
 const taskController = {
+  
   async  createTask(req:any, res:Response) {
+     const accessToken = req.cookies.access_token;
     try {
       const newTaskData = {
         ...req.body,
         user: req.user._id,
-        createdAt: new Date(),
+        accessToken
       };
-  
       const task = await Task.create(newTaskData);
       res.status(201).json(task);
     } catch (error) {
