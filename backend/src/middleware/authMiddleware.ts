@@ -9,7 +9,6 @@ const authenticateUser = (req: any, res: Response, next: NextFunction) => {
   if (!authToken) {
     return res.status(401).json({ error: 'Authorization header missing.' });
   }
-
   const token = authToken.split(' ')[1];
 
   // Check if the token is in the blacklist
@@ -18,7 +17,7 @@ const authenticateUser = (req: any, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = jwt.verify(token,process.env.JWT_TOKEN) as { email: string, _id: string };
+    const decoded = jwt.verify(token,process.env.jwtSecret) as { email: string, _id: string };
     req.user = { email: decoded.email, _id: decoded._id };
     next();
   } catch (error) {
