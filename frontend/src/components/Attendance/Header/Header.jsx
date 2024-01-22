@@ -1,16 +1,24 @@
 // DashboardNavbar.js
-
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../Dashboard/dashboard.css";
+import "../dashboard.css";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BaseURL } from "../../../Utils/utils";
 
 const Header = () => {
   const navigate = useNavigate();
+  const localToken = localStorage.getItem("jwtToken");
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
+  useEffect(() => {
+    if (!localToken) {
+      navigate("/login");
+      return;
+    }
+  }, []);
   const logout = async () => {
     try {
       // await axios.post(`${BaseURL}/tasks/logout`);
@@ -23,7 +31,7 @@ const Header = () => {
         navigate("/login");
       }
     } catch (error) {
-      alert( error);
+      alert(error);
     }
   };
 
@@ -31,7 +39,6 @@ const Header = () => {
   if (location.pathname === "/login") {
     return null;
   }
-
   return (
     <div className="dashboardContainer">
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -67,7 +74,7 @@ const Header = () => {
                   <Link to="/holidays">Holidays</Link>
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="User Name" id="basic-nav-dropdown">
+              <NavDropdown title={username} id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <Link to="/change_status">Change Status</Link>
                 </NavDropdown.Item>
@@ -92,6 +99,13 @@ const Header = () => {
                   </button>
                 </NavDropdown.Item>
               </NavDropdown>
+              {role === "admin" && localToken && (
+                <NavDropdown title="Signup here" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <Link to="/Signup">Signup here?</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -1,0 +1,142 @@
+.navbar {
+  background-color: #333;
+  padding: 10px;
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  color: white;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+body {
+  background-color: #f3f3f3;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.status-update-form {
+  margin: 0 auto 50px;
+  max-width: 700px;
+  width: 100%;
+}
+.panel-heading {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.available {
+  display: flex;
+}
+.toinputbox {
+}
+.task-input {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  max-width: 100%;
+  resize: none;
+  width: 100%;
+  min-height: 100px;
+  padding: 8px;
+  background: transparent;
+}
+.daily-status {
+  text-align: center;
+  display: block;
+}
+
+.daily-status-btn {
+  border: none;
+  border-radius: 45px;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 60px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #2e6da4;
+}
+.daily-statusSave {
+  text-align: center;
+  display: block;
+}
+
+.daily-status-savebtn {
+  border: none;
+  border-radius: 45px;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 60px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #f0ad4e;
+}
+.daily-status-sendbtn {
+  text-align: center;
+  display: block;
+}
+
+.daily-status-btnsend {
+  border: none;
+  border-radius: 45px;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 60px;
+  margin-top: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: rgb(11 154 61 / 80%);
+}
+.status_header {
+  display: flex;
+}
+.eyeicon {
+  max-width: 100px;
+  width: 100%;
+  background: #5bc0de;
+  color: #ccc;
+  border-color: #46b8da;
+  border-radius: 4x;
+  margin: 10px;
+  padding: 8px;
+  text-align: center;
+}
+.dashboard_header {
+  height: "100vh";
+  background: "#f3f3f3";
+}
