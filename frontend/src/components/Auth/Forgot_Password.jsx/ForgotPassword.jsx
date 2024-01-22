@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 const ForgotPassword = () => {
-   
+  return <div>ForgotPassword</div>;
+};
 
-  return (
-    <div>ForgotPassword</div>
-  )
-}
-
-export default ForgotPassword
+export default ForgotPassword;

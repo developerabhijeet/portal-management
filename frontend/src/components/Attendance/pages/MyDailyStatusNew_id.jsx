@@ -8,8 +8,8 @@ export const MyDailyStatusNew_id = () => {
   const data = state.item;
   const navigate = useNavigate();
   useEffect(() => {
-    const localToken = localStorage.getItem("jwtToken");
-    if (!localToken) {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
       navigate("/login");
       return;
     }

@@ -6,16 +6,13 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { BaseURL } from "../../../Utils/utils";
 import Layout from "../../Layout/Layout";
-import Header from "../Header/Header";
-
 const SendMyDailyStatus = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
-  const [emailData, setEmailData] = useState([]);
   const [tasks, setTasks] = useState([
     {
       projectStatus: "",
-      workingHour: "",
+      workingHour: "09:00",
       status: "",
       task: "",
     },
@@ -26,8 +23,8 @@ const SendMyDailyStatus = () => {
     if (!localToken) {
       navigate("/login");
       return;
-    }},[])
-  useEffect(() => {
+    }
+
     const getData = async () => {
       try {
         const response = await axios.get(`${BaseURL}/auth/getEmail`);
@@ -36,15 +33,16 @@ const SendMyDailyStatus = () => {
         alert(error);
       }
     };
+
     getData();
-  }, []);
+  }, [navigate, setEmail]);
 
   const createEmailObjects = (emailArray) =>
     emailArray.map((email) => ({ value: email, label: email }));
 
   const handleEmail = (selectedOptions) => {
     const usersEmail = selectedOptions.map((e) => e.value);
-    setEmailData(usersEmail);
+    setEmail(usersEmail);
   };
 
   const addMoreTask = () => {
@@ -63,7 +61,7 @@ const SendMyDailyStatus = () => {
       await axios.post(
         `${BaseURL}/tasks`,
         {
-          email: emailData,
+          email: email,
           dueDate: startDate,
           tasks: tasks,
         },
@@ -82,164 +80,166 @@ const SendMyDailyStatus = () => {
 
   return (
     <>
-    <Layout>
-      <div className="status-update-form panel panel-info">
-        <div className="panel-heading">
-          <h2 className="panel-title">Send Daily Status Update</h2>
-        </div>
-        <div className="available">
-          <p>
-            <a href="employee_availabilities">
-              Do you want to change your availability?
-            </a>
-          </p>
-          <p>Available</p>
-        </div>
-        <div>
-          <form onSubmit={handleStatusSubmit}>
-            <div>
+      <Layout>
+        <div className="status-update-form panel panel-info">
+          <div className="panel-heading">
+            <h2 className="panel-title">Send Daily Status Update</h2>
+          </div>
+          <div className="available">
+            <p>
+              <a href="employee_availabilities">
+                Do you want to change your availability?
+              </a>
+            </p>
+            <p>Available</p>
+          </div>
+          <div>
+            <form onSubmit={handleStatusSubmit}>
               <div>
-                <p>To</p>
-                <Select
-                  isMulti
-                  options={createEmailObjects(email)}
-                  isClearable
-                  isSearchable
-                  noOptionsMessage={() => "email not found"}
-                  onChange={handleEmail}
-                />
-              </div>
-              <div>
-                <p>CC</p>
-                <p>status@bestpeers.com</p>
                 <div>
-                  <label>Status Date</label>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    required
-                    dateFormat="dd/MM/yy"
+                  <p>To</p>
+                  <Select
+                    isMulti
+                    options={createEmailObjects(email)}
+                    isClearable
+                    isSearchable
+                    noOptionsMessage={() => "email not found"}
+                    onChange={handleEmail}
                   />
                 </div>
-              </div>
-              <div>
+                <div>
+                  <p>CC</p>
+                  <p>status@bestpeers.com</p>
+                  <div>
+                    <label>Status Date</label>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      required
+                      dateFormat="dd/MM/yy"
+                    />
+                  </div>
+                </div>
                 <div>
                   <div>
-                    <h6>+ ADD YOUR TASK DETAILS</h6>
-                  </div>
-                  {tasks.map((task, index) => (
-                    <div key={index}>
-                      <div>
-                        <label>Project</label>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? {
-                                      ...prevTask,
-                                      projectStatus: e.target.value,
-                                    }
-                                  : prevTask
-                              )
-                            )
-                          }
-                        >
-                          <option value="">Select Project</option>
-                          <option value="None">None</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label>Working Hours</label>
-                        <input
-                          type="time"
-                          placeholder="hh:mm"
-                          value={task.workingHour}
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? { ...prevTask, workingHour: e.target.value }
-                                  : prevTask
-                              )
-                            )
-                          }
-                        />
-                      </div>
-                      <div>
-                        <label>Status</label>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? { ...prevTask, status: e.target.value }
-                                  : prevTask
-                              )
-                            )
-                          }
-                        >
-                          <option value="">Select Status</option>
-                          <option value="Done">Done</option>
-                          <option value="In Processing">In Processing</option>
-                          <option value="Testing">Testing</option>
-                          <option value="Deployed">Deployed</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label>Task</label>
-                        <textarea
-                          className="task-input"
-                          value={task.task}
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? { ...prevTask, task: e.target.value }
-                                  : prevTask
-                              )
-                            )
-                          }
-                        />
-                      </div>
+                    <div>
+                      <h6>+ ADD YOUR TASK DETAILS</h6>
                     </div>
-                  ))}
-                  <div className="daily-status">
-                    <button
-                      type="button"
-                      className="daily-status-btn"
-                      onClick={addMoreTask}
-                    >
-                      + ADD MORE TASK
+                    {tasks.map((task, index) => (
+                      <div key={index}>
+                        <div>
+                          <label>Project</label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? {
+                                        ...prevTask,
+                                        projectStatus: e.target.value,
+                                      }
+                                    : prevTask
+                                )
+                              )
+                            }
+                          >
+                            <option value="">Select Project</option>
+                            <option value="None">None</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label>Working Hours</label>
+                          <input
+                            type="time"
+                            placeholder="hh:mm"
+                            value={task.workingHour}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? {
+                                        ...prevTask,
+                                        workingHour: e.target.value,
+                                      }
+                                    : prevTask
+                                )
+                              )
+                            }
+                          />
+                        </div>
+                        <div>
+                          <label>Status</label>
+                          <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? { ...prevTask, status: e.target.value }
+                                    : prevTask
+                                )
+                              )
+                            }
+                          >
+                            <option value="">Select Status</option>
+                            <option value="Done">Done</option>
+                            <option value="In Processing">In Processing</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Deployed">Deployed</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label>Task</label>
+                          <textarea
+                            className="task-input"
+                            value={task.task}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? { ...prevTask, task: e.target.value }
+                                    : prevTask
+                                )
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <div className="daily-status">
+                      <button
+                        type="button"
+                        className="daily-status-btn"
+                        onClick={addMoreTask}
+                      >
+                        + ADD MORE TASK
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="daily-statusSave">
+                    <button type="text" className="daily-status-savebtn">
+                      SAVE TO DRAFT
+                    </button>
+                  </div>
+                  <div className="daily-status-sendbtn">
+                    <button type="submit" className="daily-status-btnsend">
+                      SEND
                     </button>
                   </div>
                 </div>
               </div>
-
-              <div>
-                <div className="daily-statusSave">
-                  <button type="text" className="daily-status-savebtn">
-                    SAVE TO DRAFT
-                  </button>
-                </div>
-                <div className="daily-status-sendbtn">
-                  <button type="submit" className="daily-status-btnsend">
-                    SEND
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </Layout>
     </>
   );
-
 };
 
 export default SendMyDailyStatus;

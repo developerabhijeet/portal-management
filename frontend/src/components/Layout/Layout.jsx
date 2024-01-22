@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import '../Layout/Layout.css'
+import "../Layout/Layout.css";
 import Header from "../Attendance/Header/Header";
 export default function Layout({ children }) {
   const navigate = useNavigate();
   useEffect(() => {
-    const localToken = localStorage.getItem("jwtToken");
-    if (!localToken) {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
       navigate("/login");
       return;
     }
@@ -14,7 +14,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className="layout"> {children}</div>
     </>
   );

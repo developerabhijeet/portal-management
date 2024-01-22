@@ -5,7 +5,7 @@ import Task from "../models/Task";
 import User from "../models/User";
 
 const sendMail = async () => {
-  cron.schedule("42 17 * * *", async () => {
+  cron.schedule("31 13 * * *", async () => {
     try {
       const users = await User.find();
       const tasks = await Task.find();
@@ -13,7 +13,7 @@ const sendMail = async () => {
         const matchingTask = tasks.find((task) => task.user.equals(user._id));
         const currentDate = new Date().toLocaleDateString();
         if (matchingTask && matchingTask.dueDate === currentDate) {
-          console.log(`Task already exists for user ${user}. No email sent.`);
+          console.log(`Task already exists for user ${user.email}. No email sent.`);
         } else {
           const transporter = nodemailer.createTransport({
             service: "gmail",

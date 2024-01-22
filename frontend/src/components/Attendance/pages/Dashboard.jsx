@@ -1,24 +1,22 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Header from '../Header/Header';
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
+import "../dashboard.css";
 const Dashboard = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const localToken = localStorage.getItem("jwtToken");
     if (!localToken) {
       navigate("/login");
       return;
     }
- 
-  },[])
+  }, []);
   return (
     <>
-    <Header/>
-        <div style={{height:"100vh", background:"white"}}>Dashboard</div>
-
+      <Header />
+      <div className="dashboard_header"> </div>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

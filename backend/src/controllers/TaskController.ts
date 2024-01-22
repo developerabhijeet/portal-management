@@ -22,30 +22,40 @@ const taskController = {
   },
   async getAllTasks(req: any, res: Response) {
     try {
-      const { page, perPage, completed, sortByDueDate, sortByCompleted } =
-        req.query;
-
+      const { page, perPage, completed, sortByDueDate, sortByCompleted } = req.query;
+  
       const query =
         completed !== undefined
           ? { completed: completed === "true", $or:[{email: { $all: [req.user.email] }},{user:req.user._id}] }
           : { $or:[{email: { $all: [req.user.email] }},{user:req.user._id}] };
-
+  
       const sortOptions: any = {};
       if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1;
-      if (sortByCompleted)
-        sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
-
-      const userTasks = await Task.find(query).populate({path:'user',select:'username -_id'})
+      if (sortByCompleted) sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
+  
+      const totalTasks = await Task.countDocuments(query);
+      const totalPages = Math.ceil(totalTasks / +perPage);
+  
+      const userTasks = await Task.find(query)
+        .populate({ path: 'user', select: 'username -_id' })
         .sort(sortOptions)
         .skip((+page - 1) * +perPage)
         .limit(+perPage);
-      res.json(userTasks);
+  
+      const response = {
+        tasks: userTasks,
+        currentPage: +page,
+        totalPages: totalPages,
+        nextPage: +page < totalPages ? +page + 1 : null,
+        prevPage: +page > 1 ? +page - 1 : null,
+      };
+  
+      res.json(response);
     } catch (error) {
-      res
-        .status(500)
-        .json({ error: "An error occurred while fetching tasks." });
+      res.status(500).json({ error: "An error occurred while fetching tasks." });
     }
   },
+  
 
   async getTaskById(req: Request, res: Response) {
     try {

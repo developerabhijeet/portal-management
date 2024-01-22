@@ -1,14 +1,9 @@
 import Login from "./components/Auth/Login/Login";
 
-import {
-  Route,
-  Routes,
-  BrowserRouter as Router,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { MyDailyStatus } from "./components/Attendance/pages/MyDailyStatus";
 import { MyLeave } from "./components/Attendance/pages/MyLeave";
-import { Holidays } from "./components/Attendance/pages/Holidays";
+import Holidays from "./components/Attendance/pages/Holidays";
 import SendMyDailyStatus from "./components/Attendance/pages/SendMyDailyStatus";
 import { MyDailyStatusNew_id } from "./components/Attendance/pages/MyDailyStatusNew_id";
 import Dashboard from "./components/Attendance/pages/Dashboard";
@@ -17,7 +12,7 @@ import ForgotPassword from "./components/Auth/Forgot_Password.jsx/ForgotPassword
 import Signup from "./components/Auth/signup/signup";
 
 function App() {
-  const role =localStorage.getItem("role")
+  const role = localStorage.getItem("role");
   return (
     <>
       <Router>
@@ -33,9 +28,7 @@ function App() {
           <Route path="/my_leave" element={<MyLeave />} />
           <Route path="/holidays" element={<Holidays />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          {role === "admin" && (
-      <Route path="/Signup" element={<Signup />} />
-    )}
+          {role === "admin" && <Route path="/Signup" element={<Signup />} />}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
