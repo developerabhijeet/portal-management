@@ -36,12 +36,7 @@
   display: block;
 }
 
-body {
-  background-color: #f3f3f3;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
+
 
 .status-update-form {
   margin: 0 auto 50px;
@@ -62,10 +57,11 @@ body {
 .available {
   display: flex;
 }
-.toinputbox {
-}
+
 .task-input {
   border: 1px solid #ccc;
+  color: #f4f7f8;
+  background-color: #039eec;
   border-radius: 0;
   max-width: 100%;
   resize: none;
@@ -139,4 +135,11 @@ body {
 .dashboard_header {
   height: "100vh";
   background: "#f3f3f3";
+}
+.status{
+  color: #ccc;
+}
+.select_mail{
+  color: #31708f;
+  background-color: #039eec;
 }

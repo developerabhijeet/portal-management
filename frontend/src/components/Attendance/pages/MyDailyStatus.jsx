@@ -3,11 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../../Utils/utils";
 import Layout from "../../Layout/Layout";
-
+import "../dashboard.css";
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
@@ -23,6 +24,7 @@ export const MyDailyStatus = ({}) => {
             }
           );
           setData(response.data.tasks);
+          
           setTotalPages(response.data.totalPages);
         } catch (error) {
           alert(error);
@@ -31,13 +33,22 @@ export const MyDailyStatus = ({}) => {
       getDailyStatus();
     }
   }, [navigate, token, currentPage]);
-
   const handleNavigate = (item) => {
     navigate("/daily_status_updates_details", {
       state: {
         item,
       },
     });
+  };
+;
+
+  const handleNavigate_Edit = async (item,index) => {
+    navigate("/daily_status_updates_details_edit", {
+      state: {
+        item,index,
+      },
+    });
+   
   };
 
   const handlePageChange = (page) => {
@@ -63,7 +74,7 @@ export const MyDailyStatus = ({}) => {
           <h4>All Status</h4>
           <table className="table">
             <thead>
-              <tr>
+              <tr className="status">
                 <th>Name</th>
                 <th>Status Date</th>
                 <th>In-Time</th>
@@ -72,7 +83,7 @@ export const MyDailyStatus = ({}) => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="status">
               {data && data.length > 0
                 ? data.map((item, index) => {
                     return (
@@ -84,12 +95,18 @@ export const MyDailyStatus = ({}) => {
                         <td>:</td>
                         <td>
                           <div>
-                            <button
-                              className="eyeicon"
-                              onClick={() => handleNavigate(item)}
-                            >
-                              Show{" "}
-                            </button>
+                            {item.completed ? (
+                              <button
+                                className="eyeicon"
+                                onClick={() => handleNavigate(item)}
+                              >
+                                Show{" "}
+                              </button>
+                            ) : (
+                              <button onClick={() => handleNavigate_Edit(item,index)}>
+                                Edit
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>

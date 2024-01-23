@@ -5,7 +5,7 @@ import Task from "../models/Task";
 import User from "../models/User";
 
 const sendMail = async () => {
-  cron.schedule("31 13 * * *", async () => {
+  cron.schedule("3 13 * * *", async () => {
     try {
       const users = await User.find();
       const tasks = await Task.find();

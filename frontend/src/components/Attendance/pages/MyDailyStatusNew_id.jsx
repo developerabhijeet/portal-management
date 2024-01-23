@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../Layout/Layout";
 import Header from "../Header/Header";
-
+import "../dashboard.css";
 export const MyDailyStatusNew_id = () => {
   const { state } = useLocation();
   const data = state.item;
@@ -64,6 +64,7 @@ export const MyDailyStatusNew_id = () => {
           </div>
         </div>
       </Layout>
+     
     </>
   );
 };
