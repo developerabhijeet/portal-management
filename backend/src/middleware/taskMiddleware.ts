@@ -5,13 +5,13 @@ const Task_Data_Check = (requiredFields: string[]) => {
     try {
       const missingFields = requiredFields.filter((field) => !req.body[field]);
       if (missingFields.length > 0) {
-        res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
+        res.status(400).json({ error: `Missing required fields: ${missingFields.join(", ")}` });
       } else {
         next();
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     }
   };
 };

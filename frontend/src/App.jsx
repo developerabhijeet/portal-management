@@ -11,15 +11,18 @@ import NotFound from "./components/notFound/NotFound";
 import ForgotPassword from "./components/Auth/Forgot_Password.jsx/ForgotPassword";
 import Signup from "./components/Auth/signup/signup";
 import MyDaily_status_edit from "./components/Attendance/pages/MyDaily_status_edit";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
+    background: {
+      default: "rgb(1, 4, 9)", 
+    },
   },
 });
 function App() {
- const role =localStorage.getItem('role')
+ const role =localStorage.getItem("role")
   
   return (
     <>

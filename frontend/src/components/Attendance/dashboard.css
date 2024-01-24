@@ -54,9 +54,7 @@
   font-size: 16px;
   color: inherit;
 }
-.available {
-  display: flex;
-}
+
 
 .task-input {
   border: 1px solid #ccc;
@@ -142,4 +140,34 @@
 .select_mail{
   color: #31708f;
   background-color: #039eec;
+}
+.justify-content-center{
+  display: "flex"!important;
+  justify-content: center !important;
+  align-items: "center" !important;
+}
+.status-update-form panel panel-info{
+  margin: 0 auto 50px;
+  max-width: 700px;
+  width: 100%;
+  padding: 0%;
+}
+.panel-heading{
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1
+}
+.panel-title{
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 25px;
+  color: inherit;
+  text-transform: capitalize;
+}
+.available{
+  font-weight: 600;
+  padding: 0 15px;
+  font-size: 16px;
+  margin-bottom: 0;
+  color: #337ab7;
 }

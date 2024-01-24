@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import Task from "../models/Task";
 const taskController = {
   async createTask(req: any, res: Response) {
-    console.log("create task called...");
     try {
       const newTaskData = {
         ...req.body,
@@ -29,7 +28,7 @@ const taskController = {
           ? {
               completed: completed === "true",
               $or: [
-                { email: { $all: [req.user.email] } },
+                { email: { $all: [req.user.email] } }, //select the all email based on user id to edit functionality
                 { user: req.user._id },
               ],
             }
@@ -41,7 +40,7 @@ const taskController = {
             };
 
       const sortOptions: any = {};
-      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1;
+      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1;//To display  order
       if (sortByCompleted)
         sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
 
@@ -89,23 +88,22 @@ const taskController = {
     try {
       const newTaskData = req.body;
       newTaskData.dueDate = new Date(newTaskData.dueDate).toLocaleDateString();
-  
+
       const task = await Task.findByIdAndUpdate(req.params.id, newTaskData, {
         new: true,
       });
-  
-      console.log(req.params.id, "method is called");
-  
       if (task) {
         res.json(task);
       } else {
         res.status(404).json({ error: "Task not found." });
       }
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while updating the task." });
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the task." });
     }
   },
-  
+
   async deleteTask(req: Request, res: Response) {
     try {
       const task = await Task.findByIdAndDelete(req.params.id);

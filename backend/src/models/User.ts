@@ -1,5 +1,5 @@
 
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document } from "mongoose";
 
 interface IUser extends Document {
   username: string;
@@ -27,13 +27,13 @@ const userSchema = new mongoose.Schema<IUser>({
     default: "user",
   },
   
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
+  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
 },
 {
   timestamps: true,
 }
 );
 
-const User = mongoose.model<IUser>('User', userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 
 export default User;
