@@ -52,7 +52,7 @@ const authController = {
       res.status(500).json({ errorMessage: "Internal Server Error" });
     }
   },
-  async logout(req, res) {
+  async logout(req:any, res:any) {
     try {
       const token = req.cookies.access_token;
 

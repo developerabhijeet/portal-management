@@ -27,7 +27,7 @@ const taskSchema = new Schema<ITask>({
   },
   completed: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   tasks: [
     {

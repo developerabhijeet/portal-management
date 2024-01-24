@@ -2,25 +2,22 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { BaseURL } from "../../../Utils/utils";
 import Layout from "../../Layout/Layout";
 import "../dashboard.css";
 import StatusDropdown from "./StatusDropdown";
-const SendMyDailyStatus = () => {
+
+const MyDaily_status_edit = () => {
+  const { state } = useLocation();
+  const data = state.item;
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
-  const [tasks, setTasks] = useState([
-    {
-      projectStatus: "",
-      workingHour: "09:00",
-      status: "",
-      task: "",
-    },
-  ]);
+  const [tasks, setTasks] = useState(data.tasks);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     const localToken = localStorage.getItem("jwtToken");
     if (!localToken) {
@@ -49,11 +46,10 @@ const SendMyDailyStatus = () => {
   };
 
   const addMoreTask = () => {
-    setTasks([
-      ...tasks,
-      { projectStatus: "", workingHour: "", status: "", task: "" },
-    ]);
+    const lastTask = tasks[tasks.length - 1];
+    setTasks([...tasks, { ...lastTask }]);
   };
+
   const deleteTask = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
@@ -66,8 +62,8 @@ const SendMyDailyStatus = () => {
     const token = localStorage.getItem("jwtToken");
 
     try {
-      await axios.post(
-        `${BaseURL}/tasks`,
+      await axios.put(
+        `${BaseURL}/tasks/${data._id}`,
         {
           email: email,
           dueDate: startDate,
@@ -86,6 +82,7 @@ const SendMyDailyStatus = () => {
       alert(error);
     }
   };
+
   return (
     <>
       <Layout>
@@ -209,6 +206,13 @@ const SendMyDailyStatus = () => {
                             }
                           />
                         </div>
+                        <button
+                          type="button"
+                          className="daily-status-btn"
+                          onClick={() => deleteTask(index)}
+                        >
+                          Delete
+                        </button>
                       </div>
                     ))}
                     <div className="daily-status">
@@ -219,30 +223,14 @@ const SendMyDailyStatus = () => {
                       >
                         + ADD MORE TASK
                       </button>
-                      <button
-                        type="button"
-                        className="daily-status-btn"
-                        onClick={deleteTask}
-                      >
-                        Delete
-                      </button>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <div className="daily-statusSave">
-                    <button
-                      type="button"
-                      className="daily-status-savebtn"
-                      onClick={(e) => handleStatusSubmit(e, false)}
-                    >
-                      SAVE TO DRAFT
-                    </button>
-                  </div>
                   <div className="daily-status-sendbtn">
                     <button type="submit" className="daily-status-btnsend">
-                      SEND
+                      Update Daily Status
                     </button>
                   </div>
                 </div>
@@ -255,4 +243,4 @@ const SendMyDailyStatus = () => {
   );
 };
 
-export default SendMyDailyStatus;
+export default MyDaily_status_edit;

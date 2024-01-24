@@ -10,11 +10,25 @@ import Dashboard from "./components/Attendance/pages/Dashboard";
 import NotFound from "./components/notFound/NotFound";
 import ForgotPassword from "./components/Auth/Forgot_Password.jsx/ForgotPassword";
 import Signup from "./components/Auth/signup/signup";
-
+import MyDaily_status_edit from "./components/Attendance/pages/MyDaily_status_edit";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "rgb(1, 4, 9)", 
+    },
+  },
+});
 function App() {
-  const role = localStorage.getItem("role");
+ const role =localStorage.getItem("role")
+  
   return (
     <>
+
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -24,6 +38,8 @@ function App() {
             path="/daily_status_updates_details/"
             element={<MyDailyStatusNew_id />}
           />
+          
+          <Route path="/daily_status_updates_details_edit" element={<MyDaily_status_edit/>} />
           <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
           <Route path="/my_leave" element={<MyLeave />} />
           <Route path="/holidays" element={<Holidays />} />
@@ -32,6 +48,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      </ThemeProvider>
+
     </>
   );
 }
