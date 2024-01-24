@@ -7,6 +7,7 @@ import Select from "react-select";
 import { BaseURL } from "../../../Utils/utils";
 import Layout from "../../Layout/Layout";
 import "../dashboard.css";
+import StatusDropdown from "./StatusDropdown";
 
 const MyDaily_status_edit = () => {
   const { state } = useLocation();
@@ -66,7 +67,7 @@ const MyDaily_status_edit = () => {
         {
           email: email,
           dueDate: startDate,
-          tasks: tasks, 
+          tasks: tasks,
           completed,
         },
         {
@@ -176,9 +177,8 @@ const MyDaily_status_edit = () => {
                         </div>
                         <div>
                           <label>Status</label>
-                          <select
-                            className="form-select"
-                            aria-label="Default select example"
+                          <StatusDropdown
+                            value={task.status}
                             onChange={(e) =>
                               setTasks((prevTasks) =>
                                 prevTasks.map((prevTask, i) =>
@@ -188,13 +188,7 @@ const MyDaily_status_edit = () => {
                                 )
                               )
                             }
-                          >
-                            <option value="">Select Status</option>
-                            <option value="Done">Done</option>
-                            <option value="In Processing">In Processing</option>
-                            <option value="Testing">Testing</option>
-                            <option value="Deployed">Deployed</option>
-                          </select>
+                          />
                         </div>
                         <div>
                           <label>Task</label>
