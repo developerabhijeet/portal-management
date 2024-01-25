@@ -54,6 +54,9 @@ const Header = () => {
                 <NavDropdown.Item>
                   <Link to="/tests">Tests</Link>
                 </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link to="/interview">Create</Link>
+                </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Project" id="basic-nav-dropdown">
                 <NavDropdown.Item>

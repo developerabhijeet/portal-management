@@ -10,6 +10,7 @@ import Dashboard from "./components/Attendance/pages/Dashboard";
 import NotFound from "./components/notFound/NotFound";
 import ForgotPassword from "./components/Auth/Forgot_Password.jsx/ForgotPassword";
 import Signup from "./components/Auth/signup/signup";
+import InterviewCalls from "./components/Attendance/pages/Interview_Calls";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -30,6 +31,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           {role === "admin" && <Route path="/Signup" element={<Signup />} />}
           <Route path="*" element={<NotFound />} />
+          <Route path="/interview"  element={<InterviewCalls />}/>
         </Routes>
       </Router>
     </>
