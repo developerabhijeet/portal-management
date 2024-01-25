@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
-// Import the tokenBlacklist array from your authController
-import { tokenBlacklist } from "../controllers/authController"; 
+import { tokenBlacklist } from "../controllers/authController";
 
 const authenticateUser = (req: any, res: Response, next: NextFunction) => {
   const authToken = req.header("Authorization");
@@ -17,17 +15,15 @@ const authenticateUser = (req: any, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = jwt.verify(token,process.env.jwtSecret) as { email: string, _id: string };
+    const decoded = jwt.verify(token, process.env.jwtSecret) as {
+      email: string;
+      _id: string;
+    };
     req.user = { email: decoded.email, _id: decoded._id };
     next();
   } catch (error) {
     res.status(401).json({ error: "Invalid authorization token." });
   }
-
-  
-
- 
-  
 };
 
 export default authenticateUser;

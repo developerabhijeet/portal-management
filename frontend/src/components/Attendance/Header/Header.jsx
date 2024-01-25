@@ -1,13 +1,10 @@
-// DashboardNavbar.js
 import React, { useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../dashboard.css"
+import "../dashboard.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BaseURL } from "../../../Utils/utils";
-
-const progress2 =require("./../../../assets/progress.png")
+const progress2 = require("./../../../assets/progress.png");
 const Header = () => {
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
@@ -19,11 +16,10 @@ const Header = () => {
       return;
     }
   }, []);
-  
+
   const logout = async () => {
     try {
-      const token = localStorage.getItem("jwtToken");
-      if (token) {
+      if (localToken) {
         localStorage.clear();
         toast.success("Logout successful");
         navigate("/login");
@@ -42,14 +38,14 @@ const Header = () => {
   return (
     <div>
       <Navbar bg="rgb(0 0 0 / 95%)" variant="rgb(0 0 0 / 95%)">
-        <Container className="d-flex justify-content-between align-items-center" >
-        <img
-          alt="Please put the image"
-          src={progress2}  
-          width="60"
-          height="50"
-          className="d-inline-block align-top"
-        />{" "}
+        <Container className="d-flex justify-content-between align-items-center">
+          <img
+            alt="Please put the image"
+            src={progress2}
+            width="60"
+            height="50"
+            className="d-inline-block align-top"
+          />{" "}
           <Navbar.Brand href="/">Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

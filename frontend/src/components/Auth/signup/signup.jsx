@@ -29,7 +29,7 @@ const Signup = (props) => {
     try {
       const response = await axios.post(
         `${BaseURL}/users/signup`,
-        registrationData
+        registrationData,
       );
       if (response.data) {
         localStorage.setItem("jwtToken", response.data.token);

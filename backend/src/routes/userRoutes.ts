@@ -1,6 +1,5 @@
 import express from "express";
 import userController from "../controllers/userContoller";
-import sendMail from "../controllers/sendEmail";
 import { newUserValidator } from "../middleware/validator";
 const router = express.Router();
 

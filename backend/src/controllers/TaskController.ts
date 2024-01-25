@@ -40,7 +40,7 @@ const taskController = {
             };
 
       const sortOptions: any = {};
-      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1;//To display  order
+      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1; //To display  order
       if (sortByCompleted)
         sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
 
