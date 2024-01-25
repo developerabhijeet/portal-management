@@ -12,9 +12,6 @@ export const MyDailyStatus = ({}) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
       const getDailyStatus = async () => {
         try {
           const response = await axios.get(
@@ -31,7 +28,6 @@ export const MyDailyStatus = ({}) => {
         }
       };
       getDailyStatus();
-    }
   }, [navigate, token, currentPage]);
   const handleNavigate = (item) => {
     navigate("/daily_status_updates_details", {

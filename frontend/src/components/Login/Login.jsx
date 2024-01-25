@@ -31,11 +31,6 @@ const Login = (props) => {
     }
     setLoginData({ email: "", password: "" });
   };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-    navigate("/login");
-  };
   return (
     <div className={"body"}>
       <div className="log-in-form ">

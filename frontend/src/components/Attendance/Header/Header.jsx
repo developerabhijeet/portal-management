@@ -10,12 +10,7 @@ const Header = () => {
   const localToken = localStorage.getItem("jwtToken");
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("role");
-  useEffect(() => {
-    if (!localToken) {
-      navigate("/login");
-      return;
-    }
-  }, []);
+
 
   const logout = async () => {
     try {

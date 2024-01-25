@@ -31,12 +31,6 @@ const SendMyDailyStatus = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    const localToken = localStorage.getItem("jwtToken");
-    if (!localToken) {
-      navigate("/login");
-      return;
-    }
-
     const getData = async () => {
       try {
         const response = await axios.get(`${BaseURL}/auth/getEmail`);
