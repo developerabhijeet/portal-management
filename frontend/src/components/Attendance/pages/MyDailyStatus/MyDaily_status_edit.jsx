@@ -8,7 +8,6 @@ import { BaseURL } from "../../../../Utils/utils";
 import Layout from "../../../Layout/Layout";
 import "../../dashboard.css";
 import StatusDropdown from "../SendMyDailyStatus/StatusDropdown";
-import Project_StatusDropdown from "../SendMyDailyStatus/Project_status_dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const MyDaily_status_edit = () => {
@@ -163,7 +162,8 @@ const MyDaily_status_edit = () => {
                       <div key={index}>
                         <div>
                           <label>Project</label>
-                          <Project_StatusDropdown
+                          <StatusDropdown
+                           status={"status"}
                             className="project_select"
                             aria-label="Default select example"
                             onChange={(e) =>
@@ -204,6 +204,7 @@ const MyDaily_status_edit = () => {
                         <div className="status_task">
                           <label>Status</label>
                           <StatusDropdown
+                           status={"project"}
                             value={task.status}
                             onChange={(e) =>
                               setTasks((prevTasks) =>

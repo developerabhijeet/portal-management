@@ -10,9 +10,6 @@ import "../../dashboard.css";
 import StatusDropdown from "./StatusDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-import Project_StatusDropdown from "./Project_status_dropdown";
-
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -172,7 +169,8 @@ const SendMyDailyStatus = () => {
                       <div key={index}>
                         <div className="project_task">
                           <label>Project</label>
-                          <Project_StatusDropdown
+                          <StatusDropdown
+                            status={"status"}
                             className="project_select"
                             aria-label="Default select example"
                             onChange={(e) =>
@@ -213,6 +211,7 @@ const SendMyDailyStatus = () => {
                         <div className="status_task">
                           <label>Status</label>
                           <StatusDropdown
+                            status={"project"}
                             value={task.status}
                             onChange={(e) =>
                               setTasks((prevTasks) =>

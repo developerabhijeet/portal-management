@@ -1,7 +1,10 @@
 import React from "react";
-import { statusOptions } from "../../../../Utils/constant";
+import {
+  statusOptions,
+  Project_statusOptions,
+} from "../../../../Utils/constant";
 import "../../dashboard.css";
-const StatusDropdown = ({ value, onChange }) => {
+const StatusDropdown = ({ value, onChange, status }) => {
   return (
     <select
       className="status_select"
@@ -9,12 +12,17 @@ const StatusDropdown = ({ value, onChange }) => {
       value={value}
       onChange={onChange}
     >
-      <option value="">Select Status</option>
-      {statusOptions.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
+      {status === "project"
+        ? statusOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))
+        : Project_statusOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
     </select>
   );
 };
