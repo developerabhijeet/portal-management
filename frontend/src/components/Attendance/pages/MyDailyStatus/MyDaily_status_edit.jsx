@@ -8,7 +8,9 @@ import { BaseURL } from "../../../../Utils/utils";
 import Layout from "../../../Layout/Layout";
 import "../../dashboard.css";
 import StatusDropdown from "../SendMyDailyStatus/StatusDropdown";
-
+import Project_StatusDropdown from "../SendMyDailyStatus/Project_status_dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 const MyDaily_status_edit = () => {
   const { state } = useLocation();
   const data = state.item;
@@ -104,13 +106,38 @@ const MyDaily_status_edit = () => {
                 <div>
                   <p>To</p>
                   <Select
-                    className="select_mail"
+                    id="myfilled-name"
+                    label="select"
+                    variant="filled"
                     isMulti
                     options={createEmailObjects(email)}
                     isClearable
                     isSearchable
                     noOptionsMessage={() => "email not found"}
                     onChange={handleEmail}
+                    classNamePrefix="select-mail"
+                    styles={{
+                      control: (provided) => ({
+                        ...provided,
+                        backgroundColor: "#333",
+                        color: "#fff",
+                        width: 250,
+                      }),
+                      menu: (provided) => ({
+                        ...provided,
+                        backgroundColor: "#333",
+                        color: "#fff",
+                      }),
+                      option: (provided, state) => ({
+                        ...provided,
+                        backgroundColor: state.isSelected ? "#000" : "#333",
+                        color: state.isSelected ? "#fff" : "#ccc",
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        color: "#fff",
+                      }),
+                    }}
                   />
                 </div>
                 <div>
@@ -123,6 +150,7 @@ const MyDaily_status_edit = () => {
                       onChange={(date) => setStartDate(date)}
                       required
                       dateFormat="dd/MM/yy"
+                      className="custom-datepicker"
                     />
                   </div>
                 </div>
@@ -135,8 +163,8 @@ const MyDaily_status_edit = () => {
                       <div key={index}>
                         <div>
                           <label>Project</label>
-                          <select
-                            className="form-select"
+                          <Project_StatusDropdown
+                            className="project_select"
                             aria-label="Default select example"
                             onChange={(e) =>
                               setTasks((prevTasks) =>
@@ -150,14 +178,12 @@ const MyDaily_status_edit = () => {
                                 ),
                               )
                             }
-                          >
-                            <option value="">Select Project</option>
-                            <option value="None">None</option>
-                          </select>
+                          />
                         </div>
                         <div>
                           <label>Working Hours</label>
                           <input
+                            className="project_select"
                             type="time"
                             placeholder="hh:mm"
                             value={task.workingHour}
@@ -208,10 +234,10 @@ const MyDaily_status_edit = () => {
                         </div>
                         <button
                           type="button"
-                          className="daily-status-btn"
+                          className="delete_buttonInner"
                           onClick={() => deleteTask(index)}
                         >
-                          Delete
+                          <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </div>
                     ))}

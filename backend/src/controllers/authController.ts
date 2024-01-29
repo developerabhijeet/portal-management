@@ -20,7 +20,6 @@ const authController = {
       if (!user) {
         return res.status(404).json({ errorMessage: "User not found" });
       }
-
       const isPasswordChecked = await bcrypt.compare(password, user.password);
 
       if (!isPasswordChecked) {

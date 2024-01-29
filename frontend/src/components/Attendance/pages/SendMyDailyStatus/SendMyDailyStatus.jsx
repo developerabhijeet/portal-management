@@ -9,8 +9,9 @@ import Layout from "../../../Layout/Layout";
 import "../../dashboard.css";
 import StatusDropdown from "./StatusDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+import Project_StatusDropdown from "./Project_status_dropdown";
 
 const darkTheme = createTheme({
   palette: {
@@ -171,7 +172,7 @@ const SendMyDailyStatus = () => {
                       <div key={index}>
                         <div className="project_task">
                           <label>Project</label>
-                          <select
+                          <Project_StatusDropdown
                             className="project_select"
                             aria-label="Default select example"
                             onChange={(e) =>
@@ -186,10 +187,7 @@ const SendMyDailyStatus = () => {
                                 ),
                               )
                             }
-                          >
-                            <option value="">Select Project</option>
-                            <option value="None">None</option>
-                          </select>
+                          />
                         </div>
                         <div className="working_hour">
                           <label>Working Hours</label>
@@ -252,7 +250,7 @@ const SendMyDailyStatus = () => {
                         className="delete_buttonInner"
                         onClick={deleteTask}
                       >
-                        <FontAwesomeIcon icon={faTrash} />
+                        <RiDeleteBin6Line />
                       </button>
                     </div>
                   </div>

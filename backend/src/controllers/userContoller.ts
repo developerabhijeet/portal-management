@@ -7,6 +7,15 @@ type RequestType = {
   email: string;
   password: string;
 };
+// Common function for bcrypt password hashing
+const hashPassword = (password: any) => {
+  const salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(password, salt);
+};
+// Common error handler function
+const handleError = (res: Response, errorMessage: string) => {
+  res.status(500).json({ error: errorMessage });
+};
 
 const userController = {
   async signUp(req: Request<RequestType>, res: Response) {
@@ -19,8 +28,7 @@ const userController = {
             "Email is already taken. Please choose a different email.",
         });
       }
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(password, salt);
+      const hash = hashPassword(password);
       const newUser = new User({
         email: email,
         username: username,
@@ -49,7 +57,7 @@ const userController = {
         token,
       });
     } catch (error) {
-      res.status(500).json({ error: "An error occurred while signing up." });
+      handleError(res, "An error occurred while signing up.");
     }
   },
 };

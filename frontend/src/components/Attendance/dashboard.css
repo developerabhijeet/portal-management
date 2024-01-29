@@ -121,6 +121,17 @@
   padding: 8px;
   text-align: center;
 }
+.Edit_icon {
+  max-width: 100px;
+  width: 100%;
+  background: #337ab7;
+  color: #ccc;
+  border-color: #337ab7;
+  border-radius: 4x;
+  margin: 10px;
+  padding: 8px;
+  text-align: center;
+}
 .dashboard_header {
   height: "100vh";
   background: "#f3f3f3";
