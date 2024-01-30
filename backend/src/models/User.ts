@@ -7,7 +7,6 @@ interface IUser extends Document {
   tasks: any;
   role: "user" | "admin";
 }
-
 const userSchema = new mongoose.Schema<IUser>(
   {
     email: {
@@ -33,7 +32,5 @@ const userSchema = new mongoose.Schema<IUser>(
     timestamps: true,
   }
 );
-
 const User = mongoose.model<IUser>("User", userSchema);
-
 export default User;

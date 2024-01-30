@@ -86,6 +86,19 @@ const authController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
+
+  async getAllUser(req, res) {
+    try {
+      const users = await User.find();
+      if (!users || users.length === 0) {
+        return res.status(404).json({ error: "No users found" });
+      }
+      res.status(200).json({ users });
+    } catch (error) {
+      alert(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 // Export the tokenBlacklist array so that it can be used in other parts of your application

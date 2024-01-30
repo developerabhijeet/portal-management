@@ -5,7 +5,3 @@ export const statusOptions = [
   { value: "Testing", label: "Testing" },
   { value: "Deployed", label: "Deployed" },
 ];
-export const Project_statusOptions = [
-  { value: "", label: "Select Project" },
-  { value: "bestpeers_portal", label: "bestpeers_portal" },
-];
