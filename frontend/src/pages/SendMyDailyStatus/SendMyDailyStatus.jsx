@@ -9,6 +9,7 @@ import Layout from "../../components/Layout";
 import "../index.css";
 import StatusDropdown from "./StatusDropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { statusOptions } from "../../Utils/constant";
 const SendMyDailyStatus = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
@@ -54,19 +55,32 @@ const SendMyDailyStatus = () => {
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
   };
-
   useEffect(() => {
     const projectUpdate = async () => {
       const getUserID = localStorage.getItem("userId");
       try {
         const response = await axios.get(`${BaseURL}/project/${getUserID}`);
-        setProjectUpdate(response.data.projects);
+        const projects = response.data.projects;
+        const convertedProjects = projects.map((project) => ({
+          value: project.projectName,
+          label: project.projectName,
+        }));
+        const options = [
+          {
+            value: "",
+            label: "Select ",
+          },
+          ...convertedProjects,
+        ];
+        setProjectUpdate(options);
       } catch (error) {
         alert(error);
       }
     };
+
     projectUpdate();
   }, []);
+
   const handleStatusSubmit = async (e, completed) => {
     e.preventDefault();
 
@@ -93,7 +107,6 @@ const SendMyDailyStatus = () => {
       alert(error);
     }
   };
-
   return (
     <>
       <Layout>
@@ -174,9 +187,10 @@ const SendMyDailyStatus = () => {
                     <div key={index}>
                       <div className="project_task">
                         <label>Project</label>
+
                         <StatusDropdown
-                          status={"project"}
-                          projectUpdate={projectUpdate}
+                          value={task.projectStatus}
+                          options={projectUpdate}
                           className="project_select"
                           aria-label="Default select example"
                           onChange={(e) =>
@@ -217,8 +231,8 @@ const SendMyDailyStatus = () => {
                       <div className="status_task">
                         <label>Status</label>
                         <StatusDropdown
-                          status={"status"}
                           value={task.status}
+                          options={statusOptions}
                           onChange={(e) =>
                             setTasks((prevTasks) =>
                               prevTasks.map((prevTask, i) =>

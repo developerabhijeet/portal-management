@@ -16,9 +16,7 @@ const MyDaily_status_edit = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
   const [tasks, setTasks] = useState(data.tasks);
-
   const navigate = useNavigate();
-
   useEffect(() => {
     const localToken = localStorage.getItem("jwtToken");
     if (!localToken) {

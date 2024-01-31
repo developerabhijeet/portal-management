@@ -7,7 +7,6 @@ import Header from "../../components/Header";
 const ProjectUpdate = () => {
   const [users, setUsers] = useState([]);
   const [projectNames, setProjectNames] = useState({});
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +16,6 @@ const ProjectUpdate = () => {
         console.error("Error fetching user data:", error);
       }
     };
-
     fetchData();
   }, [setUsers]);
 
