@@ -1,7 +1,6 @@
 import React from "react";
 import "../index.css";
 import { statusOptions } from "../../Utils/constant";
-
 const StatusDropdown = ({ value, onChange, status, projectUpdate }) => {
   const projectNone = "None";
 

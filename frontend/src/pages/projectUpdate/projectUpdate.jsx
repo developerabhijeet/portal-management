@@ -45,7 +45,7 @@ const ProjectUpdate = () => {
 
   return (
     <>
-    <Header/>
+      <Header />
       <table className="table">
         <thead>
           <tr className="status">
