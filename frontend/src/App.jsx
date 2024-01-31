@@ -14,6 +14,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
 import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
+import Calls from "./components/Attendance/pages/TestCalls/Calls";
+import Tests from "./components/Attendance/pages/TestCalls/Tests";
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -61,6 +64,8 @@ function App() {
             <Route path="/holidays" element={<Holidays />} />
 
             <Route path="*" element={<NotFound />} />
+            <Route path="Calls" element={<Calls/>} />
+            <Route path="Tests" element={<Tests/>} />
           </Routes>
         </Router>
       </ThemeProvider>
