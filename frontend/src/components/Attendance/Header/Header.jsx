@@ -1,26 +1,31 @@
+// DashboardNavbar.js
 import React, { useEffect } from "react";
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Navbar, Nav, NavDropdown,  Button } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../dashboard.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const progress2 = require("./../../../assets/progress.png");
+
 const Header = () => {
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("role");
-
+  useEffect(() => {
+    if (!localToken) {
+      navigate("/login");
+      return;
+    }
+  }, [localToken, navigate]);
 
   const logout = async () => {
     try {
-      if (localToken) {
+      const token = localStorage.getItem("jwtToken");
+      if (token) {
         localStorage.clear();
         toast.success("Logout successful");
-        navigate("/login");
-      } else {
-        navigate("/login");
       }
+      navigate("/login");
     } catch (error) {
       alert(error);
     }
@@ -31,84 +36,92 @@ const Header = () => {
     return null;
   }
   return (
-    <div>
-      <Navbar bg="rgb(0 0 0 / 95%)" variant="rgb(0 0 0 / 95%)">
-        <Container className="d-flex justify-content-between align-items-center">
-          <img
-            alt="Please put the image"
-            src={progress2}
-            width="60"
-            height="50"
-            className="d-inline-block align-top"
-          />{" "}
-          <Navbar.Brand href="/">Dashboard</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <NavDropdown title="Tests/calls" id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                  <Link to="/calls">Calls</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/tests">Tests</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Project" id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                  <Link to="/project-updates">Project Updates</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Attendance" id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                  <Link to="/daily_status_updates">My Daily Status</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/send_daily_status">Send Daily Status</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/my_leave">My Leaves</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/holidays">Holidays</Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title={username} id="basic-nav-dropdown">
-                <NavDropdown.Item>
-                  <Link to="/change_status">Change Status</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/edit_profile">Edit Profile</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/edit_personal_info">Edit Personal Info</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/edit_skills">Edit Skills</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/discussion_desk">Discussion Desk</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link to="/help_desk">Help Desk</Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <button onClick={() => logout()} to="/logout">
-                    Logout
-                  </button>
-                </NavDropdown.Item>
-              </NavDropdown>
-              {role === "admin" && localToken && (
-                <NavDropdown title="Signup here" id="basic-nav-dropdown">
-                  <NavDropdown.Item>
-                    <Link to="/Signup">Signup here?</Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </div>
+    <Navbar
+      style={{ padding: "3px 30px" }}
+      variant="dark"
+      collapseOnSelect
+      expand="lg"
+    >
+      <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <img
+          src={require("./images/logo.png")}
+          height={45}
+          className="me-3"
+          alt="img"
+        />
+        Dashboard
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="ms-auto gap-3 pt-2">
+          <NavDropdown title="Tests/calls" menuVariant="dark">
+            <NavDropdown.Item onClick={() => navigate("/calls")}>
+              Calls
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/tests")}>
+              Tests
+            </NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Project" menuVariant="dark">
+            <NavDropdown.Item onClick={() => navigate("/project-updates")}>
+              Project Updates
+            </NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Attendance" menuVariant="dark">
+            <NavDropdown.Item onClick={() => navigate("/daily_status_updates")}>
+              My Daily Status
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/send_daily_status")}>
+              Send Daily Status
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={() => navigate("/my_leave")}>
+              My Leaves
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={() => navigate("/holidays")}>
+              Holidays
+            </NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title={username} menuVariant="dark" className="mb-2">
+            <NavDropdown.Item onClick={() => navigate("/change_status")}>
+              Change Status
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/edit_profile")}>
+              Edit Profile
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/edit_personal_info")}>
+              Edit Personal Info
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/edit_skills")}>
+              Edit Skills
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={() => navigate("/discussion_desk")}>
+              Discussion Desk
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/help_desk")}>
+              Help Desk
+            </NavDropdown.Item>
+
+            <Button
+              className="ms-3 my-2"
+              variant="secondary"
+              onClick={() => logout()}
+            >
+              Logout
+            </Button>
+          </NavDropdown>
+          {role === "admin" && localToken && (
+            <NavDropdown title="Signup here" menuVariant="dark">
+              <NavDropdown.Item onClick={() => navigate("/Signup")}>
+                Signup here?
+              </NavDropdown.Item>
+            </NavDropdown>
+          )}
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 

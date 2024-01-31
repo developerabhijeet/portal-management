@@ -14,6 +14,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
 import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
+import {EditEmployeesDetails} from "./components/Attendance/pages/editEmployeesDetails/EditEmployeesDetails"
+import {AddSkills} from "./components/Attendance/pages/editSkills/AddSkills"
+import {EditSkills} from "./components/Attendance/pages/editSkills/EditSkills"
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -59,8 +62,12 @@ function App() {
             <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
             <Route path="/my_leave" element={<MyLeave />} />
             <Route path="/holidays" element={<Holidays />} />
-
+            <Route path="/add-skills" element={<AddSkills />} />
+            <Route path="/edit_skills" element={<EditSkills />} />
+            <Route path="/edit_profile" element={<EditEmployeesDetails />} />
+            
             <Route path="*" element={<NotFound />} />
+
           </Routes>
         </Router>
       </ThemeProvider>
