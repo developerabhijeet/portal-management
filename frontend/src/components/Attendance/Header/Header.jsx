@@ -1,4 +1,4 @@
-// DashboardNavbar.js
+
 import React, { useEffect } from "react";
 import { Navbar, Nav, NavDropdown,  Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -83,7 +83,7 @@ const Header = () => {
               Holidays
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title={username} menuVariant="dark" className="mb-2">
+          <NavDropdown title={username} menuVariant="dark" className="mb-2" align="end">
             <NavDropdown.Item onClick={() => navigate("/change_status")}>
               Change Status
             </NavDropdown.Item>
@@ -113,7 +113,7 @@ const Header = () => {
             </Button>
           </NavDropdown>
           {role === "admin" && localToken && (
-            <NavDropdown title="Signup here" menuVariant="dark">
+            <NavDropdown title="Signup here" menuVariant="dark" align="end">
               <NavDropdown.Item onClick={() => navigate("/Signup")}>
                 Signup here?
               </NavDropdown.Item>

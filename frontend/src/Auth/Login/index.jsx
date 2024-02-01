@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import axios from "axios";
-import "../auth.css";
 import { BaseURL } from "../../Utils/utils";
 const Login = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
@@ -25,61 +27,69 @@ const Login = (props) => {
         localStorage.setItem("role", response.data.user.role);
         localStorage.setItem("username", response.data.user.username);
         localStorage.setItem("userId", response.data.user._id);
-
+        localStorage.setItem("email", loginData.email);
+        localStorage.setItem("password", loginData.password);
         navigate("/");
-      } else {
-        alert("Username and/or password are incorrect");
       }
     } catch (error) {
-      alert("Login error", error);
+      alert("Invalid credentials", error);
     }
     setLoginData({ email: "", password: "" });
   };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
-    navigate("/login");
-  };
   return (
-    <div style={{ display: "flex", alignItems: "center" }} className={"body"}>
-      <div className="log-in-form ">
-        <div className={"log-in-form2"}>
-          <div>Log in</div>
-        </div>
-        <br />
-        <form onSubmit={handleLoginSubmit}>
-          <div className={"email-custom input"}>
-            <input
-              className={"inputBox"}
-              type="text"
+    <>
+      <div className="containerOne bg-dark">
+        <h3 className="headOne">LOGIN</h3>
+        <Form className="m-4">
+          <Form.Group className="mb-3" controlId="formGroupEmail">
+            <Form.Label className="fw">Email</Form.Label>
+            <Form.Control
+              type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Enter email"
               value={loginData.email}
               onChange={handleLoginChange}
-              required
+              className="bg-dark text-white"
             />
-          </div>
-          <div className={"email-custom input"}>
-            <input
-              className={"inputBox"}
-              type="password"
+          </Form.Group>
+          <Form.Group controlId="formGroupPassword">
+            <Form.Label className="fw">Password</Form.Label>
+            <Form.Control
+              type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder="Enter password"
               value={loginData.password}
               onChange={handleLoginChange}
-              required
+              className="bg-dark text-white pe-5"
             />
-          </div>
-          <Link to="/forgot-password">Forgot Password?</Link>
-
-          <div className={"log-in-btn"}>
-            <button type="submit " className={"inputButton"}>
-              Login
-            </button>
-          </div>
-        </form>
+            <span
+              className="position-relative"
+              style={{ top: "-32px", right: "-420px", cursor: "pointer" }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <IoIosEyeOff size={20} />
+              ) : (
+                <IoIosEye size={20} />
+              )}
+            </span>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="w-100 text-end">
+              <Link to="/forgot-password">Forgot Password</Link>
+            </Form.Label>
+          </Form.Group>
+          <Button
+            className="fw"
+            variant="success"
+            type="submit"
+            onClick={(e) => handleLoginSubmit(e)}
+          >
+            LOGIN
+          </Button>{" "}
+        </Form>
       </div>
-    </div>
+    </>
   );
 };
 
