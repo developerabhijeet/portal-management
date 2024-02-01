@@ -34,7 +34,8 @@ const sendMail = async () => {
               <body>
                 <img src="">
                 <h1>Last Reminder :: You missed your daily status update at ${currentDate}</h1>
-                <h2>Hi <strong>${user.username}</strong></h2>
+                <h2>Hi <strong>${user.firstName}${user.lastName}
+                </strong></h2>
                 <p>We are waiting for your status update at ${currentDate}.Please send your status <a href="${linkUrl}">here</a>.</p>
                 <p>Best Regards,</p>
                 <p>BestPeers Team.</p>

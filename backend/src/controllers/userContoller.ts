@@ -19,7 +19,7 @@ const handleError = (res: Response, errorMessage: string) => {
 
 const userController = {
   async signUp(req: Request<RequestType>, res: Response) {
-    const { email, password, username } = req.body;
+    const { email, password, confirmPass, firstName, lastName } = req.body;
     try {
       const user = await User.findOne({ email: email });
       if (user) {
@@ -28,12 +28,16 @@ const userController = {
             "Email is already taken. Please choose a different email.",
         });
       }
+
       const hash = hashPassword(password);
       const newUser = new User({
         email: email,
-        username: username,
+        firstName: firstName,
+        lastName: lastName,
         password: hash,
+        confirmPass: hash,
       });
+
       await newUser.save();
       const token = jwt.sign(
         { email: newUser.email, _id: newUser._id },
@@ -51,13 +55,54 @@ const userController = {
         user: {
           _id: newUser._id,
           email: newUser.email,
-          username: newUser.username,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          password: newUser.password,
           role: newUser.role,
         },
         token,
       });
     } catch (error) {
       handleError(res, "An error occurred while signing up.");
+    }
+  },
+  async getEditpersonalDetails(req: any, res: Response) {
+    try {
+      const userId = req.params.id;
+      const personalEditDetails = await User.findById(userId);
+
+      if (personalEditDetails) {
+        res.json(personalEditDetails);
+      } else {
+        res.status(404).json({ error: "personal details is not found." });
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: "An error occurred while fetching the the user information.",
+      });
+    }
+  },
+  async UpdatePersonalDetails(req: any, res: Response) {
+    try {
+      const userId = req.params.id;
+      const updatedDetails = req.body;
+      const updateUserDetails = await User.findByIdAndUpdate(
+        userId,
+        updatedDetails,
+        {
+          new: true,
+        }
+      );
+      if (updateUserDetails) {
+        res.status(200).json(updateUserDetails);
+      } else {
+        res.status(404).json({ error: "User not found." });
+      }
+    } catch (error) {
+      console.error("Error updating personal details:", error);
+      res.status(500).json({
+        error: "An error occurred while updating personal details.",
+      });
     }
   },
 };

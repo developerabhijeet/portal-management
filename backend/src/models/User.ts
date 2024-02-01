@@ -1,11 +1,14 @@
 import mongoose, { Document } from "mongoose";
 
 interface IUser extends Document {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   tasks: any;
   role: "user" | "admin";
+  confirmPass: string;
+  currentPass: string;
 }
 const userSchema = new mongoose.Schema<IUser>(
   {
@@ -13,12 +16,24 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
-    username: {
+    firstName: {
       type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    confirmPass: {
+      type: String,
+      required: true,
+    },
+    currentPass: {
+      type: String,
     },
     role: {
       type: String,

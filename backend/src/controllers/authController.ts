@@ -27,9 +27,13 @@ const authController = {
           .status(404)
           .json({ errorMessage: "Password is not matched" });
       }
-
       const token = jwt.sign(
-        { email: user.email, username: user.username, _id: user._id },
+        {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          _id: user._id,
+        },
         process.env.jwtSecret,
         { expiresIn: "5h" }
       );
@@ -41,7 +45,8 @@ const authController = {
         message: "Login successful",
         user: {
           _id: user._id,
-          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           role: user.role,
         },
