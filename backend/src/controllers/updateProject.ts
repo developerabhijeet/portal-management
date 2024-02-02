@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Project from "../models/project";
 const ProjectUpdateController = {
-  async updateProject(req: Request, res: Response) {
+  async createProject(req: Request, res: Response) {
     try {
       const task = await Project.create(req.body);
       if (task) {

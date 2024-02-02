@@ -13,9 +13,11 @@ import MyDaily_status_edit from "./pages/MyDailyStatus/MyDailyStatusEdit";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
-import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
-import Calls from "./components/Attendance/pages/TestCalls/Calls";
-import Tests from "./components/Attendance/pages/TestCalls/Tests";
+import ProjectUpdate from "./pages/projectUpdate/ProjectUpdate";
+import Tests from "./pages/TestCalls/Tests";
+import Calls from "./pages/TestCalls/Calls"; 
+import ChangeStatus from "./pages/ChangeStatus/ChangeStatus";
+import EditProject from "./pages/projectUpdate/EditProject";
 
 const darkTheme = createTheme({
   palette: {
@@ -66,6 +68,8 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="Calls" element={<Calls/>} />
             <Route path="Tests" element={<Tests/>} />
+            <Route path="change_status" element={<ChangeStatus />}/>
+            <Route path="edit_project" element={<EditProject />}/>
           </Routes>
         </Router>
       </ThemeProvider>
