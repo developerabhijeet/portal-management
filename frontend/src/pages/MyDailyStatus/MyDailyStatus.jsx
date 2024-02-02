@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
-import StatusTable from "./myStatusTable";
+import StatusTable from "./MyStatusTable";
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
