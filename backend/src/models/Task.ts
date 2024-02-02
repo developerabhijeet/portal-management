@@ -45,7 +45,7 @@ const taskSchema = new Schema<ITask>({
       },
       task: {
         type: String,
-        required: true,
+       
       },
     },
   ],
