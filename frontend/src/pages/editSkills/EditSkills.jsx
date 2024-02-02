@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../Header/Header";
+import Header from "../../components/Header/Header";
 import Table from "react-bootstrap/Table";
 import { MdEdit, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
@@ -46,8 +46,8 @@ export const EditSkills = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <MdEdit style={{ color: "#fff" }} />
-                      <span style={{ color: "#fff" }}> Edit</span>
+                      <MdEdit className="text-white" />
+                      <span className="text-white"> Edit</span>
                     </span>
                   </Link>
                 </td>

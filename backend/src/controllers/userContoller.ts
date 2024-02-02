@@ -34,8 +34,8 @@ const userController = {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        password: hash,
-        confirmPass: hash,
+        password: password,
+        
       });
 
       await newUser.save();
@@ -83,6 +83,7 @@ const userController = {
     }
   },
   async UpdatePersonalDetails(req: any, res: Response) {
+    const { email, password } = req.body;
     try {
       const userId = req.params.id;
       const updatedDetails = req.body;
@@ -93,6 +94,15 @@ const userController = {
           new: true,
         }
       );
+      const isPasswordChecked = await bcrypt.compare(password, updateUserDetails.password);
+
+      if (!isPasswordChecked) {
+        return res
+          .status(404)
+          .json({ errorMessage: "Password is not matched" });
+      }
+      const hash = hashPassword(updateUserDetails.password);
+
       if (updateUserDetails) {
         res.status(200).json(updateUserDetails);
       } else {

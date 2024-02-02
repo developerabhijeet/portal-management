@@ -14,9 +14,9 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
 import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
-import {EditEmployeesDetails} from "./components/Attendance/pages/editEmployeesDetails/EditEmployeesDetails"
-import {AddSkills} from "./components/Attendance/pages/editSkills/AddSkills"
-import {EditSkills} from "./components/Attendance/pages/editSkills/EditSkills"
+import {EditEmployeesDetails} from "./pages/editEmployeesDetails/EditEmployeesDetails"
+import {AddSkills} from "./pages/editSkills/AddSkills"
+import {EditSkills} from "./pages/editSkills/EditSkills"
 const darkTheme = createTheme({
   palette: {
     mode: "dark",

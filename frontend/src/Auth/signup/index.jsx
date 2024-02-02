@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Await, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../auth.css";
-import { BaseURL } from "../../Utils/utils"; 
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { BaseURL } from "../../Utils/utils";
+import Header from "../../components/Header/Header";
+import { Button, Form } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
-const Signup = (props) => {
+const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+  const [registrationData, setRegistrationData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPass: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPass: "",
+  });
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
@@ -13,87 +32,223 @@ const Signup = (props) => {
       return;
     }
   });
-  const [registrationData, setRegistrationData] = useState({
-    email: "",
-    username: "",
-    password: "",
-  });
-  const handleRegistrationChange = (e) => {
+
+  const handleRChange = (e) => {
     const { name, value } = e.target;
     setRegistrationData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${BaseURL}/users/signup`,
-        registrationData,
-      );
-      if (response.data) {
-        localStorage.setItem("jwtToken", response.data.token);
-        navigate("/");
-      } else {
-        alert("Username and/or password are incorrect");
-      }
-    } catch (error) {
-      alert("Registration error", error);
+
+  const validationCheck = () => {
+    const email = registrationData.email;
+    const firstName = registrationData.firstName;
+    const lastName = registrationData.lastName;
+    const password = registrationData.password;
+    const confirmPass = registrationData.confirmPass;
+    let isValid = true;
+    const newErrors = { errors };
+
+    const emailPattern = /^[^\s@]+@(bestpeers)+.(in|com)$/;
+    if (!email || !email.trim() || !emailPattern.test(email)) {
+      isValid = false;
+      newErrors.email = "Please enter a valid bestpeers email address";
     }
-    setRegistrationData({ email: "", password: "", username: "" });
+    const namePattern = /^[A-Za-z]+(?: [A-Za-z]+){0,3}$/;
+    if (!firstName.trim() || !namePattern.test(firstName)) {
+      isValid = false;
+      newErrors.firstName = "Valid firstName is required";
+    }
+
+    if (!lastName.trim() || !namePattern.test(lastName)) {
+      isValid = false;
+      newErrors.lastName = "Valid lastName is required";
+    }
+
+    if (!password.trim() || (password && password.length < 6)) {
+      isValid = false;
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (password !== confirmPass) {
+      isValid = false;
+      newErrors.confirmPass = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleReset = () => {
+    setRegistrationData({
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      confirmPass: "",
+    });
+    setErrors({
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      confirmPass: "",
+    })
+  }
+
+  const handleRSubmit = async (e) => {
+    e.preventDefault();
+    if (validationCheck()) {
+      try {
+        const response = await axios.post(
+          `${BaseURL}/users/signup`,
+          registrationData,
+        );
+        if (response.data) {
+          localStorage.setItem("jwtToken", response.data.token);
+          toast.success("User Registered...", {
+            position: "top-right",
+            autoClose: 2000,
+          });
+        }
+        setRegistrationData({
+          email: "",
+          firstName: "",
+          lastName: "",
+          password: "",
+          confirmPass: "",
+        });
+      } catch (error) {
+        toast.error("Something went wrong", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
+    }
   };
 
   return (
     <>
-      <div style={{ display: "flex", alignItems: "center" }} className={"body"}>
-        <div className="log-in-form ">
-          <div className={"log-in-form2"}>
-            <div>Signup</div>
+      <Header />
+      <div className="containerOne">
+        <h3 className="headOne text-center">REGISTER EMPLOYEE</h3>
+        <Form className="m-4">
+          <Form.Group className="mb-3" controlId="formGroupEmail">
+            <Form.Label className="fw">Email</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              value={registrationData.email}
+              onChange={handleRChange}
+              className="bg-dark text-white"
+            />
+            <Form.Text className="text-danger">{errors.email}</Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="fw">firstName</Form.Label>
+            <Form.Control
+              type="text"
+              name="firstName"
+              placeholder="Enter firstName"
+              value={registrationData.firstName}
+              onChange={handleRChange}
+              className="bg-dark text-white"
+            />
+            <Form.Text className="text-danger">{errors.firstName}</Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="fw">lastName</Form.Label>
+            <Form.Control
+              type="text"
+              name="lastName"
+              placeholder="Enter lastName"
+              value={registrationData.lastName}
+              onChange={handleRChange}
+              className="bg-dark text-white"
+            />
+            <Form.Text className="text-danger">{errors.lastName}</Form.Text>
+          </Form.Group>
+          <Form.Group
+            controlId="formGroupPassword"
+            className={errors.password ? "mb-3" : null}
+          >
+            <Form.Label className="fw">Password</Form.Label>
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Enter password"
+              value={registrationData.password}
+              onChange={handleRChange}
+              className="bg-dark text-white pe-5"
+            />
+            <span
+              className="position-relative"
+              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <IoIosEyeOff size={20} />
+              ) : (
+                <IoIosEye size={20} />
+              )}
+            </span>
+            <Form.Text
+              style={{ left: -20 }}
+              className="position-relative text-danger"
+            >
+              {errors.password}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-4">
+            <Form.Label className="fw">Confirm Password</Form.Label>
+            <Form.Control
+              type={showCPassword ? "text" : "password"}
+              name="confirmPass"
+              placeholder="Enter password again"
+              value={registrationData.confirmPass}
+              onChange={handleRChange}
+              className="bg-dark text-white pe-5"
+            />
+            <span
+              className="position-relative"
+              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
+              onClick={() => setShowCPassword(!showCPassword)}
+            >
+              {showCPassword ? (
+                <IoIosEyeOff size={20} />
+              ) : (
+                <IoIosEye size={20} />
+              )}
+            </span>
+            <Form.Text
+              style={{ left: -20 }}
+              className="position-relative text-danger"
+            >
+              {errors.confirmPass}
+            </Form.Text>
+          </Form.Group>
+          <div className="d-flex justify-content-between">
+            <Button
+              className="fw"
+              variant="success"
+              type="submit"
+              onClick={handleRSubmit}
+            >
+              REGISTER USER
+            </Button>{" "}
+            <Button
+              className="fw"
+              variant="secondary"
+              onClick={() => handleReset()}
+            >
+              RESET
+            </Button>
           </div>
-          <br />
-          <form onSubmit={handleLoginSubmit}>
-            <div className={"email-custom input"}>
-              <input
-                className={"inputBox"}
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={registrationData.email}
-                onChange={handleRegistrationChange}
-                required
-              />
-            </div>
-            <div className={"email-custom input"}>
-              <input
-                className={"inputBox"}
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={registrationData.username}
-                onChange={handleRegistrationChange}
-                required
-              />
-            </div>
-            <div className={"email-custom input"}>
-              <input
-                className={"inputBox"}
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={registrationData.password}
-                onChange={handleRegistrationChange}
-                required
-              />
-            </div>
-            <div className={"log-in-btn"}>
-              <button type="submit " className={"inputButton"}>
-                Registration
-              </button>
-            </div>
-          </form>
-        </div>
+        </Form>
       </div>
+      <ToastContainer />
     </>
   );
 };

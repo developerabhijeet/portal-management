@@ -7,8 +7,6 @@ interface IUser extends Document {
   password: string;
   tasks: any;
   role: "user" | "admin";
-  confirmPass: string;
-  currentPass: string;
 }
 const userSchema = new mongoose.Schema<IUser>(
   {
@@ -28,13 +26,7 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
-    confirmPass: {
-      type: String,
-      required: true,
-    },
-    currentPass: {
-      type: String,
-    },
+   
     role: {
       type: String,
       enum: ["user", "admin"],

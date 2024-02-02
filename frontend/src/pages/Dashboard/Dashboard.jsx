@@ -1,6 +1,6 @@
 import React from "react";
 import "../index.css";
-import Header from "../../components/Attendance/Header/Header";
+import Header from "../../components/Header/Header";
 
 const Dashboard = () => {
   return (

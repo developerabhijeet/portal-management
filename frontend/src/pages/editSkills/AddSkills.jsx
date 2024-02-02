@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Header/Header";
+import Header from "../../components/Header/Header";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";

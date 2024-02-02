@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
-const Login = (props) => {
+import { ToastContainer, toast } from "react-toastify";
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -23,22 +24,26 @@ const Login = (props) => {
     try {
       const response = await axios.post(`${BaseURL}/auth/login`, loginData);
       if (response.data) {
+        console.log("RES:",response.data);
         localStorage.setItem("jwtToken", response.data.token);
         localStorage.setItem("role", response.data.user.role);
-        localStorage.setItem("username", response.data.user.username);
+        localStorage.setItem("firstName", response.data.user.firstName);
+        localStorage.setItem("lastName", response.data.user.lastName);
         localStorage.setItem("userId", response.data.user._id);
-        localStorage.setItem("email", loginData.email);
         localStorage.setItem("password", loginData.password);
         navigate("/");
       }
     } catch (error) {
-      alert("Invalid credentials", error);
+      toast.error("Incorrect credentials", {
+        position: "top-right",
+        autoClose: 2000,
+      });
     }
     setLoginData({ email: "", password: "" });
   };
   return (
     <>
-      <div className="containerOne bg-dark">
+      <div className="containerOne bg-dark" style={{margin: "9% auto"}}>
         <h3 className="headOne">LOGIN</h3>
         <Form className="m-4">
           <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -64,7 +69,7 @@ const Login = (props) => {
             />
             <span
               className="position-relative"
-              style={{ top: "-32px", right: "-420px", cursor: "pointer" }}
+              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -89,6 +94,7 @@ const Login = (props) => {
           </Button>{" "}
         </Form>
       </div>
+      <ToastContainer />
     </>
   );
 };

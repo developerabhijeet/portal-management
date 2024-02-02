@@ -2,14 +2,15 @@
 import React, { useEffect } from "react";
 import { Navbar, Nav, NavDropdown,  Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../dashboard.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
-  const username = localStorage.getItem("username");
+  const firstName = localStorage.getItem("firstName");
+  const lastName = localStorage.getItem("lastName");
+
   const role = localStorage.getItem("role");
   useEffect(() => {
     if (!localToken) {
@@ -83,7 +84,7 @@ const Header = () => {
               Holidays
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title={username} menuVariant="dark" className="mb-2" align="end">
+          <NavDropdown title={`${firstName}${lastName}`} menuVariant="dark" className="mb-2" align="end">
             <NavDropdown.Item onClick={() => navigate("/change_status")}>
               Change Status
             </NavDropdown.Item>

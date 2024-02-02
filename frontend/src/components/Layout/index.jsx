@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Layout.css";
-import Header from "../Attendance/Header/Header";
+import Header from "../Header/Header";
 export default function Layout({ children }) {
   const navigate = useNavigate();
   useEffect(() => {
