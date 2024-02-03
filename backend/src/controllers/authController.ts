@@ -15,18 +15,18 @@ const authController = {
   async login(req: Request<RequestType>, res: any) {
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email: email, password : password });
 
       if (!user) {
         return res.status(404).json({ errorMessage: "User not found" });
       }
-      const isPasswordChecked = await bcrypt.compare(password, user.password);
+      // const isPasswordChecked = await bcrypt.compare(password, user.password);
 
-      if (!isPasswordChecked) {
-        return res
-          .status(404)
-          .json({ errorMessage: "Password is not matched" });
-      }
+      // if (!isPasswordChecked) {
+      //   return res
+      //     .status(404)
+      //     .json({ errorMessage: "Password is not matched" });
+      // }
       const token = jwt.sign(
         {
           email: user.email,

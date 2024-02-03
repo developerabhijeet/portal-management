@@ -41,12 +41,9 @@ const Signup = () => {
     }));
   };
 
+  const {email, firstName, lastName, password, confirmPass} = registrationData
   const validationCheck = () => {
-    const email = registrationData.email;
-    const firstName = registrationData.firstName;
-    const lastName = registrationData.lastName;
-    const password = registrationData.password;
-    const confirmPass = registrationData.confirmPass;
+    
     let isValid = true;
     const newErrors = { errors };
 
@@ -94,23 +91,29 @@ const Signup = () => {
       lastName: "",
       password: "",
       confirmPass: "",
-    })
-  }
+    });
+  };
 
   const handleRSubmit = async (e) => {
     e.preventDefault();
     if (validationCheck()) {
       try {
+        const data = {
+          email:email,
+          firstName:firstName,
+          lastName:lastName,
+          password:password,
+        };
         const response = await axios.post(
           `${BaseURL}/users/signup`,
-          registrationData,
+          data,
         );
+        toast.success("User Registered...", {
+          position: "top-right",
+          autoClose: 2000,
+        });
         if (response.data) {
           localStorage.setItem("jwtToken", response.data.token);
-          toast.success("User Registered...", {
-            position: "top-right",
-            autoClose: 2000,
-          });
         }
         setRegistrationData({
           email: "",
