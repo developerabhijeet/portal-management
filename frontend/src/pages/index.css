@@ -190,6 +190,7 @@
   margin-bottom: 0;
   color: #ccc;
   margin-right: 250px;
+  cursor: pointer;
 }
 .available_p_link {
   color: #ccc;

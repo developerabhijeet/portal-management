@@ -17,6 +17,7 @@ import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
 import {EditEmployeesDetails} from "./pages/editEmployeesDetails/EditEmployeesDetails"
 import {AddSkills} from "./pages/editSkills/AddSkills"
 import {EditSkills} from "./pages/editSkills/EditSkills"
+import ChangeStatus from "./pages/ChangeStatus/ChangeStatus";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -65,9 +66,8 @@ function App() {
             <Route path="/add-skills" element={<AddSkills />} />
             <Route path="/edit_skills" element={<EditSkills />} />
             <Route path="/edit_profile" element={<EditEmployeesDetails />} />
-            
             <Route path="*" element={<NotFound />} />
-
+            <Route path="change_status" element={<ChangeStatus />}/>
           </Routes>
         </Router>
       </ThemeProvider>

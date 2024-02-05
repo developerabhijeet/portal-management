@@ -9,6 +9,7 @@ import Layout from "../../components/Layout";
 import "../index.css";
 import StatusDropdown from "./StatusDropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import ChangeStatus from "../ChangeStatus/ChangeStatus";
 const SendMyDailyStatus = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
@@ -94,6 +95,12 @@ const SendMyDailyStatus = () => {
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalShow = () => {
+    setShowModal(!showModal);
+  };
+  
   return (
     <>
       <Layout>
@@ -103,7 +110,7 @@ const SendMyDailyStatus = () => {
           </div>
           <div className="available_container">
             <p className="available_p">
-              <a className="available_p_link" href="employee_availabilities">
+              <a className="available_p_link" onClick={() => handleModalShow()}>
                 Do you want to change your availability?
               </a>
             </p>
@@ -286,6 +293,10 @@ const SendMyDailyStatus = () => {
             </form>
           </div>
         </div>
+        {console.log(showModal, "=======>><><<")}
+        {showModal ? (
+          <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
+        ) : null}
       </Layout>
     </>
   );
