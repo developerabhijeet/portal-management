@@ -5,7 +5,6 @@ import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
 import StatusTable from "./MyStatusTable";
-
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +38,7 @@ export const MyDailyStatus = ({}) => {
     });
   };
   const handleNavigate_Edit = async (item, index) => {
-    navigate("/daily_status_updates_details_edit", {
+    navigate("/send_daily_status", {
       state: {
         item,
         index,

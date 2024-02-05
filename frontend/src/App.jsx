@@ -9,7 +9,6 @@ import NotFound from "./pages/notFound/NotFound";
 import ForgotPassword from "./Auth/ForgotPassword";
 import Signup from "../src/Auth/signup/index";
 import Login from "../src/Auth/Login/index";
-import MyDaily_status_edit from "./pages/MyDailyStatus/MyDailyStatusEdit";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
@@ -17,6 +16,7 @@ import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
 import {EditEmployeesDetails} from "./pages/editEmployeesDetails/EditEmployeesDetails"
 import {AddSkills} from "./pages/editSkills/AddSkills"
 import {EditSkills} from "./pages/editSkills/EditSkills"
+import EditPersonalInfo from "./pages/Edit_personal_info/EditPersonalInfo";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -54,17 +54,13 @@ function App() {
               path="/daily_status_updates_details/"
               element={<MyDailyStatusNew_id />}
             />
-
-            <Route
-              path="/daily_status_updates_details_edit"
-              element={<MyDaily_status_edit />}
-            />
             <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
             <Route path="/my_leave" element={<MyLeave />} />
             <Route path="/holidays" element={<Holidays />} />
             <Route path="/add-skills" element={<AddSkills />} />
             <Route path="/edit_skills" element={<EditSkills />} />
             <Route path="/edit_profile" element={<EditEmployeesDetails />} />
+            <Route path="/edit_personal_info" element={< EditPersonalInfo/>} />
             
             <Route path="*" element={<NotFound />} />
 

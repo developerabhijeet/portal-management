@@ -1,7 +1,8 @@
-export const statusOptions = [
-  { value: "", label: "Select Status" },
-  { value: "Done", label: "Done" },
-  { value: "In Processing", label: "In Processing" },
-  { value: "Testing", label: "Testing" },
-  { value: "Deployed", label: "Deployed" },
+export const statusOption = ["Done", "In Processing", "Testing", "Deployed"];
+export const bloodGroupOptions = ["O+", "O", "A+", "A", "B+", "B", "AB+", "AB"];
+export const maritalStatusOptions = [
+  "Single",
+  "Married",
+  "Widowed",
+  "Separated",
 ];
