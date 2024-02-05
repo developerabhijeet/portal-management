@@ -84,7 +84,7 @@ const Header = () => {
               Holidays
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title={`${firstName}${lastName}`} menuVariant="dark" className="mb-2" align="end">
+          <NavDropdown title={`${firstName} ${lastName}`} menuVariant="dark" className="mb-2" align="end">
             <NavDropdown.Item onClick={() => navigate("/change_status")}>
               Change Status
             </NavDropdown.Item>

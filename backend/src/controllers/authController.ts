@@ -15,18 +15,18 @@ const authController = {
   async login(req: Request<RequestType>, res: any) {
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email: email, password : password });
+      const user = await User.findOne({ email });
 
       if (!user) {
         return res.status(404).json({ errorMessage: "User not found" });
       }
-      // const isPasswordChecked = await bcrypt.compare(password, user.password);
 
-      // if (!isPasswordChecked) {
-      //   return res
-      //     .status(404)
-      //     .json({ errorMessage: "Password is not matched" });
-      // }
+      const isPasswordChecked = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordChecked) {
+        return res.status(401).json({ errorMessage: "Invalid password" });
+      }
+
       const token = jwt.sign(
         {
           email: user.email,
@@ -53,9 +53,11 @@ const authController = {
         token,
       });
     } catch (err) {
+      console.error("Error during login:", err);
       res.status(500).json({ errorMessage: "Internal Server Error" });
     }
   },
+
   async logout(req: any, res: any) {
     try {
       const token = req.cookies.access_token;
