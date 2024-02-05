@@ -19,17 +19,24 @@ const EditProject = () => {
   const [addProjectError, setAddProjectError] = useState("");
   const [editProjectError, setEditProjectError] = useState("");
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${BaseURL}/project/${id}`);
-      setProjects(response.data.projects);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
   useEffect(() => {
-    fetchData();
-  }, []);
+    const timer = setTimeout(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${BaseURL}/project/${id}`);
+          setProjects(response.data.projects);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchData();
+    }, 500);
+
+    return () => {
+      console.log("CLEANUP");
+      clearTimeout(timer);
+    };
+  }, [projectNames, editProject]);
 
   const handleAddProject = async (userId) => {
     if (!projectNames[id] || !projectNames[id].trim()) {
@@ -51,7 +58,6 @@ const EditProject = () => {
           ...prevProjectNames,
           [userId]: "",
         }));
-        fetchData();
       } catch (error) {
         console.error("Error adding project:", error);
       }
@@ -108,7 +114,6 @@ const EditProject = () => {
         console.error("Error updating project:", error);
       }
       handleCloseModal();
-      fetchData();
     }
   };
 
@@ -121,10 +126,18 @@ const EditProject = () => {
         autoClose: 2000,
         hideProgressBar: true,
       });
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${BaseURL}/project/${id}`);
+          setProjects(response.data.projects);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchData();
     } catch (error) {
       console.error("Error deleting project:", error);
     }
-    fetchData();
   };
   const handleCloseModal = () =>
     setEditProject({ ...editProject, showEditModal: false });
