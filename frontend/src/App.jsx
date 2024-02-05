@@ -17,6 +17,9 @@ import ProjectUpdate from "./pages/projectUpdate/projectUpdate";
 import {EditEmployeesDetails} from "./pages/editEmployeesDetails/EditEmployeesDetails"
 import {AddSkills} from "./pages/editSkills/AddSkills"
 import {EditSkills} from "./pages/editSkills/EditSkills"
+import { ApplyLeave } from "./pages/Myleave/ApplyLeave";
+import { DiscussionDesk } from "./pages/discussionDesk/DiscussionDesk";
+import { HelpDesk } from "./pages/helpDesk/HelpDesk";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -65,6 +68,9 @@ function App() {
             <Route path="/add-skills" element={<AddSkills />} />
             <Route path="/edit_skills" element={<EditSkills />} />
             <Route path="/edit_profile" element={<EditEmployeesDetails />} />
+            <Route path="/discussion_desk" element={<DiscussionDesk />} />
+            <Route path="/help_desk" element={<HelpDesk />} />
+            <Route path="/my_leave/:new" element={<ApplyLeave />} />
             
             <Route path="*" element={<NotFound />} />
 

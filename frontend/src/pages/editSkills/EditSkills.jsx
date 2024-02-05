@@ -1,16 +1,16 @@
 import React from "react";
-import Header from "../../components/Header/Header";
 import Table from "react-bootstrap/Table";
-import { MdEdit, MdLogin } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
+import { Link } from "react-router-dom";
+import Layout from "../../components/Layout";
 
 export const EditSkills = () => {
   return (
     <>
-      <Header />
+      <Layout>
       <div className="container mt-4">
         <h3
-          style={{ backgroundColor: "#616161", margin: 0, padding: "5px 16px" }}
+          style={{ backgroundColor: "#515151", margin: 0, padding: "5px 16px" }}
         >
           All Skills
         </h3>
@@ -56,6 +56,7 @@ export const EditSkills = () => {
           </Table>
         </div>
       </div>
+      </Layout>
     </>
   );
 };

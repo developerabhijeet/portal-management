@@ -1,50 +1,33 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header/Header";
+import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
+import { options } from "../../Utils/constant";
 import Select from "react-dropdown-select";
 import { useNavigate } from "react-router-dom";
+import Layout from "../../components/Layout";
 
 export const AddSkills = () => {
   const [beginnerTech, setBeginnerTech] = useState([]);
   const [intermediateTech, setIntermediateTech] = useState([]);
   const [proficientTech, setProficientTech] = useState([]);
   const label = ["Beginner", "Intermediate", "Proficient"];
-  const options = [
-    {
-      value: 1,
-      label: "Python",
-    },
-    {
-      value: 2,
-      label: "ROR",
-    },
-    {
-      value: 3,
-      label: "React Native",
-    },
-  ];
-
+  
   const navigate = useNavigate();
 
   return (
     <>
-      <Header />
+      <Layout>
       <div className="container mt-4">
         <h3
-          style={{ backgroundColor: "#616161", margin: 0, padding: "5px 16px" }}
+          className="px-3 py-2 m-0"
+          style={{ backgroundColor: "#515151"}}
         >
           Add Skills
         </h3>
         <div
-          style={{
-            padding: "16px",
-            backgroundColor: "#212529",
-            margin: 0,
-            alignItems: "center",
-          }}
+        className="p-3 bg-dark m-0"
         >
           <Form>
             {label.map((val) => (
@@ -60,13 +43,10 @@ export const AddSkills = () => {
                   <Select
                     multi
                     searchable
-                    placeholder=""
-                    color="#818181"
-                    style={{
-                      color: "#000",
-                      backgroundColor: "#212121",
-                      border: "1px solid #515151",
-                    }}
+                    style={{colorScheme: "dark"}}
+                    placeholder="--Select Technology--"
+                    color="#717171"
+                    className="text-secondary border border-secondary"
                     options={options}
                     onChange={(values) => {
                       if (val === "Beginner") {
@@ -89,6 +69,7 @@ export const AddSkills = () => {
           </div>
         </div>
       </div>
+      </Layout>
     </>
   );
 };

@@ -1,12 +1,12 @@
 .headOne{
-  background-color: #313131;
-  padding: 10px 20px;
+  background-color: #515151;
+  padding: 8px;
   text-align: center;
   border-radius: 10px;
 }
 .containerOne{
   margin: 3% auto;
-  max-width: 600px;
+  max-width: 570px;
   width: 100%;
   border-radius: 10px;
   border: 1px solid #818181;
