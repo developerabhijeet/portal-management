@@ -1,20 +1,12 @@
 import React from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { Formik, Form } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
 import { Table } from "react-bootstrap";
 import "./InterviewCalls.css";
 import Input from "./Input";
 import SelectInput from "./SelectInput";
 import Header from '../../components/Header/index'
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 const Calls = () => {
   const validationSchema = Yup.object({
@@ -29,16 +21,12 @@ const Calls = () => {
     priority: Yup.string().required(),
   });
 
-  const onSubmit = async (values, actions) => {
-    const formattedTime = moment(values.time).format("DD-MMM-YYYY hh:mm A");
-    values.time = formattedTime;
+  const onSubmit = async (actions) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
-    console.log("formValues", values);
   };
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Header />
         <div className="main-container">
@@ -118,14 +106,14 @@ const Calls = () => {
                 <Input
                   label="Scheduled at from"
                   style="style"
-                  type="datetime-local"
+                  type="date"
                   id="scheduledFrom"
                   name="scheduledFrom"
                 />
                 <Input
                   label="Scheduled at to"
                   style="style"
-                  type="datetime-local"
+                  type="date"
                   id="scheduledTo"
                   name="scheduledTo"
                 />
@@ -161,7 +149,7 @@ const Calls = () => {
             </Formik>
           </div>
         </div>
-      </ThemeProvider>
+ 
     </>
   );
 };

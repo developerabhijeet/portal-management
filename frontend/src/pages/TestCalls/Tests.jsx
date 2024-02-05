@@ -2,7 +2,6 @@ import React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { Formik, Form } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
 import Header from "../../components/Header/index";
 import { Table } from "react-bootstrap";
@@ -30,12 +29,9 @@ const Tests = () => {
     technology: Yup.string().required(),
   });
 
-  const onSubmit = async (values, actions) => {
-    const formattedTime = moment(values.time).format("DD-MMM-YYYY hh:mm A");
-    values.time = formattedTime;
+  const onSubmit = async (actions) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
-    console.log("testValues", values);
   };
 
   return (
@@ -126,14 +122,14 @@ const Tests = () => {
                 <Input
                   label="Deadline from"
                   style="style"
-                  type="datetime-local"
+                  type="date"
                   id="timeFrom"
                   name="DeadlineFrom"
                 />
                 <Input
                   label="Deadline to"
                   style="style"
-                  type="datetime-local"
+                  type="date"
                   id="timeTo"
                   name="DeadlineTo"
                 />

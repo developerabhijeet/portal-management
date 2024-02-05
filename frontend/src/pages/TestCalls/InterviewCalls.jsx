@@ -1,18 +1,10 @@
 import React from "react";
 import { useFormik } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./InterviewCalls.css";
 import { Table, Form } from "react-bootstrap";
 import Header from "../../Header/Header";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 const InterviewCalls = () => {
   const countryValidationSchema = Yup.object({
@@ -55,15 +47,12 @@ const InterviewCalls = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const formattedTime = moment(values.time).format("DD-MMM-YYYY hh:mm A");
-      values.time = formattedTime;
       console.log("formValues", values);
     },
   });
 
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Header />
         <div className="main-container">
@@ -225,7 +214,6 @@ const InterviewCalls = () => {
             </Form>
           </div>
         </div>
-      </ThemeProvider>
     </>
   );
 };
