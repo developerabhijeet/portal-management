@@ -33,7 +33,6 @@ const EditProject = () => {
     }, 500);
 
     return () => {
-      console.log("CLEANUP");
       clearTimeout(timer);
     };
   }, [projectNames, editProject]);

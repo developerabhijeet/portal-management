@@ -45,7 +45,6 @@ const InterviewCalls = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("formValues", values);
     },
   });
 

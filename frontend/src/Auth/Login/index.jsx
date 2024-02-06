@@ -24,7 +24,6 @@ const Login = () => {
     try {
       const response = await axios.post(`${BaseURL}/auth/login`, loginData);
       if (response.data) {
-        console.log("RES:", response.data);
         localStorage.setItem("jwtToken", response.data.token);
         localStorage.setItem("role", response.data.user.role);
         localStorage.setItem("firstName", response.data.user.firstName);

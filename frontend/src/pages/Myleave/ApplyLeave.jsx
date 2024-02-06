@@ -64,7 +64,6 @@ export const ApplyLeave = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validationCheck()) {
-      console.log("DATA APPLY LEAVE: ", data, mailTo);
     }
   };
   return (

@@ -100,7 +100,7 @@ export const EditEmployeesDetails = () => {
         currentPass: "",
       }));
     } catch (error) {
-      console.log("ERR:", error);
+      console.error("ERR:", error);
     }
   };
 
@@ -118,7 +118,6 @@ export const EditEmployeesDetails = () => {
           password: password ? password : currentPass,
         };
         try {
-          console.log("DD:", data);
           await axios.put(`${BaseURL}/users/UpdateUserDetails/${id}`, data);
           localStorage.setItem("password", data.password);
           localStorage.setItem("lastName", data.lastName);
