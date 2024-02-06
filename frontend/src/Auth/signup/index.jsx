@@ -188,7 +188,7 @@ const Signup = () => {
             />
             <span
               className="position-relative"
-              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
+              style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
@@ -204,7 +204,7 @@ const Signup = () => {
               {errors.password}
             </Form.Text>
           </Form.Group>
-          <Form.Group className="mb-4">
+          <Form.Group className={errors.confirmPass?"mb-4":"mb-2"}>
             <Form.Label className="fw">Confirm Password</Form.Label>
             <Form.Control
               type={showCPassword ? "text" : "password"}
@@ -216,7 +216,7 @@ const Signup = () => {
             />
             <span
               className="position-relative"
-              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
+              style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
               onClick={() => setShowCPassword(!showCPassword)}
             >
               {showCPassword ? (
@@ -235,11 +235,11 @@ const Signup = () => {
           <div className="d-flex justify-content-between">
             <Button
               className="fw"
-              variant="success"
+              variant="outline-success"
               type="submit"
               onClick={handleRSubmit}
             >
-              REGISTER USER
+              REGISTER
             </Button>{" "}
             <Button
               className="fw"

@@ -105,7 +105,6 @@ const userController = {
 
       if (updateUserDetails) {
         res.status(200).json(updateUserDetails);
-        console.log("PUT USER:",updateUserDetails);
         
       } else {
         res.status(404).json({ error: "User not found." });

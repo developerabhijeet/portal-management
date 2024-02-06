@@ -170,7 +170,7 @@ export const ApplyLeave = () => {
               </Button>{" "}
               <Button
                 className="fw"
-                variant="primary"
+                variant="outline-primary"
                 onClick={() => navigate("/my_leave")}
               >
                 BACK

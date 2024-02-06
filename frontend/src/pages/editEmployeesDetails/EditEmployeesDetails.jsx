@@ -11,6 +11,7 @@ import Layout from "../../components/Layout";
 
 export const EditEmployeesDetails = () => {
   const navigate = useNavigate();
+  const [fetchData, setFetchData] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [showCRPassword, setShowCRPassword] = useState(false);
@@ -101,13 +102,13 @@ export const EditEmployeesDetails = () => {
         currentPass: "",
       }));
     } catch (error) {
-      console.log("ERR:", error);
+      console.log("ERR While getting Users:", error);
     }
   };
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [fetchData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,16 +120,16 @@ export const EditEmployeesDetails = () => {
           password: password ? password : currentPass,
         };
         try {
-          console.log("DD:", data);
           await axios.put(`${BaseURL}/users/UpdateUserDetails/${id}`, data);
           localStorage.setItem("password", data.password);
           localStorage.setItem("lastName", data.lastName);
           localStorage.setItem("firstName", data.firstName);
-
+          
           toast.success("Employee Details Updated Successfully...", {
             position: "top-right",
             autoClose: 2000,
           });
+          setFetchData(!fetchData)
         } catch (error) {
           toast.error("Something went wrong! please login again", {
             position: "top-right",
@@ -287,7 +288,7 @@ export const EditEmployeesDetails = () => {
               <div className="d-flex justify-content-between">
                 <Button
                   className="fw"
-                  variant="success"
+                  variant="outline-success"
                   type="submit"
                   onClick={(e) => handleSubmit(e)}
                 >
@@ -295,7 +296,7 @@ export const EditEmployeesDetails = () => {
                 </Button>{" "}
                 <Button
                   className="fw"
-                  variant="primary"
+                  variant="outline-primary"
                   onClick={() => navigate("/")}
                 >
                   BACK
