@@ -124,7 +124,7 @@ export const ApplyLeave = () => {
               </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="fw">Days</Form.Label>
+              <Form.Label className="fw">Day</Form.Label>
               <Form.Control
                 disabled
                 name="days"

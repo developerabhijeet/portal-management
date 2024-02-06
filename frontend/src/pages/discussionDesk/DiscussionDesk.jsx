@@ -13,8 +13,8 @@ export const DiscussionDesk = () => {
             <Table hover variant="dark">
               <thead>
                 <tr>
-                  <th>Topic</th>
-                  <th>Detail</th>
+                  <th>Topics</th>
+                  <th>Details</th>
                   <th>DueDate</th>
                   <th>TalkWith</th>
                   <th>Status</th>
