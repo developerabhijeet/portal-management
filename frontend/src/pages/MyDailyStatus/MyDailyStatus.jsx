@@ -9,6 +9,7 @@ export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
