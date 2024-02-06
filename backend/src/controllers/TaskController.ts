@@ -48,7 +48,7 @@ const taskController = {
       const totalPages = Math.ceil(totalTasks / +perPage);
 
       const userTasks = await Task.find(query)
-        .populate({ path: "user", select: "username -_id" })
+        .populate({ path: "user", select: "firstName lastName  -_id" })
         .sort(sortOptions)
         .skip((+page - 1) * +perPage)
         .limit(+perPage);

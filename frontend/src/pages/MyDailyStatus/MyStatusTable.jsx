@@ -19,8 +19,9 @@ const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
           ? data.map((item, index) => {
               return (
                 <tr key={index}>
-
-                  <td>{item.user.username}</td>
+                  <td>
+                    {item.user.firstName} {item.user.lastName}
+                  </td>
                   <td>{item.dueDate}</td>
                   <td></td>
                   <td></td>
