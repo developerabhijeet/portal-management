@@ -1,9 +1,9 @@
-
 import React, { useEffect } from "react";
-import { Navbar, Nav, NavDropdown,  Button } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logo } from "../../assets/assets";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Header = () => {
     >
       <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
         <img
-          src={require("./images/logo.png")}
+          src={logo}
           height={45}
           className="me-3"
           alt="img"
@@ -64,7 +64,7 @@ const Header = () => {
             </NavDropdown.Item>
           </NavDropdown>
           <NavDropdown title="Project" menuVariant="dark">
-            <NavDropdown.Item onClick={() => navigate("/project-updates")}>
+            <NavDropdown.Item onClick={() => navigate("/projectUpdate")}>
               Project Updates
             </NavDropdown.Item>
           </NavDropdown>
@@ -84,7 +84,12 @@ const Header = () => {
               Holidays
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title={`${firstName} ${lastName}`} menuVariant="dark" className="mb-2" align="end">
+          <NavDropdown
+            title={`${firstName} ${lastName}`}
+            menuVariant="dark"
+            className="mb-2"
+            align="end"
+          >
             <NavDropdown.Item onClick={() => navigate("/change_status")}>
               Change Status
             </NavDropdown.Item>

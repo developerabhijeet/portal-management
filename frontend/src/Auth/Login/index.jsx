@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const response = await axios.post(`${BaseURL}/auth/login`, loginData);
       if (response.data) {
-        console.log("RES:",response.data);
+        console.log("RES:", response.data);
         localStorage.setItem("jwtToken", response.data.token);
         localStorage.setItem("role", response.data.user.role);
         localStorage.setItem("firstName", response.data.user.firstName);
@@ -43,7 +43,7 @@ const Login = () => {
   };
   return (
     <>
-      <div className="containerOne bg-dark" style={{margin: "9% auto"}}>
+      <div className="containerOne bg-dark" style={{ margin: "9% auto" }}>
         <h3 className="headOne">LOGIN</h3>
         <Form className="m-4">
           <Form.Group className="mb-3" controlId="formGroupEmail">

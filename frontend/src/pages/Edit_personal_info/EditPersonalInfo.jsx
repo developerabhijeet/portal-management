@@ -8,7 +8,6 @@ import { BaseURL } from "../../Utils/utils";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const EditPersonalInfo = () => {
   const [editProfileData, seEditProfileData] = useState("");
   const [err, setErr] = useState({});

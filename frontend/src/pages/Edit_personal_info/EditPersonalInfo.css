@@ -1,117 +1,123 @@
-.container-edit{
-    flex :1;
-    border: 1px solid rgb(88, 138, 133);
-    margin-top: 20px;
-    width: 600px;
-    border-radius: 5px;
-    margin-left: 350px;
-    background-color: rgb(27, 26, 26);
+.container-edit {
+  flex: 1;
+  border: 1px solid rgb(88, 138, 133);
+  margin-top: 20px;
+  width: 600px;
+  border-radius: 5px;
+  margin-left: 350px;
+  background-color: rgb(27, 26, 26);
 }
-.Header { 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgb(34, 79, 100);
-    height: 70px;
-    background-color: rgb(142, 194, 189);
+.Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(34, 79, 100);
+  height: 70px;
+  background-color: rgb(142, 194, 189);
 }
-.formBox{
-    display: flex;
-    margin: 20px;
-    margin-left: 20px;
-}
-.inputBox{
-    margin-left: 20px;
-}
-.label{
-    font-weight: bold;
-    font-size: 18px;
-    color: rgb(201, 201, 202);
-    letter-spacing: 0.7px;
-}
-input[type=text],input[type=date],input[type=email]{
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    background-color: #050706;
-    color: antiquewhite;
-  }
-input[type=text]:focus,input[type=date]:focus,input[type=email]:focus, .textarea-box:focus,input[type=time]:focus{
-    background-color: rgb(11, 12, 12);
-    color: aliceblue;
-}
-#select{
-    background-color: #050706;
-    width: 250px;
-    color: rgb(238, 240, 241);
-    height: 50px;
-   margin-top: 8px;
-}
-.select-box{
-    margin-left: 20px;
-    margin-right: -90px;
-}
-.bodDate{
-    max-width: 280px;
-}
-.textarea-box{
-    background-color: #050706;
-    color: white;
-}
-.textarea{
+.formBox {
+  display: flex;
+  margin: 20px;
   margin-left: 20px;
 }
-.update-btn{
-    width: 150px;
-    margin: 10px;
-    border: none;
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 25px;
+.inputBox {
+  margin-left: 20px;
+}
+.label {
+  font-weight: bold;
+  font-size: 18px;
+  color: rgb(201, 201, 202);
+  letter-spacing: 0.7px;
+}
+input[type="text"],
+input[type="date"],
+input[type="email"] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  background-color: #050706;
+  color: antiquewhite;
+}
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+.textarea-box:focus,
+input[type="time"]:focus {
+  background-color: rgb(11, 12, 12);
+  color: aliceblue;
+}
+#select {
+  background-color: #050706;
+  width: 250px;
+  color: rgb(238, 240, 241);
+  height: 50px;
+  margin-top: 8px;
+}
+.select-box {
+  margin-left: 20px;
+  margin-right: -90px;
+}
+.bodDate {
+  max-width: 280px;
+}
+.textarea-box {
+  background-color: #050706;
+  color: white;
+}
+.textarea {
+  margin-left: 20px;
+}
+.update-btn {
+  width: 150px;
+  margin: 10px;
+  border: none;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 25px;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+  filter: invert(1);
 }
-.inputGroup{
-    display: flex;
+.inputGroup {
+  display: flex;
 }
-.errorText{
-    color: red;
-    margin-left: 10px;
+.errorText {
+  color: red;
+  margin-left: 10px;
 }
-input:-webkit-autofill, input:-webkit-autofill:focus {
-    box-shadow: 0 0 0 1000px rgb(5, 5, 5) inset;
-    -webkit-text-fill-color: #fdfbfb;
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px rgb(5, 5, 5) inset;
+  -webkit-text-fill-color: #fdfbfb;
+}
 @media only screen and (max-width: 1000px) {
-    .container-edit{
-        margin-left: 200px;   
-    }
-    .inputGroup{
-        display: block;
-    }
-    #select{
-        width: 530px;
-    }
+  .container-edit {
+    margin-left: 200px;
+  }
+  .inputGroup {
+    display: block;
+  }
+  #select {
+    width: 530px;
+  }
 }
 
 @media only screen and (max-width: 900px) {
-    .container-edit{
-        margin-left: 100px;   
-    }
-   
+  .container-edit {
+    margin-left: 100px;
   }
-  @media only screen and (max-width: 720px) {
-    .container-edit{
-        margin-left: 0px; 
-    }
+}
+@media only screen and (max-width: 720px) {
+  .container-edit {
+    margin-left: 0px;
   }
-  @media only screen and (max-width: 500px) {
-    .container-edit{
-        margin-left: 0px; 
-        width: 450px;   
-    }
-    #select{
-        width: 340px;
-     }
+}
+@media only screen and (max-width: 500px) {
+  .container-edit {
+    margin-left: 0px;
+    width: 450px;
   }
+  #select {
+    width: 340px;
+  }
+}

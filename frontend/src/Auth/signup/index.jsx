@@ -243,7 +243,7 @@ const Signup = () => {
             </Button>{" "}
             <Button
               className="fw"
-              variant="secondary"
+              variant="outline-secondary"
               onClick={() => handleReset()}
             >
               RESET

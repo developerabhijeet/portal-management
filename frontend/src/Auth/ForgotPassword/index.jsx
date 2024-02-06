@@ -3,9 +3,9 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className="containerOne bg-dark" style={{margin: "9% auto"}}>
+    <div className="containerOne bg-dark" style={{ margin: "9% auto" }}>
       <h3 className="headOne">FORGOT PASSWORD</h3>
       <Form className="m-4">
         <Form.Group className="mb-4" controlId="formGroupEmail">
