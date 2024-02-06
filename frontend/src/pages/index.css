@@ -13,7 +13,7 @@
 .nav-item {
   color: white;
 }
-.email-box{
+.email-box {
   display: flex;
   justify-content: space-between;
 }
@@ -149,9 +149,10 @@
   margin: 0 auto 50px;
   max-width: 700px;
   padding-top: 20px;
+  display: block !important;
 }
-input[type="time"]::-webkit-calendar-picker-indicator{
-  filter: invert(1) ;
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 .panel-heading {
   background-color: rgb(142, 194, 189);
@@ -207,7 +208,7 @@ input[type="time"]::-webkit-calendar-picker-indicator{
   width: 100%;
   border-radius: 5px solid rgb(203, 204, 204);
 }
-#select_option{
+#select_option {
   background-color: #050706;
   width: 210px;
   color: rgb(238, 240, 241);
@@ -293,11 +294,11 @@ input[type="time"]::-webkit-calendar-picker-indicator{
   background-color: #000;
   color: #ccc;
 }
-.errorText{
-color: red;
+.errorText {
+  color: red;
 }
-.main-container{
-  flex :1;
+.main-container {
+  flex: 1;
   border: 1px solid rgb(22, 34, 33);
   position: relative;
   top: 20px;
@@ -316,47 +317,49 @@ color: red;
 .task_status_box {
   display: flex;
 }
-@media screen  and  ((max-width: 724px)){
-  .emailContrainer ,.email-box{
+@media screen and ((max-width: 724px)) {
+  .emailContrainer,
+  .email-box {
     display: block;
   }
-  #myfilled-name, #select_option{
+  #myfilled-name,
+  #select_option {
     width: 100%;
   }
-  .mail{
+  .mail {
     margin-right: 20px;
   }
-  .working_hours{
+  .working_hours {
     margin-left: -1px;
     width: 100%;
     padding-right: 0px;
   }
   .custom-datepicker {
     height: 38px;
-    width: 660px 
-   }
-  .addtask{
-   margin-top: 0px;
+    width: 660px;
+  }
+  .addtask {
+    margin-top: 0px;
   }
   .task_status_box {
     display: block;
   }
 }
-@media screen  and  ((max-width: 624px)){
+@media screen and ((max-width: 624px)) {
   .custom-datepicker {
-    width: 560px 
-   }
+    width: 560px;
+  }
 }
-@media screen  and  ((max-width: 524px)){
+@media screen and ((max-width: 524px)) {
   .custom-datepicker {
-    width: 460px 
-   }
-   .save_send_btn_container{
+    width: 460px;
+  }
+  .save_send_btn_container {
     display: block;
     margin-top: 10px;
-   }
-   .daily-status-btnsend {
+  }
+  .daily-status-btnsend {
     margin-top: 10px;
     margin-left: -230px;
-   }
+  }
 }
