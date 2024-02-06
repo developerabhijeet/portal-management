@@ -1,4 +1,5 @@
 # Task-Mangment-App
+
 # User Authentication REST API
 
 This project implements a User Authentication REST API with the ability to sign up and log in users. It provides the necessary routes, controllers, services, and tests to facilitate user registration and authentication.
@@ -26,19 +27,21 @@ Before you begin, ensure you have the following installed:
 
 ### Installation
 
+### Install dependencies
 
-### Install dependencies 
-   npm install
+npm install
 
-### usage 
-   npm run start
+### usage
 
-### testing 
+npm run start
+
+### testing
+
     npm test
 
-### env 
-    create env file put this varables 
+### env
+
+    create env file put this varables
     MONGODB_URL= ;
     JWT_SECRET_KEY= TASK_MANAGMENT_TOKEN
     PORT= 4500;
-

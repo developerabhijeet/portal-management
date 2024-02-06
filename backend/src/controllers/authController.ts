@@ -15,7 +15,7 @@ const authController = {
   async login(req: Request<RequestType>, res: any) {
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email });
 
       if (!user) {
         return res.status(404).json({ errorMessage: "User not found" });
@@ -24,13 +24,16 @@ const authController = {
       const isPasswordChecked = await bcrypt.compare(password, user.password);
 
       if (!isPasswordChecked) {
-        return res
-          .status(404)
-          .json({ errorMessage: "Password is not matched" });
+        return res.status(401).json({ errorMessage: "Invalid password" });
       }
 
       const token = jwt.sign(
-        { email: user.email, username: user.username, _id: user._id },
+        {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          _id: user._id,
+        },
         process.env.jwtSecret,
         { expiresIn: "5h" }
       );
@@ -42,17 +45,20 @@ const authController = {
         message: "Login successful",
         user: {
           _id: user._id,
-          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           role: user.role,
         },
         token,
       });
     } catch (err) {
+      console.error("Error during login:", err);
       res.status(500).json({ errorMessage: "Internal Server Error" });
     }
   },
-  async logout(req:any, res:any) {
+
+  async logout(req: any, res: any) {
     try {
       const token = req.cookies.access_token;
 
@@ -82,6 +88,19 @@ const authController = {
       const emails = users.map((user) => user.email);
 
       res.status(200).json({ emails });
+    } catch (error) {
+      alert(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  async getAllUser(req, res) {
+    try {
+      const users = await User.find();
+      if (!users || users.length === 0) {
+        return res.status(404).json({ error: "No users found" });
+      }
+      res.status(200).json({ users });
     } catch (error) {
       alert(error);
       res.status(500).json({ error: "Internal server error" });

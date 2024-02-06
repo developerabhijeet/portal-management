@@ -4,6 +4,8 @@ import "dotenv/config";
 import taskRoutes from "./routes/TaskRoutes";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import projectRoutes from "./routes/projectUpdateRoutes";
+import persanalInfoRoutes from "./routes/personalInfoEditRoutes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
@@ -24,6 +26,9 @@ app.use(cookieParser());
 app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
+app.use("/project", projectRoutes);
+app.use("/project", projectRoutes);
+app.use("/editPesonalInfo", persanalInfoRoutes);
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
