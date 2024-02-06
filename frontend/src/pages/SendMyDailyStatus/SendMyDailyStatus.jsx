@@ -10,7 +10,9 @@ import "../index.css";
 import StatusDropdown from "./StatusDropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
+
 const SendMyDailyStatus = () => {
+  const [showModal, setShowModal] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [email, setEmail] = useState([]);
   const [projectUpdate, setProjectUpdate] = useState([]);
@@ -68,6 +70,7 @@ const SendMyDailyStatus = () => {
     };
     projectUpdate();
   }, []);
+
   const handleStatusSubmit = async (e, completed) => {
     e.preventDefault();
 
@@ -94,8 +97,6 @@ const SendMyDailyStatus = () => {
       alert(error);
     }
   };
-
-  const [showModal, setShowModal] = useState(false);
 
   const handleModalShow = () => {
     setShowModal(!showModal);
@@ -293,7 +294,6 @@ const SendMyDailyStatus = () => {
             </form>
           </div>
         </div>
-        {console.log(showModal, "=======>><><<")}
         {showModal ? (
           <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
         ) : null}
