@@ -6,9 +6,33 @@ export const maritalStatusOptions = [
   "Widowed",
   "Separated",
 ];
-export const selectTech = ["Django", "React", "Angular"];
+export const selectTech = [
+  "Ror",
+  "Django",
+  "React",
+  "Angular",
+  "Node",
+  "Angular+Node",
+  "React+Node",
+  "Flask",
+  "Vuejs",
+  "Qa Manual",
+  "Qa Auto",
+  "Javascript",
+];
+
+export const selectStatus = [
+  "Unassigned",
+  "Assigned",
+  "Completed",
+  "Cracked",
+  "Rescheduled",
+  "Not Done",
+  "Canceled",
+  "Not Clear"
+]
 export const selectPriority = ["High", "Medium", "Low"];
-export const selectMode = ["online", "Offline"];
+export const selectMode = ["Online", "Offline"];
 export const leaveType = [
   "Paid Leave",
   "Comp Off",

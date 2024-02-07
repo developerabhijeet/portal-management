@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import { useField } from "formik";
-
+import style from "./InterviewCalls.module.css";
 const SelectInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
@@ -16,7 +16,7 @@ const SelectInput = ({ label, ...props }) => {
           {props.children}
         </Form.Select>
         {meta.touched && meta.error ? (
-          <p className="error">{meta.error}</p>
+          <p className={style.error}>{meta.error}</p>
         ) : null}
       </Form.Group>
     </>

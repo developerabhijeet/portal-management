@@ -3,21 +3,21 @@
   padding: 0;
 }
 
-.create-heading {
+.createheading {
   background-color: #454545;
   padding: 8px 10px;
   margin: 0;
   border-radius: 3px 3px 0 0;
 }
 
-.interview-heading {
+.interviewHeading {
   background-color: #454545;
   padding: 8px 10px;
   margin-bottom: 8px;
   border-radius: 3px;
 }
 
-.main-container {
+.mainContainer {
   padding-top: 20px;
   display: flex;
   flex-direction: row;
@@ -68,7 +68,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 @media screen and (max-width: 1000px) {
-  .main-container {
+  .mainContainer {
     display: block;
   }
 }
