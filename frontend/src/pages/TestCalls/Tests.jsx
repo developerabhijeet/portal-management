@@ -2,12 +2,17 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Table } from "react-bootstrap";
-import "./InterviewCalls.css";
+import style from "./InterviewCalls.module.css";
 import Input from "./Input";
 import SelectInput from "./SelectInput";
 import Layout from "../../components/Layout";
 import OptionsSelect from "../../components/selectOption/selectOption";
-import { selectMode, selectPriority, selectTech } from "../../Utils/constant";
+import {
+  selectMode,
+  selectPriority,
+  selectStatus,
+  selectTech,
+} from "../../Utils/constant";
 const Tests = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required(),
@@ -27,12 +32,16 @@ const Tests = () => {
     actions.resetForm();
   };
 
+  const handleReset = (values) => {
+    values = {};
+  };
+
   return (
     <>
       <Layout>
-        <div className="main-container">
+        <div className={style.mainContainer}>
           <div className="container" style={{ flex: 2 }}>
-            <h5 className="create-heading">Test Tasks</h5>
+            <h5 className={style.createheading}>Test Tasks</h5>
             <Table striped hover variant="dark">
               <thead>
                 <tr>
@@ -50,7 +59,7 @@ const Tests = () => {
               </tbody>
             </Table>
           </div>
-          <div className="form">
+          <div className={style.form}>
             <Formik
               initialValues={{
                 name: "",
@@ -66,58 +75,61 @@ const Tests = () => {
               }}
               validationSchema={validationSchema}
               onSubmit={onSubmit}
+              onReset={handleReset}
             >
               <Form>
                 <Input
                   label="By Client name"
-                  style="style"
+                  style={style}
                   type="text"
                   id="name"
                   name="name"
                 />
-                <Input
+                <SelectInput
                   label="By developer profile"
-                  style="style"
+                  style={style}
                   type="text"
                   name="DeveloperProfile"
                   id="DeveloperProfile"
                 />
-                <Input
+                <SelectInput
                   label="Assigned to"
-                  style="style"
+                  style={style}
                   type="text"
                   name="assigned"
                   id="assigned"
                 />
                 <Input
                   label="Round Contains"
-                  style="style"
+                  style={style}
                   min={1}
                   max={10}
                   type="number"
                   id="round"
                   name="round"
                 />
-                <Input
+                <SelectInput
                   label="Status"
-                  style="style"
+                  style={style}
                   type="text"
                   name="status"
                   id="status"
-                />
-                <SelectInput label="Mode" id="mode" name="mode" style="style">
+                >
+                  <OptionsSelect options={selectStatus} />
+                </SelectInput>
+                <SelectInput label="Mode" id="mode" name="mode" style={style}>
                   <OptionsSelect options={selectMode} />
                 </SelectInput>
                 <Input
                   label="Deadline from"
-                  style="style"
+                  style={style}
                   type="date"
                   id="timeFrom"
                   name="DeadlineFrom"
                 />
-                <SelectInput
+                <Input
                   label="Deadline to"
-                  style="style"
+                  style={style}
                   type="date"
                   id="timeTo"
                   name="DeadlineTo"
@@ -126,7 +138,7 @@ const Tests = () => {
                   label="Priority"
                   id="priority"
                   name="priority"
-                  style="style"
+                  style={style}
                 >
                   <OptionsSelect options={selectPriority} />
                 </SelectInput>
@@ -134,14 +146,14 @@ const Tests = () => {
                   label="Primary technology"
                   id="technology"
                   name="technology"
-                  style="style"
+                  style={style}
                 >
                   <OptionsSelect options={selectTech} />
                 </SelectInput>
-                <button type="submit" className="submitbtn">
+                <button type="submit" className={style.submitbtn}>
                   Search
                 </button>
-                <button type="button" className="searchbtn">
+                <button type="reset" className={style.searchbtn}>
                   Clear Search
                 </button>
               </Form>

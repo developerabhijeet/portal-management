@@ -4,7 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 const ChangeStatus = ({ showModal, setShowModal }) => {
   const handleClose = () => setShowModal(false);
   const [moreOptions, setMoreOptions] = useState(false);
-  
+
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
