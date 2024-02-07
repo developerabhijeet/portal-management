@@ -23,6 +23,7 @@ import ProjectUpdate from "./pages/ProjectUpdate/ProjectUpdate";
 import EditProject from "./pages/ProjectUpdate/EditProject";
 import Calls from "./pages/TestCalls/Calls";
 import Tests from "./pages/TestCalls/Tests";
+import ResetPassword from "./Auth/resetPassword";
 
 const darkTheme = createTheme({
   palette: {
@@ -75,6 +76,10 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="Calls" element={<Calls />} />
             <Route path="Tests" element={<Tests />} />
+            <Route
+              path="/forgotPass/reset-password/:id/:token"
+              element={<ResetPassword />}
+            />
           </Routes>
         </Router>
       </ThemeProvider>
