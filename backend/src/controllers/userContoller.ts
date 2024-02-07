@@ -8,10 +8,10 @@ type RequestType = {
   password: string;
 };
 // Common function for bcrypt password hashing
-// const hashPassword = (password: any) => {
-//   const salt = bcrypt.genSaltSync(10);
-//   return bcrypt.hashSync(password, salt);
-// };
+const hashPassword = (password: any) => {
+  const salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(password, salt);
+};
 // Common error handler function
 const handleError = (res: Response, errorMessage: string) => {
   res.status(500).json({ error: errorMessage });
@@ -29,13 +29,12 @@ const userController = {
         });
       }
 
-      // const hash = hashPassword(password);
+      const hash = hashPassword(password);
       const newUser = new User({
         email: email,
         firstName: firstName,
         lastName: lastName,
-        password: password,
-        
+        password: hash, // Save hashed password
       });
 
       await newUser.save();
@@ -83,10 +82,15 @@ const userController = {
     }
   },
   async UpdatePersonalDetails(req: any, res: Response) {
-    const { email, password } = req.body;
     try {
       const userId = req.params.id;
-      const updatedDetails = req.body;
+      const updatedDetails: RequestType = req.body;
+
+      // Hash the password if it is present in the update details
+      if (updatedDetails.password) {
+        updatedDetails.password = hashPassword(updatedDetails.password);
+      }
+
       const updateUserDetails = await User.findByIdAndUpdate(
         userId,
         updatedDetails,
@@ -94,18 +98,9 @@ const userController = {
           new: true,
         }
       );
-      // const isPasswordChecked = await bcrypt.compare(password, updateUserDetails.password);
-
-      // if (!isPasswordChecked) {
-      //   return res
-      //     .status(404)
-      //     .json({ errorMessage: "Password is not matched" });
-      // }
-      // const hash = hashPassword(updateUserDetails.password);
 
       if (updateUserDetails) {
         res.status(200).json(updateUserDetails);
-        
       } else {
         res.status(404).json({ error: "User not found." });
       }

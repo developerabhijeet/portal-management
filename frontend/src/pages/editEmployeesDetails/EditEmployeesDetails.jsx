@@ -8,7 +8,6 @@ import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
 import { ToastContainer, toast } from "react-toastify";
 import Layout from "../../components/Layout";
-
 export const EditEmployeesDetails = () => {
   const navigate = useNavigate();
   const [fetchData, setFetchData] = useState(false)
@@ -39,17 +38,17 @@ export const EditEmployeesDetails = () => {
     const newErrors = { errors };
 
     const emailPattern = /^[^\s@]+@(bestpeers|gmail)+.(in|com)$/;
-    if (!email || !email.trim() || !emailPattern.test(email)) {
+    if (!email || !email.trim() || !emailPattern.test(email.trim())) {
       isValid = false;
-      newErrors.email = "Please enter a valid bestpeers email address";
+      newErrors.email = "Please enter a valid email address";
     }
     const namePattern = /^[A-Za-z]+(?: [A-Za-z]+){0,3}$/;
-    if (!firstName.trim() || !namePattern.test(firstName)) {
+    if (!firstName.trim() || !namePattern.test(firstName.trim())) {
       isValid = false;
       newErrors.firstName = "Valid First name is required";
     }
 
-    if (!lastName.trim() || !namePattern.test(lastName)) {
+    if (!lastName.trim() || !namePattern.test(lastName.trim())) {
       isValid = false;
       newErrors.lastName = "Valid Last name is required";
     }
@@ -102,7 +101,7 @@ export const EditEmployeesDetails = () => {
         currentPass: "",
       }));
     } catch (error) {
-      console.log("ERR While getting Users:", error);
+      console.error("ERR While getting Users:", error);
     }
   };
 
@@ -166,7 +165,7 @@ export const EditEmployeesDetails = () => {
                 <Form.Control
                   type="text"
                   name="firstName"
-                  placeholder="Enter First name"
+                  placeholder="Enter first name"
                   value={firstName}
                   onChange={(e) => handleChange(e)}
                   className="text-white bg-dark"
@@ -179,7 +178,7 @@ export const EditEmployeesDetails = () => {
                 <Form.Label className="fw">Last name</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Last name"
+                  placeholder="Enter last name"
                   name="lastName"
                   value={lastName}
                   onChange={(e) => handleChange(e)}

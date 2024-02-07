@@ -7,5 +7,4 @@ router.post("/signup", newUserValidator, userController.signUp);
 router.get("/getUserDetails/:id", userController.getEditpersonalDetails);
 router.put("/UpdateUserDetails/:id", userController.UpdatePersonalDetails);
 
-
 export default router;

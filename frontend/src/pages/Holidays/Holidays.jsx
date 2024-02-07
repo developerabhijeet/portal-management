@@ -30,7 +30,6 @@ const Holidays = () => {
             </Table>
           </div>
         </div>
-
         <div className="container mt-4 bg-dark p-3">
           <h3>Note</h3>
           <ol>

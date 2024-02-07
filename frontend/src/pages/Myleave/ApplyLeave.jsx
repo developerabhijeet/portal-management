@@ -4,7 +4,6 @@ import { Button, Form } from "react-bootstrap";
 import Select from "react-dropdown-select";
 import { emails } from "../../Utils/constant";
 import { useLocation, useNavigate } from "react-router-dom";
-
 export const ApplyLeave = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,7 +64,6 @@ export const ApplyLeave = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validationCheck()) {
-      console.log("DATA APPLY LEAVE: ", data, mailTo);
     }
   };
   return (
@@ -114,7 +112,7 @@ export const ApplyLeave = () => {
             <Form.Group className="mb-3">
               <Form.Label className="fw">To session</Form.Label>
               <Form.Control
-              as="select"
+                as="select"
                 className="bg-dark text-white border-secondary"
                 defaultValue={"session-2"}
                 name="toSession"
@@ -125,7 +123,7 @@ export const ApplyLeave = () => {
               </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="fw">Days</Form.Label>
+              <Form.Label className="fw">Day</Form.Label>
               <Form.Control
                 disabled
                 name="days"
@@ -140,7 +138,7 @@ export const ApplyLeave = () => {
                 searchable
                 placeholder=""
                 color="#717171"
-                style={{colorScheme: "dark"}}
+                style={{ colorScheme: "dark" }}
                 className="text-secondary bg-dark border-secondary"
                 options={emails}
                 onChange={(val) => setMailTo(val)}

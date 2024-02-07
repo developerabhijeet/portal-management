@@ -4,12 +4,11 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import { leaveType } from "../../Utils/constant";
 export const MyLeave = () => {
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
-  const navigate = useNavigate()
-  const leaveType = ["Paid Leave", "Comp Off", "Optional Leave", "Casual Leave"]
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,8 +20,15 @@ export const MyLeave = () => {
             className="my-4 d-flex justify-content-end"
             menuVariant="dark"
           >
-            {leaveType.map((type)=>{
-              return<Dropdown.Item key={type} onClick={()=>navigate("new", {state: type})} >{type}</Dropdown.Item>
+            {leaveType.map((type) => {
+              return (
+                <Dropdown.Item
+                  key={type}
+                  onClick={() => navigate("new", { state: type })}
+                >
+                  {type}
+                </Dropdown.Item>
+              );
             })}
           </DropdownButton>
           <div className="bg-dark p-3 d-flex justify-content-between mb-4">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Await, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { BaseURL } from "../../Utils/utils";
@@ -47,7 +47,7 @@ const Signup = () => {
     let isValid = true;
     const newErrors = { errors };
 
-    const emailPattern = /^[^\s@]+@(bestpeers)+.(in|com)$/;
+    const emailPattern = /^[^\s@]+@(bestpeers|gmail)+.(in|com)$/;
     if (!email || !email.trim() || !emailPattern.test(email)) {
       isValid = false;
       newErrors.email = "Please enter a valid bestpeers email address";
@@ -150,11 +150,11 @@ const Signup = () => {
             <Form.Text className="text-danger">{errors.email}</Form.Text>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label className="fw">firstName</Form.Label>
+            <Form.Label className="fw">First name</Form.Label>
             <Form.Control
               type="text"
               name="firstName"
-              placeholder="Enter firstName"
+              placeholder="Enter first name"
               value={registrationData.firstName}
               onChange={handleRChange}
               className="bg-dark text-white"
@@ -162,11 +162,11 @@ const Signup = () => {
             <Form.Text className="text-danger">{errors.firstName}</Form.Text>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label className="fw">lastName</Form.Label>
+            <Form.Label className="fw">Last name</Form.Label>
             <Form.Control
               type="text"
               name="lastName"
-              placeholder="Enter lastName"
+              placeholder="Enter last name"
               value={registrationData.lastName}
               onChange={handleRChange}
               className="bg-dark text-white"

@@ -1,12 +1,20 @@
-export const statusOptions = [
-  { value: "", label: "Select Status" },
-  { value: "Done", label: "Done" },
-  { value: "In Processing", label: "In Processing" },
-  { value: "Testing", label: "Testing" },
-  { value: "Deployed", label: "Deployed" },
+export const statusOption = ["Done", "In Processing", "Testing", "Deployed"];
+export const bloodGroupOptions = ["O+", "O", "A+", "A", "B+", "B", "AB+", "AB"];
+export const maritalStatusOptions = [
+  "Single",
+  "Married",
+  "Widowed",
+  "Separated",
 ];
-
-
+export const selectTech = ["Django", "React", "Angular"];
+export const selectPriority = ["High", "Medium", "Low"];
+export const selectMode = ["online", "Offline"];
+export const leaveType = [
+  "Paid Leave",
+  "Comp Off",
+  "Optional Leave",
+  "Casual Leave",
+];
 export const options = [
   {
     value: 1,

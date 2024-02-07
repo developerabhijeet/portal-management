@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
-import StatusTable from "./myStatusTable";
+import StatusTable from "./MyStatusTable";
 export const MyDailyStatus = ({}) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
@@ -38,7 +37,7 @@ export const MyDailyStatus = ({}) => {
     });
   };
   const handleNavigate_Edit = async (item, index) => {
-    navigate("/daily_status_updates_details_edit", {
+    navigate("/send_daily_status", {
       state: {
         item,
         index,
