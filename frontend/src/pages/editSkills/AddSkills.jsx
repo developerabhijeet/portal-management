@@ -36,7 +36,7 @@ export const AddSkills = () => {
                       multi
                       searchable
                       style={{ colorScheme: "dark" }}
-                      placeholder="--Select Technology--"
+                      placeholder="Select Technology"
                       color="#717171"
                       className="text-secondary border border-secondary"
                       options={options}

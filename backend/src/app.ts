@@ -9,7 +9,7 @@ import persanalInfoRoutes from "./routes/personalInfoEditRoutes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
-
+import leaveSection from "./routes/leaveRoutes";
 const app = express();
 const port = 4500;
 
@@ -29,6 +29,8 @@ app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
 app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
+app.use("/leaveSection", leaveSection);
+
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,

@@ -111,6 +111,23 @@ const userController = {
       });
     }
   },
+  async deleteUser(req: any, res: Response) {
+    try {
+      const userId = req.params.id;
+      const updatedProject = req.body;
+      const userProject = await User.findByIdAndDelete(userId, updatedProject);
+      if (userProject) {
+        res.status(200).json({ message: "User  deleted successfully" });
+      } else {
+        res.status(404).json({ error: "User is not found." });
+      }
+    } catch (error) {
+      console.error("Error deleting user details:", error);
+      res.status(500).json({
+        error: "An error occurred while deleting user details.",
+      });
+    }
+  },
 };
 
 export default userController;
