@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const navigate = useNavigate()
+
   return (
     <div className="containerOne bg-dark" style={{ margin: "9% auto" }}>
       <h3 className="headOne">FORGOT PASSWORD</h3>
@@ -14,8 +16,8 @@ const ForgotPassword = () => {
             type="email"
             name="email"
             placeholder="Enter email"
-            value=""
-            onChange={() => {}}
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             className="bg-dark text-white"
           />
         </Form.Group>

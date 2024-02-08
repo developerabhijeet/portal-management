@@ -23,6 +23,7 @@ import ProjectUpdate from "./pages/ProjectUpdate/ProjectUpdate";
 import EditProject from "./pages/ProjectUpdate/EditProject";
 import Calls from "./pages/TestCalls/Calls";
 import Tests from "./pages/TestCalls/Tests";
+import { AddDiscussion } from "./pages/discussionDesk/AddDiscussion";
 
 const darkTheme = createTheme({
   palette: {
@@ -70,6 +71,7 @@ function App() {
             <Route path="/edit_profile" element={<EditEmployeesDetails />} />
             <Route path="/edit_personal_info" element={<EditPersonalInfo />} />
             <Route path="/discussion_desk" element={<DiscussionDesk />} />
+            <Route path="/discussion_desk/:new" element={<AddDiscussion />} />
             <Route path="/help_desk" element={<HelpDesk />} />
             <Route path="/my_leave/:new" element={<ApplyLeave />} />
             <Route path="*" element={<NotFound />} />

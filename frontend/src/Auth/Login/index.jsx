@@ -68,7 +68,7 @@ const Login = () => {
             />
             <span
               className="position-relative"
-              style={{ top: "-32px", right: "-510px", cursor: "pointer" }}
+              style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
