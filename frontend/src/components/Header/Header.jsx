@@ -44,7 +44,7 @@ const Header = () => {
   return (
     <>
       <Navbar
-        style={{ padding: "3px 30px" }}
+        style={{ padding: "3px 30px", backgroundColor: "#333333" }}
         variant="dark"
         collapseOnSelect
         expand="lg"

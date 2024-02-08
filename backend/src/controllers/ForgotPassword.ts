@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";

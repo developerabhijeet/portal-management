@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "./InterviewCalls.css";
+import style from "./InterviewCalls.module.css";
 import { Table, Form } from "react-bootstrap";
 import Header from "../../Header/Header";
 const InterviewCalls = () => {
@@ -52,9 +52,9 @@ const InterviewCalls = () => {
     <>
       <CssBaseline />
       <Header />
-      <div className="main-container">
+      <div className={style.mainContainer}>
         <div className="container" style={{ flex: 2 }}>
-          <h5 className="create-heading">Create</h5>
+          <h5 className={style.createheading}>Create</h5>
           <Table striped hover variant="dark">
             <thead>
               <tr>
@@ -72,8 +72,8 @@ const InterviewCalls = () => {
             </tbody>
           </Table>
         </div>
-        <div className="form">
-          <h5 className="interview-heading">Interviews</h5>
+        <div className={style.form}>
+          <h5 className={style.interviewHeading}>Interviews</h5>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-3 ">
               <Form.Label>Assigned to:</Form.Label>
@@ -86,7 +86,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.name && formik.errors.name ? (
-                <p className="error">{formik.errors.name}</p>
+                <p className={style.error}>{formik.errors.name}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -102,7 +102,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.round && formik.errors.round ? (
-                <p className="error">{formik.errors.round}</p>
+                <p className={style.error}>{formik.errors.round}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -117,7 +117,7 @@ const InterviewCalls = () => {
               />
               {formik.touched.DeveloperProfile &&
               formik.errors.DeveloperProfile ? (
-                <p className="error">{formik.errors.DeveloperProfile}</p>
+                <p className={style.error}>{formik.errors.DeveloperProfile}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -130,7 +130,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.email && formik.errors.email ? (
-                <p className="error">{formik.errors.email}</p>
+                <p className={style.error}>{formik.errors.email}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -144,7 +144,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.technology && formik.errors.technology ? (
-                <p className="error">{formik.errors.technology}</p>
+                <p className={style.error}>{formik.errors.technology}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -158,7 +158,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.time && formik.errors.time ? (
-                <p className="error">{formik.errors.time}</p>
+                <p className={style.error}>{formik.errors.time}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -172,7 +172,7 @@ const InterviewCalls = () => {
                 }}
               />
               {formik.touched.CV && formik.errors.CV ? (
-                <p className="error">{formik.errors.CV}</p>
+                <p className={style.error}>{formik.errors.CV}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -184,7 +184,7 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.salary && formik.errors.salary ? (
-                <p className="error">{formik.errors.salary}</p>
+                <p className={style.error}>{formik.errors.salary}</p>
               ) : null}
             </Form.Group>
             <Form.Group className="mb-3 ">
@@ -202,10 +202,10 @@ const InterviewCalls = () => {
                 onChange={formik.handleChange}
               />
               {formik.touched.details && formik.errors.details ? (
-                <p className="error">{formik.errors.details}</p>
+                <p className={style.error}>{formik.errors.details}</p>
               ) : null}
             </Form.Group>
-            <button type="submit" className="submitbtn">
+            <button type="submit" className={style.submitbtn}>
               Submit
             </button>
           </Form>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,19 +7,20 @@ import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { statusOption } from "../../Utils/constant";
 import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
-
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState([]);
   const [projectUpdate, setProjectUpdate] = useState([]);
-  const [editData,setEditData] = useState(false)
-  const [editId,setEditId] = useState(null)
+  const [editData, setEditData] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [addEmail, setAddEmail] = useState(false);
   const [tasks, setTasks] = useState([
     {
       projectStatus: "none",
@@ -30,48 +30,54 @@ const SendMyDailyStatus = () => {
     },
   ]);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
+
+  const handleEmail = (selectedOptions) => {
+    const usersEmail = selectedOptions.map((e) => e.value);
+    setEmail(usersEmail);
+    setAddEmail(!addEmail);
+  };
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get(`${BaseURL}/auth/getEmail`);
-        setEmail(response.data.emails);
+        setEmailList(response.data.emails);
       } catch (error) {
         console.error("Error fetching email data:", error);
       }
     };
 
     getData();
-  }, [navigate]);
+  }, [navigate, addEmail]);
 
-  useEffect(()=>{
-    if(location.state!==null){
-      setEditData(true)
-      setEditId(location.state.item._id)
-      updateStatus()
+  useEffect(() => {
+    if (location.state !== null) {
+      setEditData(true);
+      setEditId(location.state.item._id);
+      updateStatus();
     }
-  },[location.state])
+  }, [location.state]);
 
-  const updateStatus = ()=>{
-    const {dueDate,tasks,email} = location.state.item
-    let d= new Date(dueDate)
-    d = d.toLocaleDateString()
-    setStartDate(new Date(d))
-    setTasks([...tasks])
-    setEmail([...email])
-  }
+  const updateStatus = () => {
+    const { date, tasks, email } = location.state.item;
+    let d = new Date(date);
+    d = d.toLocaleDateString();
+    // setStartDate(new Date(d));
+    setTasks([...tasks]);
+    setEmail([...email]);
+  };
 
-  const handleUpdate = async(e,completed)=>{
+  const handleUpdate = async (e, completed) => {
     e.preventDefault();
-    
+
     const token = localStorage.getItem("jwtToken");
-    
+
     try {
       await axios.put(
         `${BaseURL}/tasks/${editId}`,
         {
           email: email,
-          dueDate: startDate,
+          // dueDate: newDate,
           tasks: tasks,
           completed,
         },
@@ -81,21 +87,16 @@ const SendMyDailyStatus = () => {
           },
           "Content-Type": "application/json",
         },
-        );
-      setEditData(false)
+      );
+      setEditData(false);
       navigate("/daily_status_updates");
     } catch (error) {
       alert(error);
     }
-  }
+  };
 
   const createEmailObjects = (emailArray) =>
     emailArray.map((email) => ({ value: email, label: email }));
-
-  const handleEmail = (selectedOptions) => {
-    const usersEmail = selectedOptions.map((e) => e.value);
-    setEmail(usersEmail);
-  };
 
   const addMoreTask = () => {
     setTasks([
@@ -116,7 +117,10 @@ const SendMyDailyStatus = () => {
       try {
         const response = await axios.get(`${BaseURL}/project/${getUserID}`);
         const projects = response.data.projects;
-        const projectSelect = ["None", ...projects.map((option) => option.projectName)];;
+        const projectSelect = [
+          "None",
+          ...projects.map((option) => option.projectName),
+        ];
         setProjectUpdate(projectSelect);
       } catch (error) {
         console.error("Error fetching project data:", error);
@@ -132,21 +136,18 @@ const SendMyDailyStatus = () => {
     const token = localStorage.getItem("jwtToken");
 
     try {
-      await axios.post(
-        `${BaseURL}/tasks`,
-        {
-          email: email,
-          dueDate: startDate,
-          tasks: tasks,
-          completed,
+      const newTask = {
+        email: email,
+        date: date,
+        tasks: tasks,
+        completed,
+      };
+      await axios.post(`${BaseURL}/tasks`, newTask, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          "Content-Type": "application/json",
-        },
-      );
+        "Content-Type": "application/json",
+      });
       navigate("/daily_status_updates");
     } catch (error) {
       console.error("Error submitting status:", error);
@@ -156,225 +157,229 @@ const SendMyDailyStatus = () => {
   const handleModalShow = () => {
     setShowModal(!showModal);
   };
-  
+
   return (
     <>
       <Layout>
-        <div className="status-update-form-main main-container">
-          <div className="panel-heading">
-            <h2 className="panel-title">Send Daily Status Update</h2>
+        <div
+          className="my-4 mx-auto border border-secondary"
+          style={{ maxWidth: 800 }}
+        >
+          <div className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}>
+            <h2 className="m-0 p-0">Send Daily Status Update</h2>
           </div>
-          <div className="available_container">
-            <p className="available_p">
-              <a className="available_p_link" onClick={() => handleModalShow()}>
-                Do you want to change your availability?
-              </a>
-            </p>
-            <p className="Available_heading">Available</p>
-          </div>
-          <div className="form-container">
-            <Form.Group className="mb-3 email-box">
-              <div className="mail">
-                <Form.Label>To</Form.Label>
-                <Select
-                  id="myfilled-name"
-                  label="select"
-                  variant="filled"
-                  isMulti
-                  options={createEmailObjects(email)}
-                  isClearable
-                  isSearchable
-                  noOptionsMessage={() => "email not found"}
-                  onChange={handleEmail}
-                  classNamePrefix="select-mail"
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      backgroundColor: "black",
-                      marginRight: -20,
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      backgroundColor: "#333",
-                      color: "#fff",
-                    }),
-                    option: (provided, state) => ({
-                      ...provided,
-                      backgroundColor: state.isSelected ? "#000" : "#333",
-                      color: state.isSelected ? "#fff" : "#ccc",
-                    }),
-                    singleValue: (provided) => ({
-                      ...provided,
-                      color: "#fff",
-                    }),
-                  }}
-                />
-              </div>
-              <div>
-                <Form.Label >CC</Form.Label>
-                <p>status@bestpeers.com</p>
-              </div>
-              <div>
-                <Form.Label>status date</Form.Label>
-                <div>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    required
-                    dateFormat="dd/MM/yy"
-                    className="custom-datepicker"
-                  />
-                </div>
-              </div>
-            </Form.Group>
-            <form onSubmit={(e) => handleStatusSubmit(e, true)}>
-              <div>
-            <div className="addtask">
-              <h6>+ ADD YOUR TASK DETAILS</h6>
-            </div>
-            <div className="taskContainer">
-              {tasks.map((task, index) => (
-                <div key={index}>
-                  <div className="task_status_box">
-                    <div className="project_task">
-                      <div>
-                        <Form.Label>Project</Form.Label>
-                      </div>
-                      
-                      <Form.Select
-                          id="select_option"
-                          value={task.projectStatus}
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? {
-                                      ...prevTask,
-                                      projectStatus: e.target.value,
-                                    }
-                                  : prevTask,
-                              ),
-                            )
-                          }
-                        >
-                          <OptionsSelect
-                            options={projectUpdate}
-                            defaultOption="Select Status"
-                          />
-                        </Form.Select>
-                    </div>
-                    <div className="working_hours">
-                      <div>
-                        <Form.Label >Working Hours</Form.Label>
-                      </div>
-                      <Form.Control
-                        className="project_select working-field"
-                        style={{
-                          borderRadius: 5,
-                          padding: 7,
-                          borderBlockColor: "rgb(203, 204, 204)",
-                        }}
-                        type="time"
-                        placeholder="hh:mm"
-                        value={task.workingHour}
-                        onChange={(e) =>
-                          setTasks((prevTasks) =>
-                            prevTasks.map((prevTask, i) =>
-                              i === index
-                                ? {
-                                    ...prevTask,
-                                    workingHour: e.target.value,
-                                  }
-                                : prevTask,
-                            ),
-                          )
-                        }
-                      />
-                    </div>
-                    <div style={{ marginLeft: 10 }}>
-                      <div>
-                        <Form.Label >Status</Form.Label>
-                      </div>
-                      <Form.Select
-                          id="select_option"
-                          name="task"
-                          value={task.status}
-                          onChange={(e) =>
-                            setTasks((prevTasks) =>
-                              prevTasks.map((prevTask, i) =>
-                                i === index
-                                  ? { ...prevTask, status: e.target.value }
-                                  : prevTask,
-                              ),
-                            )
-                          }
-                        >
-                          <OptionsSelect
-                            options={statusOption}
-                            defaultOption="Select Status"
-                          />
-                        </Form.Select>
-                    </div>
-                  </div>
 
-                  <div className="task">
-                    <label>Task</label>
-                    <div className="task-box">
-                      <textarea
-                        className="task-input"
-                        value={task.task}
-                        onChange={(e) =>
-                          setTasks((prevTasks) =>
-                            prevTasks.map((prevTask, i) =>
-                              i === index
-                                ? { ...prevTask, task: e.target.value }
-                                : prevTask,
-                            ),
-                          )
-                        }
-                      />
-                      <div className="delete_btn">
-                        <RiDeleteBin6Line color="red" onClick={deleteTask} />
+          <div className="">
+            <div className="d-flex justify-content-between border-bottom border-secondary p-3 text-info">
+              <div role="button" onClick={() => handleModalShow()}>
+                Do you want to change your availability?
+              </div>
+              <div>Available</div>
+            </div>
+            <Form className="p-4">
+              <Row className="mb-5 pb-5">
+                <Form.Group as={Col}>
+                  <Form.Label className="fw">To</Form.Label>
+                  <Select
+                    label="select"
+                    isMulti
+                    options={createEmailObjects(emailList)}
+                    isSearchable
+                    noOptionsMessage={() => "email not found"}
+                    onChange={handleEmail}
+                    styles={{
+                      control: (prevStyle) => ({
+                        ...prevStyle,
+                        backgroundColor: "#212529",
+                        borderColor: "#313131",
+                      }),
+                      menu: (prevStyle) => ({
+                        ...prevStyle,
+                        backgroundColor: "#212529",
+                      }),
+                      option: (prevStyle) => ({
+                        ...prevStyle,
+                        backgroundColor: "#212529",
+                        color: "#ccc",
+                      }),
+                    }}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col}>
+                  <Form.Label className="fw">CC</Form.Label>
+                  <Form.Control
+                    value="status@bestpeers.com"
+                    disabled
+                    className="bg-dark text-white border-dark"
+                  />
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label className="fw">Status Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    className="bg-dark text-white"
+                    style={{ colorScheme: "dark" }}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+              </Row>
+
+              <div>
+                <div className="">
+                  <h6>+ ADD YOUR TASK DETAILS</h6>
+                </div>
+                <div className="taskContainer">
+                  {tasks.map((task, index) => (
+                    <div key={index}>
+                      <div className="task_status_box">
+                        <div className="project_task">
+                          <div>
+                            <Form.Label>Project</Form.Label>
+                          </div>
+
+                          <Form.Select
+                            id="select_option"
+                            value={task.projectStatus}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? {
+                                        ...prevTask,
+                                        projectStatus: e.target.value,
+                                      }
+                                    : prevTask,
+                                ),
+                              )
+                            }
+                          >
+                            <OptionsSelect
+                              options={projectUpdate}
+                              defaultOption="Select Status"
+                            />
+                          </Form.Select>
+                        </div>
+                        <div className="working_hours">
+                          <div>
+                            <Form.Label>Working Hours</Form.Label>
+                          </div>
+                          <Form.Control
+                            className="project_select working-field"
+                            style={{
+                              borderRadius: 5,
+                              padding: 7,
+                              borderBlockColor: "rgb(203, 204, 204)",
+                            }}
+                            type="time"
+                            placeholder="hh:mm"
+                            value={task.workingHour}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? {
+                                        ...prevTask,
+                                        workingHour: e.target.value,
+                                      }
+                                    : prevTask,
+                                ),
+                              )
+                            }
+                          />
+                        </div>
+                        <div style={{ marginLeft: 10 }}>
+                          <div>
+                            <Form.Label>Status</Form.Label>
+                          </div>
+                          <Form.Select
+                            id="select_option"
+                            name="task"
+                            value={task.status}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? { ...prevTask, status: e.target.value }
+                                    : prevTask,
+                                ),
+                              )
+                            }
+                          >
+                            <OptionsSelect
+                              options={statusOption}
+                              defaultOption="Select Status"
+                            />
+                          </Form.Select>
+                        </div>
+                      </div>
+
+                      <div className="task">
+                        <label>Task</label>
+                        <div className="task-box">
+                          <textarea
+                            className="task-input"
+                            value={task.task}
+                            onChange={(e) =>
+                              setTasks((prevTasks) =>
+                                prevTasks.map((prevTask, i) =>
+                                  i === index
+                                    ? { ...prevTask, task: e.target.value }
+                                    : prevTask,
+                                ),
+                              )
+                            }
+                          />
+                          <div className="delete_btn">
+                            <RiDeleteBin6Line
+                              color="red"
+                              onClick={deleteTask}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-           
-               
-                <Button
-                  type="button"
-                  className="daily-status-btn btn"
-                  onClick={addMoreTask}
-                >
+
+                <Button variant="outline-primary" onClick={addMoreTask}>
                   + ADD MORE TASK
                 </Button>
-                  {editData !== true? 
-                <div className="save_send_btn_container">
-                  <div className="daily-statusSave">
+                {!editData ? (
+                  <div className="save_send_btn_container">
+                    <div className="daily-statusSave">
+                      <Button
+                        variant="outline-warning"
+                        onClick={(e) => handleStatusSubmit(e, false)}
+                      >
+                        SAVE TO DRAFT
+                      </Button>
+                    </div>
+                    <div className="daily-status-sendbtn">
+                      <Button
+                        variant="outline-success"
+                        className="px-5"
+                        onClick={(e) => handleStatusSubmit(e, true)}
+                      >
+                        SEND
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="save_send_btn_container">
                     <Button
-                      type="button"
-                      className="daily-status-savebtn btn"
-                      onClick={(e) => handleStatusSubmit(e, false)}
+                      className="px-5"
+                      variant="outline-primary"
+                      onClick={(e) => handleUpdate(e, true)}
                     >
-                      SAVE TO DRAFT
+                      Update
                     </Button>
                   </div>
-                  <div className="daily-status-sendbtn">
-                    <Button type="submit" className="daily-status-btnsend btn">
-                      SEND
-                    </Button>
-                  </div>
-
-                </div>
-                 :  
-                 <div className="save_send_btn_container">
-                 <Button className="btn" onClick={(e)=>handleUpdate(e,true)}>Update</Button>
-                 </div>
-                   }
+                )}
               </div>
-            </form>
+            </Form>
           </div>
         </div>
         {showModal ? (
@@ -386,4 +391,3 @@ const SendMyDailyStatus = () => {
 };
 
 export default SendMyDailyStatus;
-

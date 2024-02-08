@@ -9,11 +9,7 @@ export const EditSkills = () => {
       <Layout>
         <div className="container mt-4">
           <h3
-            style={{
-              backgroundColor: "#515151",
-              margin: 0,
-              padding: "5px 16px",
-            }}
+            className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}
           >
             All Skills
           </h3>

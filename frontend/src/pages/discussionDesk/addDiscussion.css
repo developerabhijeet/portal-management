@@ -1,0 +1,11 @@
+
+.wrapper{
+  border: 1px solid rgb(104, 103, 103);
+  border-radius: 2px;
+}
+
+.editor{
+  background-color: #212529;
+  margin: 0;
+  padding: 0px 10px;
+}

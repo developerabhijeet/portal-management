@@ -1,4 +1,4 @@
-.container-edit {
+/* .container-edit {
   flex: 1;
   border: 1px solid rgb(88, 138, 133);
   margin-top: 20px;
@@ -119,5 +119,25 @@ input:-webkit-autofill:focus {
   }
   #select {
     width: 340px;
+  }
+} */
+/* 
+.form-control{
+  background-color: #212529;
+  color: white;
+} */
+
+
+@media (min-width: 1024px) {
+  .col-md-6 {
+      flex: 0 0 auto;
+      width: 50%;      
+  }
+}
+
+@media (max-width: 1024px) {
+  .col-md-6 {
+      flex: 0 0 auto;
+      width: 100%;     
   }
 }

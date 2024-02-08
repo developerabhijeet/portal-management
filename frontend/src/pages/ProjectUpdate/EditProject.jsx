@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BaseURL } from "../../Utils/utils";
 import { useLocation } from "react-router-dom";
-import "./EditProject.css";
+import style from "./EditProject.module.css";
 import Layout from "../../components/Layout";
 
 const EditProject = () => {
@@ -143,13 +143,13 @@ const EditProject = () => {
   return (
     <>
       <Layout>
-        <div className="containerCls bg-dark">
-          <h3 className="heading1">
+        <div className={style.containerCls} bg-dark>
+          <h3 className={style.heading}>
             {firstName} {lastName}
           </h3>
           <Form className="m-3">
             <Form.Group className="mb-4" controlId="formGroupEmail">
-              <Form.Label className="fw">Add Project</Form.Label>
+              <Form.Label className={style.fw}>Add Project</Form.Label>
               <Form.Control
                 type="text"
                 name="project"
@@ -159,7 +159,7 @@ const EditProject = () => {
                 onChange={(e) => handleAddInput(e)}
               />
             </Form.Group>
-            {addProjectError && <p className="errors">{addProjectError}</p>}
+            {addProjectError && <p className={style.errors}>{addProjectError}</p>}
             <Button
               className="me-3 fw"
               variant="success"
@@ -231,7 +231,7 @@ const EditProject = () => {
                       />
                     </Form.Group>
                     {editProjectError && (
-                      <p className="errors">{editProjectError}</p>
+                      <p className={style.errors}>{editProjectError}</p>
                     )}
                     <Button variant="primary" type="submit">
                       Submit
@@ -249,7 +249,7 @@ const EditProject = () => {
               </Modal>
             </>
           ) : (
-            <p className="noProjects">No Projects Alloted</p>
+            <p className={style.noProjects}>No Projects Alloted</p>
           )}
         </div>
         <ToastContainer />

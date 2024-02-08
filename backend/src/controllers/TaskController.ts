@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import Task from "../models/Task";
+import User from "../models/User";
 const taskController = {
   async createTask(req: any, res: Response) {
     try {
+      const userData = await User.findById(req.user._id);
       const newTaskData = {
         ...req.body,
         user: req.user._id,
+        userEmail: userData?.email,
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
       };
-      newTaskData.dueDate = new Date(newTaskData.dueDate).toLocaleDateString();
       const task = await Task.create(newTaskData);
       res.status(201).json(task);
     } catch (error) {
@@ -40,7 +44,7 @@ const taskController = {
             };
 
       const sortOptions: any = {};
-      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1; //To display  order
+      if (sortByDueDate) sortOptions.date = sortByDueDate === "asc" ? 1 : -1; //To display  order
       if (sortByCompleted)
         sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
 
@@ -87,8 +91,6 @@ const taskController = {
   async updateTask(req: Request, res: Response) {
     try {
       const newTaskData = req.body;
-      newTaskData.dueDate = new Date(newTaskData.dueDate).toLocaleDateString();
-
       const task = await Task.findByIdAndUpdate(req.params.id, newTaskData, {
         new: true,
       });
