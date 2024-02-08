@@ -20,15 +20,31 @@ export const MyDailyStatus = ({}) => {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        setData(response.data.tasks);
+        const formattedTasks = response.data.tasks.map((task) => {
+          const formattedDate = new Date(task.date).toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            },
+          );
+          return {
+            ...task,
+            date: formattedDate,
+          };
+        });
 
+        setData(formattedTasks);
         setTotalPages(response.data.totalPages);
       } catch (error) {
         alert(error);
       }
     };
+
     getDailyStatus();
   }, [navigate, token, currentPage]);
+
   const handleNavigate = (item) => {
     navigate("/daily_status_updates_details", {
       state: {
