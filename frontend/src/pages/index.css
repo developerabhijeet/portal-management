@@ -104,10 +104,7 @@
   padding: 8px;
   text-align: center;
 }
-.dashboard_header {
-  height: "100vh";
-  background: "#f3f3f3";
-}
+
 .status {
   color: #ccc;
 }

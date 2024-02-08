@@ -9,8 +9,8 @@ import NotFound from "./pages/notFound/NotFound";
 import ForgotPassword from "./Auth/ForgotPassword";
 import Signup from "../src/Auth/signup/index";
 import Login from "../src/Auth/Login/index";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+// import { ThemeProvider, createTheme } from "@mui/material/styles";
+// import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
 import { EditEmployeesDetails } from "./pages/editEmployeesDetails/EditEmployeesDetails";
 import { AddSkills } from "./pages/editSkills/AddSkills";
@@ -25,20 +25,11 @@ import Calls from "./pages/TestCalls/Calls";
 import Tests from "./pages/TestCalls/Tests";
 import { AddDiscussion } from "./pages/discussionDesk/AddDiscussion";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    background: {
-      default: "rgb(1, 4, 9)",
-    },
-  },
-});
+
 function App() {
   const role = localStorage.getItem("role");
   return (
-    <>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
+    <div style={{backgroundColor: "#000", margin: 0, padding: 0, flex: 1, width: "100%", height: "100%"}}>
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -79,8 +70,7 @@ function App() {
             <Route path="Tests" element={<Tests />} />
           </Routes>
         </Router>
-      </ThemeProvider>
-    </>
+    </div>
   );
 }
 
