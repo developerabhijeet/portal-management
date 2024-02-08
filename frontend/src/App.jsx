@@ -19,11 +19,14 @@ import EditPersonalInfo from "./pages/Edit_personal_info/EditPersonalInfo";
 import { ApplyLeave } from "./pages/Myleave/ApplyLeave";
 import { DiscussionDesk } from "./pages/discussionDesk/DiscussionDesk";
 import { HelpDesk } from "./pages/helpDesk/HelpDesk";
-import ProjectUpdate from "./pages/ProjectUpdate/ProjectUpdate";
-import EditProject from "./pages/ProjectUpdate/EditProject";
+import ProjectUpdate from "./pages/adminPanel/ProjectUpdate";
+import EditProject from "./pages/adminPanel/EditProject";
 import Calls from "./pages/TestCalls/Calls";
 import Tests from "./pages/TestCalls/Tests";
+import ResetPassword from "./Auth/resetPassword";
 import { AddDiscussion } from "./pages/discussionDesk/AddDiscussion";
+import Users from "./pages/adminPanel/Users";
+import Projects from "./pages/ProjectUpdate/Projects";
 
 
 function App() {
@@ -39,6 +42,7 @@ function App() {
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/projectUpdate" element={<ProjectUpdate />} />
                 <Route path="/edit_project" element={<EditProject />} />
+                <Route path="/All_users" element={<Users />} />
               </>
             )}
             <Route
@@ -68,6 +72,11 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="Calls" element={<Calls />} />
             <Route path="Tests" element={<Tests />} />
+            <Route
+              path="/forgotPass/reset-password/:id/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="projects" element={<Projects />} />
           </Routes>
         </Router>
     </div>

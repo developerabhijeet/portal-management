@@ -14,6 +14,9 @@ interface ITask extends Document {
     task: string;
   }[];
   user: any;
+  userEmail: string;
+  firstName: string;
+  lastName: string;
 }
 
 const taskSchema = new Schema<ITask>({
@@ -29,6 +32,18 @@ const taskSchema = new Schema<ITask>({
   completed: {
     type: Boolean,
     default: true,
+  },
+  userEmail: {
+    type: String,
+    require: true,
+  },
+  firstName: {
+    type: String,
+    require: true,
+  },
+  lastName: {
+    type: String,
+    require: true,
   },
   tasks: [
     {

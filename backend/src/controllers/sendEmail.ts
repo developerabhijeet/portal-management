@@ -10,33 +10,39 @@ const sendMail = async () => {
       const tasks = await Task.find();
       const today = new Date();
       let yesterday = new Date(today);
-      
+
       // Check if yesterday is Saturday (6) or Sunday (0)
       while (yesterday.getDay() === 6 || yesterday.getDay() === 0) {
-          yesterday.setDate(yesterday.getDate() - 1); // Adjust yesterday to the previous day
+        yesterday.setDate(yesterday.getDate() - 1); // Adjust yesterday to the previous day
       }
-  
-      const usersWithoutStatus = users.filter(user => {
-          return !tasks.some(task => 
-              task.user.toString() === user._id.toString() &&
-              task.date.toDateString() === yesterday.toDateString()
-          );
+
+      const usersWithoutStatus = users.filter((user) => {
+        return !tasks.some(
+          (task) =>
+            task.user.toString() === user._id.toString() &&
+            task.date.toDateString() === yesterday.toDateString()
+        );
       });
-      
+
       const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-              user: "email here",
-              pass: "enter your password",
-          },
+        service: "gmail",
+        auth: {
+          user: "your emails",
+          pass: "your password",
+        },
       });
-  
+
       const linkUrl = "http://localhost:3000/send_daily_status";
-  
+
       for (const user of usersWithoutStatus) {
-          const formattedDate = yesterday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  
-          const htmlContent = `
+        const formattedDate = yesterday.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        const htmlContent = `
               <html>
                   <head>
                       <style>
@@ -53,21 +59,20 @@ const sendMail = async () => {
                   </body>
               </html>
           `;
-          
-          const mailOptions = {
-              from: "portal9589@gmail.com",
-              to: user.email,
-              subject: `Last Reminder :: You missed your daily status update on ${formattedDate}`,
-              html: htmlContent,
-          };
-  
-          await transporter.sendMail(mailOptions);
-          console.log(`Email sent successfully to ${user.email}.`);
-      }
-  } catch (error) {
-      console.error('Error:', error);
-  }
 
+        const mailOptions = {
+          from: "portal9589@gmail.com",
+          to: user.email,
+          subject: `Last Reminder :: You missed your daily status update on ${formattedDate}`,
+          html: htmlContent,
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${user.email}.`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   });
 };
 

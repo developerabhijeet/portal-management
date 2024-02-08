@@ -6,17 +6,25 @@ import { BaseURL } from "../../Utils/utils";
 import { useLocation } from "react-router-dom";
 import style from "./EditProject.module.css";
 import Layout from "../../components/Layout";
+import OptionsSelect from "../../components/selectOption/selectOption";
+import { statusOption } from "../../Utils/constant";
 
 const EditProject = () => {
   const location = useLocation();
   const { id, firstName, lastName } = location.state;
   const [projectNames, setProjectNames] = useState({});
+  const [date, setDate] = useState(new Date());
+  const [actions, setActions] = useState("");
   const [projects, setProjects] = useState([]);
   const [editProject, setEditProject] = useState({
     projectName: "",
     showEditModal: false,
   });
-  const [addProjectError, setAddProjectError] = useState("");
+  const [addProjectError, setAddProjectError] = useState({
+    projectName: "",
+    dateError: "",
+    action: "",
+  });
   const [editProjectError, setEditProjectError] = useState("");
 
   useEffect(() => {
@@ -35,16 +43,37 @@ const EditProject = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [projectNames, editProject]);
+  }, [projectNames, editProject, id]);
+
+  const validation = () => {
+    let isValid = true;
+    const Errors = { addProjectError };
+
+    if (!projectNames[id] || !projectNames[id].trim()) {
+      isValid = false;
+      Errors.projectName = "Please enter a project name";
+    }
+    if (!date || !date.trim()) {
+      isValid = false;
+      Errors.dateError = "Please select a date";
+    }
+    if (!actions || !actions.trim()) {
+      isValid = false;
+      Errors.action = "Please select an action";
+    }
+
+    setAddProjectError(Errors);
+    return isValid;
+  };
 
   const handleAddProject = async (userId) => {
-    if (!projectNames[id] || !projectNames[id].trim()) {
-      setAddProjectError("Please enter a project name");
-    } else {
+    if (validation()) {
       try {
         await axios.post(`${BaseURL}/project/${userId}`, {
           projectName: projectNames[userId],
           user: userId,
+          date: date,
+          action: actions,
         });
 
         toast.success("Project added successfully!", {
@@ -57,6 +86,8 @@ const EditProject = () => {
           ...prevProjectNames,
           [userId]: "",
         }));
+        setDate("");
+        setActions("");
       } catch (error) {
         console.error("Error adding project:", error);
       }
@@ -68,8 +99,12 @@ const EditProject = () => {
       ...prevProjectNames,
       [id]: e.target.value,
     }));
-    setAddProjectError("");
+    setAddProjectError({
+      ...addProjectError,
+      projectName: "",
+    });
   };
+
   const handleEditProject = (projectId) => {
     const project = projects.find((item) => item._id === projectId);
     if (project) {
@@ -140,6 +175,8 @@ const EditProject = () => {
   };
   const handleCloseModal = () =>
     setEditProject({ ...editProject, showEditModal: false });
+
+  const { projectName, dateError, action } = addProjectError;
   return (
     <>
       <Layout>
@@ -148,8 +185,8 @@ const EditProject = () => {
             {firstName} {lastName}
           </h3>
           <Form className="m-3">
-            <Form.Group className="mb-4" controlId="formGroupEmail">
-              <Form.Label className={style.fw}>Add Project</Form.Label>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">Add Project</Form.Label>
               <Form.Control
                 type="text"
                 name="project"
@@ -159,7 +196,32 @@ const EditProject = () => {
                 onChange={(e) => handleAddInput(e)}
               />
             </Form.Group>
-            {addProjectError && <p className={style.errors}>{addProjectError}</p>}
+            {projectName && <p className="errors">{projectName}</p>}
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="date"
+                className="bg-dark text-white"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </Form.Group>
+            {dateError && <p className="errors">{dateError}</p>}
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">Action</Form.Label>
+              <Form.Select
+                className="bg-dark text-white"
+                value={actions}
+                onChange={(e) => setActions(e.target.value)}
+              >
+                <OptionsSelect
+                  options={statusOption}
+                  defaultOption={"Select action"}
+                />
+              </Form.Select>
+            </Form.Group>
+            {action && <p className="errors">{action}</p>}
             <Button
               className="me-3 fw"
               variant="success"
