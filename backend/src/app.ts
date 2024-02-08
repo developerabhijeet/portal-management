@@ -10,6 +10,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
 import leaveSection from "./routes/leaveRoutes";
+import EditSkills from "./routes/editSkillsRoutes";
 const app = express();
 const port = 4500;
 
@@ -30,6 +31,7 @@ app.use("/project", projectRoutes);
 app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
 app.use("/leaveSection", leaveSection);
+app.use("/EditSkills", EditSkills);
 
 mongoose
   .connect(process.env.MONGODB_URL, {
