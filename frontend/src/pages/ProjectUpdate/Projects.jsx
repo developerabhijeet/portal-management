@@ -19,6 +19,7 @@ const Projects = () => {
     };
     fetchData();
   }, [id]);
+
   return (
     <>
       <Layout>
@@ -39,7 +40,7 @@ const Projects = () => {
                 projectData.map((item) => (
                   <tr key={item._id}>
                     <td>{item.projectName}</td>
-                    <td>{item.date}</td>
+                    <td>{new Date(item.date).toLocaleDateString()}</td>
                     <td>{item.action}</td>
                   </tr>
                 ))}

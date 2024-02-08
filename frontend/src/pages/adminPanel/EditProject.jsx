@@ -13,7 +13,7 @@ const EditProject = () => {
   const location = useLocation();
   const { id, firstName, lastName } = location.state;
   const [projectNames, setProjectNames] = useState({});
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [actions, setActions] = useState("");
   const [projects, setProjects] = useState([]);
   const [editProject, setEditProject] = useState({
@@ -67,13 +67,13 @@ const EditProject = () => {
   };
 
   const handleAddProject = async (userId) => {
-    const formattedDate = new Date(date).toLocaleDateString();
+   
     if (validation()) {
       try {
         await axios.post(`${BaseURL}/project/${userId}`, {
           projectName: projectNames[userId],
           user: userId,
-          date: formattedDate,
+          date: date,
           action: actions,
         });
 
