@@ -8,6 +8,7 @@ const projectSchema = new Schema<IProject>({
   projectName: {
     type: String,
     required: true,
+    default: "None",
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
