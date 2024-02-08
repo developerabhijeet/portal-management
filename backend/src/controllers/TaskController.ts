@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
 import Task from "../models/Task";
+import User from "../models/User";
 const taskController = {
   async createTask(req: any, res: Response) {
     try {
+      const userData = await User.findById(req.user._id);
       const newTaskData = {
         ...req.body,
         user: req.user._id,
+        userEmail: userData?.email,
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
       };
       const task = await Task.create(newTaskData);
       res.status(201).json(task);

@@ -29,8 +29,8 @@ export const selectStatus = [
   "Rescheduled",
   "Not Done",
   "Canceled",
-  "Not Clear"
-]
+  "Not Clear",
+];
 export const selectPriority = ["High", "Medium", "Low"];
 export const selectMode = ["Online", "Offline"];
 export const leaveType = [
