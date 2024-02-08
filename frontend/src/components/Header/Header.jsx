@@ -68,7 +68,7 @@ const Header = () => {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Project" menuVariant="dark">
-              <NavDropdown.Item onClick={() => navigate("/projectUpdate")}>
+              <NavDropdown.Item onClick={() => navigate("/projects")}>
                 Project Updates
               </NavDropdown.Item>
             </NavDropdown>
@@ -125,9 +125,24 @@ const Header = () => {
               </Button>
             </NavDropdown>
             {role === "admin" && localToken && (
-              <NavDropdown title="Signup here" menuVariant="dark" align="end">
+              <NavDropdown title="Admin Panel" menuVariant="dark" align="end">
                 <NavDropdown.Item onClick={() => navigate("/Signup")}>
-                  Signup here?
+                  Add User
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>navigate("/All_users")}>
+                  Users
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>navigate("/projectUpdate")}>
+                  Projects
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>navigate("/tests")}>
+                  Tests
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>navigate("/calls")}>
+                  Calls
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={()=>navigate("/my_leave")}>
+                  Leaves
                 </NavDropdown.Item>
               </NavDropdown>
             )}
