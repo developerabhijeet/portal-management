@@ -9,9 +9,11 @@ import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
 import { logo } from "../../assets/assets";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
-import { FaUserEdit } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { AiOutlineDashboard } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
+import { GrStatusGood } from "react-icons/gr";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
@@ -55,12 +57,13 @@ const Header = () => {
         {/* sidebar start */}
         <div className="sidebar pe-4 pb-3">
           <nav className="navbar bg-secondary navbar-dark">
-            <a className="navbar-brand mx-4 mb-3">
-              <h3 className="text-primary">
-                <FaUserEdit className="me-3" />
-                Bestpeers
-              </h3>
-            </a>
+            <div className="navbar-brand mx-5 mb-3">
+              <img
+                src={require("../../assets/logo.png")}
+                width={130}
+                height={50}
+              />
+            </div>
             <div className="d-flex align-items-center ms-4 mb-4">
               <div className="position-relative">
                 <FaRegCircleUser size={40} />
@@ -129,37 +132,46 @@ const Header = () => {
         {/* Sidebar End */}
         {/* Content Start */}
         <div className="content">
-          <Navbar collapseOnSelect expand="lg" className="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-            <Container>
-              <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-              <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="me-auto">
-                  <Nav.Link href="#features">Features</Nav.Link>
-                  <Nav.Link href="#pricing">Pricing</Nav.Link>
-                  <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">
-                      Action
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">
-                      Something
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">
-                      Separated link
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </Nav>
-                <Nav>
-                  <Nav.Link href="#deets">More deets</Nav.Link>
-                  <Nav.Link eventKey={2} href="#memes">
-                    Dank memes
-                  </Nav.Link>
-                </Nav>
-              </Navbar.Collapse>
+          <Navbar
+            collapseOnSelect
+            expand="lg"
+            className="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-2"
+          >
+            <a className="sidebar-toggler flex-shrink-0">
+              <i className="fa fa-bars"></i>
+            </a>
+            <Container className="mt-2">
+              <div>
+                <h3 className="text-primary">Bestpeers</h3>
+              </div>
+              <div>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav className="">
+                    <GrStatusGood style={{ marginRight: -16, marginTop: 15 }} />
+                    <NavDropdown menuVariant="dark" title="Status">
+                      <NavDropdown.Item>My Daily Status</NavDropdown.Item>
+                      <NavDropdown.Item>Send Daily Status</NavDropdown.Item>
+                      <NavDropdown.Item>Change Status</NavDropdown.Item>
+                    </NavDropdown>
+                    <BiSupport style={{ marginRight: -16, marginTop: 15 }} />
+                    <NavDropdown menuVariant="dark" title="Support">
+                      <NavDropdown.Item>Discussion Desk</NavDropdown.Item>
+                      <NavDropdown.Item>Help Desk</NavDropdown.Item>
+                    </NavDropdown>
+                    <FaUser style={{ marginRight: -16, marginTop: 15 }} />
+                    <NavDropdown
+                      className="m-0 p-0"
+                      menuVariant="dark"
+                      title="Username"
+                    >
+                      <NavDropdown.Item>Edit Profile</NavDropdown.Item>
+                      <NavDropdown.Item>Edit Personal info</NavDropdown.Item>
+                      <NavDropdown.Item>Logout</NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
+                </Navbar.Collapse>
+              </div>
             </Container>
           </Navbar>
         </div>
