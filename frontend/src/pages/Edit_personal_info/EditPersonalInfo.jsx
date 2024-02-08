@@ -15,8 +15,8 @@ const EditPersonalInfo = () => {
     motherName: "",
     personalEmail: "",
     bloodGroup: "",
-    personalNum: "",
-    emergencyNum: "",
+    personalContactNum: "",
+    emergencyContactNum: "",
     dateOfBirth: "",
     birthDay: "",
     presentAddress: "",
@@ -29,8 +29,8 @@ const EditPersonalInfo = () => {
     motherName: "",
     personalEmail: "",
     bloodGroup: "",
-    personalNum: "",
-    emergencyNum: "",
+    personalContactNum: "",
+    emergencyContactNum: "",
     dateOfBirth: "",
     birthDay: "",
     presentAddress: "",
@@ -47,37 +47,9 @@ const EditPersonalInfo = () => {
         const userIndexData = data.filter((val) => val.user === userId);
         if (userIndexData.length > 0) {
           setIsGetData(true);
+          const userInfo = userIndexData[0];
+          setUserData(userInfo);
         }
-        const userInfo = userIndexData[0];
-        const {
-          fatherName,
-          motherName,
-          personalEmail,
-          bloodGroup,
-          personalContactNum,
-          emergencyContactNum,
-          birthDay,
-          dateOfBirth,
-          dateOfMarriage,
-          maritalStatus,
-          presentAddress,
-          permanentAddress,
-        } = userInfo;
-        setUserData((prevData) => ({
-          ...prevData,
-          fatherName,
-          motherName,
-          personalEmail,
-          bloodGroup,
-          personalNum: personalContactNum,
-          emergencyNum: emergencyContactNum,
-          birthDay,
-          dateOfBirth,
-          dateOfMarriage,
-          maritalStatus,
-          presentAddress,
-          permanentAddress,
-        }));
       } catch (error) {
         alert("error:", error);
       }
@@ -122,14 +94,14 @@ const EditPersonalInfo = () => {
     }
 
     const numPattern = /^[6-9][0-9]{9}$/;
-    if (!personalNum.trim() || !numPattern.test(personalNum)) {
+    if (!personalContactNum.trim() || !numPattern.test(personalContactNum)) {
       isValid = false;
-      newErrors.personalNum = "Invalid Number";
+      newErrors.personalContactNum = "Invalid Number";
     }
 
-    if (!emergencyNum.trim() || !numPattern.test(emergencyNum)) {
+    if (!emergencyContactNum.trim() || !numPattern.test(emergencyContactNum)) {
       isValid = false;
-      newErrors.emergencyNum = "Invalid EmergencyNum";
+      newErrors.emergencyContactNum = "Invalid emergencyContactNum";
     }
 
     if (!dateOfBirth) {
@@ -173,6 +145,7 @@ const EditPersonalInfo = () => {
           });
         }
       } else {
+      
         try {
           await axios.post(`${BaseURL}/editPesonalInfo`, {
             user: userId,
@@ -198,8 +171,8 @@ const EditPersonalInfo = () => {
     bloodGroup,
     maritalStatus,
     dateOfMarriage,
-    personalNum,
-    emergencyNum,
+    personalContactNum,
+    emergencyContactNum,
     dateOfBirth,
     birthDay,
     presentAddress,
@@ -277,11 +250,11 @@ const EditPersonalInfo = () => {
                   type="text"
                   placeholder="Enter your contact number"
                   className="bg-dark text-white"
-                  name="personalNum"
-                  value={personalNum}
+                  name="personalContactNum"
+                  value={personalContactNum}
                   onChange={handleChange}
                 />
-                <span className="text-danger">{errors.personalNum}</span>
+                <span className="text-danger">{errors.personalContactNum}</span>
               </Form.Group>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Emergency Contact</Form.Label>
@@ -289,11 +262,13 @@ const EditPersonalInfo = () => {
                   type="text"
                   className="bg-dark text-white"
                   placeholder="Enter your contact number"
-                  name="emergencyNum"
-                  value={emergencyNum}
+                  name="emergencyContactNum"
+                  value={emergencyContactNum}
                   onChange={handleChange}
                 />
-                <span className="text-danger">{errors.emergencyNum}</span>
+                <span className="text-danger">
+                  {errors.emergencyContactNum}
+                </span>
               </Form.Group>
             </Row>
             <Row>
@@ -357,6 +332,7 @@ const EditPersonalInfo = () => {
               <Form.Control
                 as="textarea"
                 className="bg-dark text-white"
+                placeholder="Enter present address"
                 name="presentAddress"
                 value={presentAddress}
                 onChange={handleChange}
@@ -369,6 +345,7 @@ const EditPersonalInfo = () => {
                 as="textarea"
                 className="bg-dark text-white"
                 name="permanentAddress"
+                placeholder="Enter permanent address"
                 value={permanentAddress}
                 onChange={handleChange}
               />

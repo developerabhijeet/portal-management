@@ -7,7 +7,6 @@ const taskController = {
         ...req.body,
         user: req.user._id,
       };
-      newTaskData.dueDate = new Date(newTaskData.dueDate).toLocaleDateString();
       const task = await Task.create(newTaskData);
       res.status(201).json(task);
     } catch (error) {
@@ -40,7 +39,7 @@ const taskController = {
             };
 
       const sortOptions: any = {};
-      if (sortByDueDate) sortOptions.dueDate = sortByDueDate === "asc" ? 1 : -1; //To display  order
+      if (sortByDueDate) sortOptions.date = sortByDueDate === "asc" ? 1 : -1; //To display  order
       if (sortByCompleted)
         sortOptions.completed = sortByCompleted === "asc" ? 1 : -1;
 
@@ -87,8 +86,6 @@ const taskController = {
   async updateTask(req: Request, res: Response) {
     try {
       const newTaskData = req.body;
-      newTaskData.dueDate = new Date(newTaskData.dueDate).toLocaleDateString();
-
       const task = await Task.findByIdAndUpdate(req.params.id, newTaskData, {
         new: true,
       });

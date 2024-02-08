@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
@@ -13,14 +12,15 @@ import { statusOption } from "../../Utils/constant";
 import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
-
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState([]);
   const [projectUpdate, setProjectUpdate] = useState([]);
   const [editData, setEditData] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [addEmail, setAddEmail] = useState(false);
   const [tasks, setTasks] = useState([
     {
       projectStatus: "none",
@@ -35,19 +35,20 @@ const SendMyDailyStatus = () => {
   const handleEmail = (selectedOptions) => {
     const usersEmail = selectedOptions.map((e) => e.value);
     setEmail(usersEmail);
+    setAddEmail(!addEmail);
   };
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get(`${BaseURL}/auth/getEmail`);
-        setEmail(response.data.emails);
+        setEmailList(response.data.emails);
       } catch (error) {
         console.error("Error fetching email data:", error);
       }
     };
 
     getData();
-  }, [navigate, handleEmail]);
+  }, [navigate, addEmail]);
 
   useEffect(() => {
     if (location.state !== null) {
@@ -58,10 +59,10 @@ const SendMyDailyStatus = () => {
   }, [location.state]);
 
   const updateStatus = () => {
-    const { dueDate, tasks, email } = location.state.item;
-    let d = new Date(dueDate);
+    const { date, tasks, email } = location.state.item;
+    let d = new Date(date);
     d = d.toLocaleDateString();
-    setStartDate(new Date(d));
+    // setStartDate(new Date(d));
     setTasks([...tasks]);
     setEmail([...email]);
   };
@@ -76,7 +77,7 @@ const SendMyDailyStatus = () => {
         `${BaseURL}/tasks/${editId}`,
         {
           email: email,
-          dueDate: startDate,
+          // dueDate: newDate,
           tasks: tasks,
           completed,
         },
@@ -135,21 +136,18 @@ const SendMyDailyStatus = () => {
     const token = localStorage.getItem("jwtToken");
 
     try {
-      await axios.post(
-        `${BaseURL}/tasks`,
-        {
-          email: email,
-          dueDate: startDate,
-          tasks: tasks,
-          completed,
+      const newTask = {
+        email: email,
+        date: date,
+        tasks: tasks,
+        completed,
+      };
+      await axios.post(`${BaseURL}/tasks`, newTask, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          "Content-Type": "application/json",
-        },
-      );
+        "Content-Type": "application/json",
+      });
       navigate("/daily_status_updates");
     } catch (error) {
       console.error("Error submitting status:", error);
@@ -185,7 +183,7 @@ const SendMyDailyStatus = () => {
                   <Select
                     label="select"
                     isMulti
-                    options={createEmailObjects(email)}
+                    options={createEmailObjects(emailList)}
                     isSearchable
                     noOptionsMessage={() => "email not found"}
                     onChange={handleEmail}
@@ -218,13 +216,14 @@ const SendMyDailyStatus = () => {
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label className="fw">Status Date</Form.Label>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    required
-                    dateFormat="dd/MM/yyyy"
-                    className="bg-dark text-white p-1 px-2 border-secondary "
-                  />
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    className="bg-dark text-white"
+                    style={{ colorScheme: "dark" }}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  ></Form.Control>
                 </Form.Group>
               </Row>
 

@@ -23,7 +23,7 @@ const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
                   <td>
                     {item?.user?.firstName} {item?.user?.lastName}
                   </td>
-                  <td>{item.dueDate}</td>
+                  <td>{item.date}</td>
                   <td></td>
                   <td></td>
                   <td>:</td>

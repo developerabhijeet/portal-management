@@ -4,7 +4,7 @@ interface ITask extends Document {
   email: string[];
   status: string;
   projectStatus: string;
-  dueDate: string;
+  date: Date;
   workingHour: string;
   completed: boolean;
   tasks: {
@@ -21,9 +21,10 @@ const taskSchema = new Schema<ITask>({
     type: [String],
     required: true,
   },
-  dueDate: {
-    type: String,
+  date: {
+    type: Date,
     required: true,
+    unique:true
   },
   completed: {
     type: Boolean,
