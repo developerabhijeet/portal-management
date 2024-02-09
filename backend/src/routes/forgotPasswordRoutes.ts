@@ -6,9 +6,9 @@ const router = express.Router();
 router.post("/forgot-password", sendForgotEmailController.createForgotEmail);
 router.get(
   "/reset-password/:id/:token",
-  sendForgotEmailController.getResetpPassword
+  sendForgotEmailController.getResetPassword
 );
-router.post(
+router.put(
   "/reset-password/:id/:token",
   sendForgotEmailController.createResetPassword
 );

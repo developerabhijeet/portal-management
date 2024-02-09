@@ -3,11 +3,12 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BaseURL } from "../../Utils/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,9 +17,21 @@ const ForgotPassword = () => {
         `${BaseURL}/forgotPass/forgot-password`,
         { email },
       );
-      setMessage(response.data.status);
+      if (response.status === 200) {
+        toast.success("Email sent successfully!", {
+          onClose: () => navigate("/login"),
+        });
+      }
     } catch (error) {
-      console.error("Error:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.status === "User Not Found"
+      ) {
+        toast.error("Email not found");
+      } else {
+        toast.error("Error sending forgot password email");
+      }
     }
   };
 
@@ -39,15 +52,9 @@ const ForgotPassword = () => {
           />
         </Form.Group>
         <div className="d-flex justify-content-between">
-          <Button
-            className="fw"
-            variant="success"
-            type="submit"
-           
-          >
+          <Button className="fw" variant="success" type="submit">
             SEND
           </Button>
-
           <Button
             className="fw"
             variant="secondary"
@@ -55,9 +62,9 @@ const ForgotPassword = () => {
           >
             LOGIN
           </Button>
-        </div>{" "}
+        </div>
       </Form>
-      {message && <p>{message}</p>}
+      <ToastContainer />
     </div>
   );
 };

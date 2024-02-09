@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import nodemailer from "nodemailer";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/User";
 
@@ -10,7 +10,7 @@ const sendForgotEmailController = {
     try {
       const oldUser = await User.findOne({ email });
       if (!oldUser) {
-        return res.json({ status: "User Not Exists!!" });
+        return res.status(404).json({ status: "User Not Found" });
       }
 
       // Generating token using jwtSecret and user's password
@@ -19,7 +19,7 @@ const sendForgotEmailController = {
         { email: oldUser.email, id: oldUser._id },
         secret,
         {
-          expiresIn: "55m",
+          expiresIn: "2m",
         }
       );
 
@@ -28,8 +28,8 @@ const sendForgotEmailController = {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "",
-          pass: "",
+          user: "portal9589@gmail.com",
+          pass: "your password",
         },
       });
 
@@ -60,64 +60,71 @@ const sendForgotEmailController = {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
-          res.json({ status: "Error sending forgot password email" });
+          console.error("Error sending forgot password email:", error);
+          return res.status(500).json({ status: "Error sending email" });
         } else {
           console.log("Email sent: " + info.response);
-          res.json({ status: "Password reset email sent successfully" });
+          return res.status(200).json({ status: "Email sent successfully" });
         }
       });
-      console.log(link);
     } catch (error) {
       console.error("Error sending forgot password email:", error);
-      res.json({ status: "Error sending forgot password email" });
+      return res.status(500).json({ status: "Internal Server Error" });
     }
   },
 
-  async getResetpPassword(req: Request, res: Response) {
+  async getResetPassword(req: Request, res: Response) {
     const { id, token } = req.params;
-    console.log(req.params);
-    const oldUser = await User.findOne({ _id: id });
-    if (!oldUser) {
-      return res.json({ status: "User Not Exists!!" });
-    }
-    const secret = process.env.jwtSecret + oldUser.password;
     try {
+      const oldUser = await User.findById(id);
+      if (!oldUser) {
+        return res.status(404).json({ status: "User Not Found" });
+      }
+      const secret = process.env.jwtSecret + oldUser.password;
       const verify = jwt.verify(token, secret);
-      res.render("index", { email: verify.email, status: "Not Verified" });
+      return res
+        .status(200)
+        .json({ email: verify.email, status: "Token Verified" });
     } catch (error) {
-      console.log(error);
-      res.send("Not Verified");
+      if (error instanceof TokenExpiredError) {
+        console.error("Token expired:", error);
+        return res.status(401).json({ status: "Token expired" });
+      } else if (error instanceof JsonWebTokenError) {
+        console.error("Invalid token:", error);
+        return res.status(400).json({ status: "Invalid token" });
+      } else {
+        console.error("Error verifying token:", error);
+        return res.status(500).json({ status: "Internal Server Error" });
+      }
     }
   },
 
   async createResetPassword(req: Request, res: Response) {
     const { id, token } = req.params;
     const { password } = req.body;
-
-    const oldUser = await User.findOne({ _id: id });
-    if (!oldUser) {
-      return res.json({ status: "User Not Exists!!" });
-    }
-    const secret = process.env.jwtSecret + oldUser.password;
     try {
+      const oldUser = await User.findById(id);
+      if (!oldUser) {
+        return res.status(404).json({ status: "User Not Found" });
+      }
+      const secret = process.env.jwtSecret + oldUser.password;
       const verify = jwt.verify(token, secret);
       const encryptedPassword = await bcrypt.hash(password, 10);
-      await User.updateOne(
-        {
-          _id: id,
-        },
-        {
-          $set: {
-            password: encryptedPassword,
-          },
-        }
-      );
-
-      res.render("index", { email: verify.email, status: "verified" });
+      await User.findByIdAndUpdate(id, { password: encryptedPassword });
+      return res
+        .status(200)
+        .json({ email: verify.email, status: "Password updated" });
     } catch (error) {
-      console.log(error);
-      res.json({ status: "Something Went Wrong" });
+      if (error instanceof TokenExpiredError) {
+        console.error("Token expired:", error);
+        return res.status(401).json({ status: "Token expired" });
+      } else if (error instanceof JsonWebTokenError) {
+        console.error("Invalid token:", error);
+        return res.status(400).json({ status: "Invalid token" });
+      } else {
+        console.error("Error verifying token:", error);
+        return res.status(500).json({ status: "Internal Server Error" });
+      }
     }
   },
 };
