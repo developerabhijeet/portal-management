@@ -11,7 +11,7 @@ import { logo } from "../../assets/assets";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaUserLock } from "react-icons/fa";
 import { BiSupport } from "react-icons/bi";
 import { GrStatusGood } from "react-icons/gr";
 
@@ -138,37 +138,110 @@ const Header = () => {
             className="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-2"
           >
             <a className="sidebar-toggler flex-shrink-0">
-              <i className="fa fa-bars"></i>
+              <i style={{color:'#60c2cf'}} className="fa fa-bars"></i>
             </a>
             <Container className="mt-2">
               <div>
-                <h3 className="text-primary">Bestpeers</h3>
+                <h3 style={{color:'#60c2cf'}}>Bestpeers</h3>
               </div>
               <div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="">
-                    <GrStatusGood style={{ marginRight: -16, marginTop: 15 }} />
-                    <NavDropdown menuVariant="dark" title="Status">
-                      <NavDropdown.Item>My Daily Status</NavDropdown.Item>
-                      <NavDropdown.Item>Send Daily Status</NavDropdown.Item>
-                      <NavDropdown.Item>Change Status</NavDropdown.Item>
-                    </NavDropdown>
-                    <BiSupport style={{ marginRight: -16, marginTop: 15 }} />
-                    <NavDropdown menuVariant="dark" title="Support">
-                      <NavDropdown.Item>Discussion Desk</NavDropdown.Item>
-                      <NavDropdown.Item>Help Desk</NavDropdown.Item>
-                    </NavDropdown>
-                    <FaUser style={{ marginRight: -16, marginTop: 15 }} />
-                    <NavDropdown
-                      className="m-0 p-0"
-                      menuVariant="dark"
-                      title="Username"
-                    >
-                      <NavDropdown.Item>Edit Profile</NavDropdown.Item>
-                      <NavDropdown.Item>Edit Personal info</NavDropdown.Item>
-                      <NavDropdown.Item>Logout</NavDropdown.Item>
-                    </NavDropdown>
+                    <div className="d-flex nav-link">
+                      <i className="fa fa-laptop me-2"></i>
+                      <NavDropdown
+                        className=""
+                        menuVariant="dark"
+                        title="Tests/calls"
+                        id="collapsible-nav-dropdown"
+                      >
+                        <NavDropdown.Item onClick={() => navigate("/calls")}>
+                          Calls
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => navigate("/tests")}>
+                          Tests
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </div>
+                    <div className="d-flex nav-link">
+                      <i className="fa fa-envelope me-lg-2"></i>
+                      <NavDropdown
+                        menuVariant="dark"
+                        title="Support"
+                        id="collapsible-nav-dropdown"
+                      >
+                        <NavDropdown.Item
+                          onClick={() => navigate("/discussion_desk")}
+                        >
+                          Discussion Desk
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          onClick={() => navigate("/help_desk")}
+                        >
+                          Help Desk
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </div>
+                    <div className="d-flex nav-link ">
+                      <i className="fa fa-solid fa-user me-2"></i>
+                      <NavDropdown
+                        align="end"
+                        menuVariant="dark"
+                        title={`${firstName} ${lastName}`}
+                        id="collapsible-nav-dropdown"
+                      >
+                        <NavDropdown.Item
+                          onClick={() => navigate("/edit_profile")}
+                        >
+                          Edit Profile
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          onClick={() => navigate("/edit_personal_info")}
+                        >
+                          Edit Personal info
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => logout()}>
+                          Logout
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </div>
+                    {role === "admin" && localToken && (
+                      <div className="d-flex nav-link ">
+                        <i className="fa fa-solid fa-lock me-2"></i>
+                        <NavDropdown
+                          title="Admin Panel"
+                          menuVariant="dark"
+                          align="end"
+                          id="collapsible-nav-dropdown"
+                        >
+                          <NavDropdown.Item onClick={() => navigate("/Signup")}>
+                            Add User
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => navigate("/All_users")}
+                          >
+                            Users
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => navigate("/projectUpdate")}
+                          >
+                            Projects
+                          </NavDropdown.Item>
+                          <NavDropdown.Item onClick={() => navigate("/tests")}>
+                            Tests
+                          </NavDropdown.Item>
+                          <NavDropdown.Item onClick={() => navigate("/calls")}>
+                            Calls
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => navigate("/my_leave")}
+                          >
+                            Leaves
+                          </NavDropdown.Item>
+                        </NavDropdown>
+                      </div>
+                    )}
                   </Nav>
                 </Navbar.Collapse>
               </div>

@@ -145,7 +145,6 @@ const EditPersonalInfo = () => {
           });
         }
       } else {
-      
         try {
           await axios.post(`${BaseURL}/editPesonalInfo`, {
             user: userId,
@@ -182,11 +181,11 @@ const EditPersonalInfo = () => {
   return (
     <Layout>
       <div className="containerOne">
-        <div className="headOne">
-          <h3 className="p-0 m-0">Personal Information</h3>
+        <div>
+          <h3 className="headOne">Personal Information</h3>
         </div>
-        <div className="p-4">
-          <Form>
+        <div>
+          <Form className="p-4 bg">
             <Row>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Father name</Form.Label>
@@ -355,7 +354,7 @@ const EditPersonalInfo = () => {
               <Button variant="outline-success" onClick={handleFormSubmit}>
                 Update
               </Button>
-              <Button variant="outline-secondary">Back</Button>
+              <Button variant="outline-primary">Back</Button>
             </div>
           </Form>
         </div>

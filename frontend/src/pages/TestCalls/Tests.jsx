@@ -41,10 +41,10 @@ const Tests = () => {
       <Layout>
         <div className={style.mainContainer}>
           <div className="container" style={{ flex: 2 }}>
-            <h5 className={style.createheading}>Test Tasks</h5>
-            <Table striped hover variant="dark">
+            <h4 className={style.createheading}>Test Tasks</h4>
+            <Table striped hover style={{backgroundColor:'#191c24'}}>
               <thead>
-                <tr>
+                <tr style={{color:'#ccc'}}>
                   <th>Client's Details</th>
                   <th>Profile</th>
                   <th>Status</th>

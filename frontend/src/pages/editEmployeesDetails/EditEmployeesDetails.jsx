@@ -146,7 +146,7 @@ export const EditEmployeesDetails = () => {
         <div className="containerOne">
           <div>
             <h3 className="headOne">Edit Employee</h3>
-            <Form className="m-4">
+            <Form className="p-4 bg" >
               <Form.Group className="mb-4" controlId="formGroupEmail">
                 <Form.Label className="fw">Email</Form.Label>
                 <Form.Control

@@ -5,24 +5,26 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export const DiscussionDesk = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <Layout>
-        <div className="container p-0 mt-4">
+        <div className="container mt-4">
           <div className="justify-content-end d-flex ">
-            <Button onClick={()=>navigate("new")} variant="outline-primary">New Discussion</Button>
+            <Button onClick={() => navigate("new")} variant="outline-primary">
+              New Discussion
+            </Button>
           </div>
 
           <div className="bg-dark my-4">
             <h3
               className="px-3 py-2 m-0"
-              style={{ backgroundColor: "#515151" }}
+              style={{ backgroundColor: "#292b3a" }}
             >
               Discussion Desk
             </h3>
             <div className="p-3 bg-dark m-0">
-              <Table hover variant="dark">
+              <Table striped hover>
                 <thead>
                   <tr>
                     <th>Topic</th>

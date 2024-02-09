@@ -26,7 +26,7 @@ const ProjectUpdate = () => {
   return (
     <>
       <Layout>
-        <Table className="container mt-4" striped hover variant="dark">
+        <Table className="container mt-4" striped hover>
           <thead>
             <tr>
               <th>Employee Name</th>

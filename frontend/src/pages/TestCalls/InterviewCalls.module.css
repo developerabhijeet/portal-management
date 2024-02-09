@@ -2,12 +2,15 @@
   margin: 0;
   padding: 0;
 }
-
+.backg {
+  background-color: #191c24;
+}
 .createheading {
-  background-color: #454545;
+  color: #60c2cf;
   padding: 8px 10px;
   margin: 0;
   border-radius: 3px 3px 0 0;
+  background-color: #191c24;
 }
 
 .interviewHeading {
@@ -24,9 +27,12 @@
 }
 
 .form {
-  padding-left: 60px;
-  margin-right: 100px;
+  padding: 30px;
+  margin: 0 15px 0 15px;
   flex: 1;
+  background-color: #191c24;
+  border: 1px solid none;
+  border-radius: 5px;
 }
 
 #cv::file-selector-button {
