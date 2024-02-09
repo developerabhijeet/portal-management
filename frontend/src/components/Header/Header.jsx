@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, NavDropdown, Button, Container } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../style.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +19,8 @@ const Header = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
+  const [toggleNav, setToggleNav] = useState(false);
+
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
 
@@ -55,101 +57,92 @@ const Header = () => {
     <>
       <div className="">
         {/* sidebar start */}
-        <div className="sidebar pe-4 pb-3">
+        <div
+          className={toggleNav ? "sidebar pe-4 pb-3 open" : "sidebar pe-4 pb-3"}
+        >
           <nav className="navbar bg-secondary navbar-dark">
-            <div className="navbar-brand mx-5 mb-3">
+            <div className="ms-5 mt-2">
               <img
                 src={require("../../assets/logo.png")}
-                width={130}
+                alt="logo"
                 height={50}
+                width={140}
               />
             </div>
-            <div className="d-flex align-items-center ms-4 mb-4">
+            <div className="d-flex align-items-center ms-4 mt-4">
               <div className="position-relative">
                 <FaRegCircleUser size={40} />
                 <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
               </div>
               <div className="ms-3">
-                <h6 className="mb-0">Jay prakash Gupta</h6>
-                <span>Admin</span>
+                <h6 className="mb-0">{`${firstName} ${lastName}`}</h6>
+                <span>{`${role}`}</span>
               </div>
             </div>
-            <div className="navbar-nav w-100">
-              <div
-                className="nav-item nav-link active d-flex"
-                style={{ alignItems: "center" }}
-              >
-                <div
-                  className="bg-secondary rounded-circle d-flex me-3"
-                  style={{
-                    height: "40px",
-                    width: "40px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AiOutlineDashboard size={20} />
+            <div className="navbar-nav w-100 mt-5">
+              <Link to="/">
+                <div className="nav-item nav-link active d-flex  align-items-center">
+                  <div className="bg-secondary rounded-circle d-flex me-2 align-items-center justify-content-center h3 w3 m-0 p-0">
+                    <AiOutlineDashboard size={20} />
+                  </div>
+                  <div>Dashboard</div>
                 </div>
-                <div>Dashboard</div>
-              </div>
+              </Link>
 
-              <div className="nav-item dropdown">
-                <a href="/Calls" className="nav-link dropdown-toggle">
-                  <i className="fa fa-laptop me-2"></i>Calls
-                </a>
-                <div className="dropdown-menu bg-transparent border-0">
-                  <a className="dropdown-item">Buttons</a>
-                  <a className="dropdown-item">Typography</a>
-                  <a className="dropdown-item">Other Elements</a>
+              <Link to="/send_daily_status">
+                <div className="nav-link">
+                  <i className="fa fa-laptop me-2"></i>Send Updates
                 </div>
-              </div>
-              <a href="/edit_profile" className="nav-item nav-link">
-                <i className="fa fa-th me-2"></i> Update profile
-              </a>
-              <a href="/edit_personal_info" className="nav-item nav-link">
-                <i className="fa fa-laptop me-2"></i>Tests
-              </a>
-              <a href="/send_daily_status" className="nav-item nav-link">
-                <i className="fa fa-table me-2"></i>Daily status
-              </a>
-              <a href="/discussion_desk" className="nav-item nav-link">
-                <i className="fa fa-th me-2"></i>Charts
-              </a>
-              <a href="/Calls" className="nav-link dropdown-toggle">
-                <i className="fa fa-laptop me-2"></i>Calls
-              </a>
-              <div className="nav-item dropdown">
-                <div className="dropdown-menu bg-transparent border-0">
-                  <a className="dropdown-item">Sign In</a>
-                  <a className="dropdown-item">Sign Up</a>
-                  <a className="dropdown-item">404 Error</a>
-                  <a className="dropdown-item">Blank Page</a>
+              </Link>
+              <Link to="/daily_status_updates">
+                <div className="nav-link">
+                  <i className="fa fa-laptop me-2"></i>My Updates
                 </div>
-              </div>
+              </Link>
+              <Link to="/my_leave">
+                <div className="nav-link">
+                  <i className="fa fa-th me-2"></i>My Leaves
+                </div>
+              </Link>
+
+              <Link to="/holidays">
+                <div className="nav-link">
+                  <i className="fa fa-table me-2"></i>Holidays
+                </div>
+              </Link>
+              <Link to="/edit_skills">
+                <div className="nav-link">
+                  <i className="fa fa-th me-2"></i>Skills
+                </div>
+              </Link>
             </div>
           </nav>
         </div>
         {/* Sidebar End */}
         {/* Content Start */}
-        <div className="content">
+        <div className={toggleNav ? "content open ms-0" : "content "}>
+          {/* Navbar Start  */}
           <Navbar
             collapseOnSelect
             expand="lg"
-            className="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-2"
+            className="navbar navbar-expand bg-secondary navbar-dark sticky-top m-0 ps-3 p-0"
           >
-            <a className="sidebar-toggler flex-shrink-0">
-              <i style={{color:'#60c2cf'}} className="fa fa-bars"></i>
-            </a>
-            <Container className="mt-2">
-              <div>
-                <h3 style={{color:'#60c2cf'}}>Bestpeers</h3>
-              </div>
+            <span className="sidebar-toggler text-brand content open flex-shrink-0">
+              <div
+                onClick={() => setToggleNav(!toggleNav)}
+                className="fa fa-bars"
+              ></div>
+            </span>
+            <Container className="pe-0 me-4">
+            <div>
+              <h2 className="m-0 text-brand"></h2>
+            </div>
               <div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="">
                     <div className="d-flex nav-link">
-                      <i className="fa fa-laptop me-2"></i>
+                     
                       <NavDropdown
                         className=""
                         menuVariant="dark"
@@ -164,8 +157,7 @@ const Header = () => {
                         </NavDropdown.Item>
                       </NavDropdown>
                     </div>
-                    <div className="d-flex nav-link">
-                      <i className="fa fa-envelope me-lg-2"></i>
+                    <div className="d-flex nav-link ms-0 ">
                       <NavDropdown
                         menuVariant="dark"
                         title="Support"
@@ -183,8 +175,7 @@ const Header = () => {
                         </NavDropdown.Item>
                       </NavDropdown>
                     </div>
-                    <div className="d-flex nav-link ">
-                      <i className="fa fa-solid fa-user me-2"></i>
+                    <div className="d-flex nav-link ms-0 ">
                       <NavDropdown
                         align="end"
                         menuVariant="dark"
@@ -207,8 +198,7 @@ const Header = () => {
                       </NavDropdown>
                     </div>
                     {role === "admin" && localToken && (
-                      <div className="d-flex nav-link ">
-                        <i className="fa fa-solid fa-lock me-2"></i>
+                      <div className="d-flex nav-link ms-0 ">
                         <NavDropdown
                           title="Admin Panel"
                           menuVariant="dark"
@@ -247,6 +237,7 @@ const Header = () => {
               </div>
             </Container>
           </Navbar>
+          {/* Navbar End */}
         </div>
       </div>
       {showModal ? (

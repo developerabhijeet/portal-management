@@ -4,7 +4,7 @@ import { BiSolidShow } from "react-icons/bi";
 
 const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
   return (
-    <table className="table">
+    <table className="table my-3" style={{backgroundColor: "#191C24"}}>
       <thead>
         <tr className="status">
           <th>Name</th>

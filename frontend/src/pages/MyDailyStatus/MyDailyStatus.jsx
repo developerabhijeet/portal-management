@@ -20,7 +20,7 @@ export const MyDailyStatus = ({}) => {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        const formattedTasks = response.data.tasks.map((task) => {
+        const formattedTasks = response?.data?.tasks.map((task) => {
           const formattedDate = new Date(task.date).toLocaleDateString(
             "en-US",
             {
@@ -80,14 +80,14 @@ export const MyDailyStatus = ({}) => {
   return (
     <>
       <Layout>
-        <div>
-          <h4>All Status</h4>
+        <div className="container mt-4 py-3" style={{backgroundColor: "#191C24"}}>
+          <h2 className="text-heading">All Status</h2>
           <StatusTable
             data={data}
             handleNavigate={handleNavigate}
             handleNavigate_Edit={handleNavigate_Edit}
           />
-        </div>
+        
         <div className="d-flex justify-content-center">
           <button
             className="btn btn-success me-2"
@@ -115,7 +115,7 @@ export const MyDailyStatus = ({}) => {
           >
             Next
           </button>
-        </div>
+        </div></div>
       </Layout>
     </>
   );

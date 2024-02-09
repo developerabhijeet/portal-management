@@ -8,9 +8,9 @@ export const MyDailyStatusNew_id = () => {
   return (
     <>
       <Layout>
-        <div>
-          <h2>Status Update on {data.date}</h2>
-          <div>
+        <div className="container my-4 p-3" style={{backgroundColor: "#191C24"}}>
+          <h2 className="text-heading">Status Update on {data.date}</h2>
+          <div className="p-2">
             <ul>
               <li>
                 <b>In Time</b>
@@ -22,7 +22,7 @@ export const MyDailyStatusNew_id = () => {
                 <b>Total Hours:</b>
               </li>
             </ul>
-            <h3>Please Find My Status Update:</h3>
+            <h4 style={{color: "#ccc"}}>Please Find My Status Update:</h4>
             <ul>
               <span>
                 <ul>
