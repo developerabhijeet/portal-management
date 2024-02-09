@@ -23,7 +23,6 @@ const ResetPassword = () => {
         );
         setMessage(response.data.status);
         if (response.status === 200) {
-          console.log("valid user");
           setData(true);
         } else if (response.status === 401) {
           navigate("*"); // Navigate to not-found page if token is expired
