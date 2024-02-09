@@ -127,9 +127,9 @@ const Header = () => {
             expand="lg"
             className="navbar navbar-expand bg-secondary navbar-dark sticky-top m-0 ps-3 p-0"
           >
-            <span className="sidebar-toggler text-brand content open flex-shrink-0">
+            <span className="sidebar-toggler text-brand content open flex-shrink-0" style={{cursor: "pointer"}} onClick={() => setToggleNav(!toggleNav)}>
               <div
-                onClick={() => setToggleNav(!toggleNav)}
+                
                 className="fa fa-bars"
               ></div>
             </span>
