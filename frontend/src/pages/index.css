@@ -1,4 +1,14 @@
 
+.form-label {
+  margin-bottom: 0.5rem;
+  color: cadetblue;
+}
+
+.text-white {
+  color: #a7a4a4 !important;
+}
+
+
 .nav-list {
   list-style-type: none;
   display: flex;

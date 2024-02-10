@@ -81,7 +81,7 @@ const Header = () => {
             </div>
             <div className="navbar-nav w-100 mt-5">
               <Link to="/">
-                <div className="nav-item nav-link active d-flex  align-items-center">
+                <div className=" nav-link active d-flex  align-items-center">
                   <div className="bg-secondary rounded-circle d-flex me-2 align-items-center justify-content-center h3 w3 m-0 p-0">
                     <AiOutlineDashboard size={20} />
                   </div>
@@ -120,29 +120,29 @@ const Header = () => {
         </div>
         {/* Sidebar End */}
         {/* Content Start */}
-        <div className={toggleNav ? "content open ms-0" : "content "}>
+        <div className={toggleNav ? "content open" : "content"}>
           {/* Navbar Start  */}
           <Navbar
             collapseOnSelect
             expand="lg"
-            className="navbar navbar-expand bg-secondary navbar-dark sticky-top m-0 ps-3 p-0"
+            className=" navbar-expand bg-secondary navbar-dark sticky-top m-0 ps-3 p-0"
           >
-            <span className="sidebar-toggler text-brand content open flex-shrink-0" style={{cursor: "pointer"}} onClick={() => setToggleNav(!toggleNav)}>
-              <div
-                
-                className="fa fa-bars"
-              ></div>
+            <span
+              className="sidebar-toggler text-brand content open flex-shrink-0"
+              style={{ cursor: "pointer" }}
+              onClick={() => setToggleNav(!toggleNav)}
+            >
+              <i className="fa fa-bars"></i>
             </span>
             <Container className="pe-0 me-4">
-            <div>
-              <h2 className="m-0 text-brand"></h2>
-            </div>
+              <div>
+                <h2 className="m-0 text-brand"></h2>
+              </div>
               <div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="">
                     <div className="d-flex nav-link">
-                     
                       <NavDropdown
                         className=""
                         menuVariant="dark"

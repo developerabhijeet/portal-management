@@ -144,7 +144,7 @@ export const EditEmployeesDetails = () => {
     <>
       <Layout>
         <div className="containerOne">
-          <div>
+          
             <h3 className="headOne">Edit Employee</h3>
             <Form className="p-4 bg" >
               <Form.Group className="mb-4" controlId="formGroupEmail">
@@ -302,7 +302,7 @@ export const EditEmployeesDetails = () => {
                 </Button>
               </div>
             </Form>
-          </div>
+          
         </div>
         <ToastContainer />
       </Layout>

@@ -6,7 +6,6 @@ import { BaseURL } from "../../Utils/utils";
 import Header from "../../components/Header/Header";
 import { Button, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
@@ -134,8 +133,8 @@ const Signup = () => {
   return (
     <>
       <Header />
-      <div className="containerOne">
-        <h3 className="headOne text-center">REGISTER EMPLOYEE</h3>
+      <div className="containerOne content">
+        <h3 className="headOne">REGISTER EMPLOYEE</h3>
         <Form className="m-4">
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label className="fw">Email</Form.Label>
