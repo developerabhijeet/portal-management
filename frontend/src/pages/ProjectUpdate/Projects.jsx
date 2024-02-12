@@ -22,12 +22,12 @@ const Projects = () => {
 
   return (
     <>
-      <Layout>
-        <div className="container mt-4">
-          <h5 className="px-3 py-3 m-0" style={{ backgroundColor: "#454545" }}>
+      <Layout newIndex="7">
+        <div className="container mt-4 p-5">
+          <h5 className="px-3 py-3 m-0" style={{ backgroundColor: "#191c24", color:"#60c2cf"}}>
             All Projects
           </h5>
-          <Table striped hover variant="dark">
+          <Table striped hover style={{ backgroundColor: "#191c24" }}>
             <thead>
               <tr>
                 <th>Project</th>

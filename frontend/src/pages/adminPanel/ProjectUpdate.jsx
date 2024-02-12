@@ -27,17 +27,13 @@ const ProjectUpdate = () => {
     <>
       <Layout newIndex="6">
         <div className="mt-5 container p-4">
-        <h3
+          <h3
             className="px-3 py-3 m-0"
             style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
           >
             Assigned Projects
           </h3>
-          <Table
-            striped
-            hover
-            style={{ backgroundColor: "#191c24" }}
-          >
+          <Table striped hover style={{ backgroundColor: "#191c24" }}>
             <thead>
               <tr>
                 <th>Employee Name</th>
@@ -53,7 +49,7 @@ const ProjectUpdate = () => {
                     </td>
                     <td>
                       <Button
-                        variant="info"
+                        variant="outline-info"
                         onClick={() => {
                           navigate("/edit_project", {
                             state: {

@@ -8,10 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { FaPenToSquare } from "react-icons/fa6";
+import { FaRegCircleUser, FaPenToSquare } from "react-icons/fa6";
 import { BiSolidHomeHeart } from "react-icons/bi";
-import { FaMedal } from "react-icons/fa";
+import { FaMedal, FaRegClipboard } from "react-icons/fa";
 
 const Header = ({ newIndex }) => {
   const [showModal, setShowModal] = useState(false);
@@ -95,6 +94,14 @@ const Header = ({ newIndex }) => {
               <Link to="/daily_status_updates">
                 <div className={newIndex == 2 ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-laptop me-2"></i>My Updates
+                </div>
+              </Link>
+              <Link to="/projects">
+                <div className={newIndex == 7 ? `nav-link active` : "nav-link"}>
+                  <i className="me-2">
+                    <FaRegClipboard />
+                  </i>
+                  Projects
                 </div>
               </Link>
               <Link to="/my_leave">

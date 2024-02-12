@@ -44,8 +44,7 @@ const InterviewCalls = () => {
       details: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-    },
+    onSubmit: (values) => {},
   });
 
   return (
@@ -205,9 +204,9 @@ const InterviewCalls = () => {
                 <p className={style.error}>{formik.errors.details}</p>
               ) : null}
             </Form.Group>
-            <button type="submit" className={style.submitbtn}>
+            <Button type="submit" className="me-3" variant="outline-success">
               Submit
-            </button>
+            </Button>
           </Form>
         </div>
       </div>
