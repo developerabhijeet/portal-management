@@ -36,9 +36,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="containerOne bg-dark" style={{ margin: "9% auto" }}>
+    <div className="containerOne" style={{ margin: "9% auto" }}>
       <h3 className="headOne">FORGOT PASSWORD</h3>
-      <Form className="m-4" onSubmit={handleSubmit}>
+      <Form style={{ backgroundColor: "#191c24" }} className="p-4 backg" onSubmit={handleSubmit}>
         <Form.Group className="mb-4" controlId="formGroupEmail">
           <Form.Label className="fw">Email</Form.Label>
           <Form.Control
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
           </Button>
           <Button
             className="fw"
-            variant="secondary"
+            style={{backgroundColor:'purple', color:'white'}}
             onClick={() => navigate("/login")}
           >
             LOGIN

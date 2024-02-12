@@ -8,15 +8,14 @@ export const DiscussionDesk = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Layout>
-        <div className="container mt-4">
+      <Layout newIndex="6">
+        <div className="container mt-4 p-4">
           <div className="justify-content-end d-flex ">
             <Button onClick={() => navigate("new")} variant="outline-info">
               New Discussion
             </Button>
           </div>
-
-          <div className="my-4 mx-4">
+          <div className="mt-1 py-3 ">
             <h3
               className="px-3 py-3 m-0"
               style={{ backgroundColor: "#191c24", color:'#60c2cf' }}

@@ -4,9 +4,8 @@
   transition: 0.5s;
 }
 
-.bg {
+.backg {
   background-color: #191c24;
-  border: 1px solid none;
   border-radius: 0 0 20px 20px;
 }
 

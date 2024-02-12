@@ -142,20 +142,20 @@ export const EditEmployeesDetails = () => {
   };
   return (
     <>
-      <Layout>
+      <Layout newIndex="6">
         <div className="containerOne">
           <h3 className="headOne">Edit Employee</h3>
-          <Form className="p-4 bg">
+          <Form className="p-4 backg">
             <Form.Group className="mb-4" controlId="formGroupEmail">
               <Form.Label className="fw">Email</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
                 placeholder="Enter email"
-                disabled
                 value={email}
                 onChange={(e) => handleChange(e)}
                 className="text-white bg-dark"
+                disabled
               />
               <Form.Text className="text-danger">{errors.email}</Form.Text>
             </Form.Group>

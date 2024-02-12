@@ -8,23 +8,23 @@ import "./addDiscussion.css";
 export const AddDiscussion = () => {
   return (
     <>
-      <Layout>
-        <div className="my-4 container p-0">
+      <Layout newIndex="6">
+        <div className="mt-5 p-4 container">
           <h3
-            className="mx-3 px-3 py-2 m-0"
-            style={{ backgroundColor: "#191c24" }}
+            className="px-3 py-2 m-0"
+            style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
           >
             New Discussion Desk
           </h3>
-          <div className="p-3 bg-dark m-0">
-            <Form className="p-3" style={{ backgroundColor: "#191c24" }}>
+          <div>
+            <Form className="p-4" style={{ backgroundColor: "#191c24" }}>
               <Form.Group as={Row} className="mb-3">
                 <Form.Label className="fw" column sm={2}>
                   Topic <span>*</span>
                 </Form.Label>
                 <Col sm={10}>
                   <Form.Control
-                    className="bg-dark text-white border-secondary"
+                    className="text-white border-secondary"
                     type="text"
                   />
                 </Col>

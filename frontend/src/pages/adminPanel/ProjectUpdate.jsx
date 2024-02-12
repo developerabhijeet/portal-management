@@ -25,8 +25,8 @@ const ProjectUpdate = () => {
 
   return (
     <>
-      <Layout>
-        <div className="container p-4">
+      <Layout newIndex="6">
+        <div className="mt-5 container p-4">
         <h3
             className="px-3 py-3 m-0"
             style={{ backgroundColor: "#191c24", color: "#60c2cf" }}

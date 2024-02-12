@@ -179,13 +179,13 @@ const EditPersonalInfo = () => {
   } = userData;
 
   return (
-    <Layout>
+    <Layout newIndex="6">
       <div className="containerOne">
         <div>
           <h3 className="headOne">Personal Information</h3>
         </div>
         <div>
-          <Form className="p-4 bg">
+          <Form className="p-4 backg">
             <Row>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Father name</Form.Label>

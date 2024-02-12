@@ -38,7 +38,7 @@ const Tests = () => {
 
   return (
     <>
-      <Layout>
+      <Layout newIndex="6">
         <div className={style.mainContainer}>
           <div className="container" style={{ flex: 2 }}>
             <h4 className={style.createheading}>Test Tasks</h4>

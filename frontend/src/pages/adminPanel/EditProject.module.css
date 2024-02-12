@@ -3,7 +3,7 @@
   padding: 5px;
   text-align: center;
   border-radius: 10px 10px 0 0;
-  font-size: 20px;
+  font-size: 30px;
   color: #60c2cf;
   margin: 0;
 }
@@ -31,4 +31,8 @@
 .errors {
   color: red;
   margin-top: -15px;
+}
+
+.tablebg {
+  background-color: #191c24;
 }

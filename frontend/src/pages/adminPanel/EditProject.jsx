@@ -13,7 +13,7 @@ const EditProject = () => {
   const location = useLocation();
   const { id, firstName, lastName } = location.state;
   const [projectNames, setProjectNames] = useState({});
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("");
   const [actions, setActions] = useState("");
   const [projects, setProjects] = useState([]);
   const [editProject, setEditProject] = useState({
@@ -53,7 +53,7 @@ const EditProject = () => {
       isValid = false;
       Errors.projectName = "Please enter a project name";
     }
-    if (!date || !date.trim()) {
+    if (!date) {
       isValid = false;
       Errors.dateError = "Please select a date";
     }
@@ -179,11 +179,11 @@ const EditProject = () => {
   const { projectName, dateError, action } = addProjectError;
   return (
     <>
-      <Layout>
+      <Layout newIndex="6">
         <div className={style.containerCls}>
-          <h3 className={style.heading}>
+          <p className={style.heading}>
             {firstName} {lastName}
-          </h3>
+          </p>
           <Form className="p-4 bg">
             <Form.Group className="mb-4">
               <Form.Label className="fw">Add Project</Form.Label>
@@ -196,18 +196,19 @@ const EditProject = () => {
                 onChange={(e) => handleAddInput(e)}
               />
             </Form.Group>
-            {projectName && <p className="errors">{projectName}</p>}
+            {projectName && <p className={style.errors}>{projectName}</p>}
             <Form.Group className="mb-4">
               <Form.Label className="fw">Date</Form.Label>
               <Form.Control
                 type="date"
                 name="date"
+                style={{ colorScheme: "dark" }}
                 className="bg-dark text-white"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
             </Form.Group>
-            {dateError && <p className="errors">{dateError}</p>}
+            {dateError && <p className={style.errors}>{dateError}</p>}
             <Form.Group className="mb-4">
               <Form.Label className="fw">Action</Form.Label>
               <Form.Select
@@ -221,7 +222,7 @@ const EditProject = () => {
                 />
               </Form.Select>
             </Form.Group>
-            {action && <p className="errors">{action}</p>}
+            {action && <p className={style.errors}>{action}</p>}
             <Button
               className="me-3 fw"
               variant="success"
@@ -233,8 +234,8 @@ const EditProject = () => {
         </div>
         <div>
           {projects.length > 0 ? (
-            <div className="p-4">
-              <Table className="container mt-4" striped hover>
+            <div className="m-4">
+              <Table className={`container ${style.tablebg}`} striped hover>
                 <thead>
                   <tr>
                     <th>Assigned Project Name</th>

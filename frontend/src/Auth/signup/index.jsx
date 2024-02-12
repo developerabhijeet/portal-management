@@ -134,7 +134,7 @@ const Signup = () => {
       <div className="signup">
         <div className="containerOne" style={{maxWidth:'590px'}}>
           <h3 className="headOne">REGISTER EMPLOYEE</h3>
-          <Form className="p-4 bg">
+          <Form className="p-4 backg">
             <Form.Group className="mb-3" controlId="formGroupEmail">
               <Form.Label className="fw">Email</Form.Label>
               <Form.Control
