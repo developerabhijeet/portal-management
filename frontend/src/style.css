@@ -211,9 +211,6 @@
 .content .navbar .dropdown-toggle[aria-expanded="true"]::after {
   transform: rotate(-180deg);
 }
-.show{
-  width: 100%;
-}
 
 .icondisplay {
   display: none;

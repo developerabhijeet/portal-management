@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
@@ -38,10 +39,10 @@ const SendMyDailyStatus = () => {
     workingHour: "",
     status: "",
     task: "",
+    index: "",
   });
 
   const validationCheck = () => {
-    // const {email, date, workingHour, status, task} = errors
     let isValid = true;
     const newErrors = { errors };
 
@@ -49,24 +50,35 @@ const SendMyDailyStatus = () => {
       isValid = false;
       newErrors.email = "Email is required";
     }
-    if (!date || !date.trim()) {
+    if (!date) {
       isValid = false;
       newErrors.date = "Date is required";
     }
-    if (!tasks.map((item)=>item.workingHour)) {
-      isValid = false;
-      newErrors.email = "Working hour is required";
-    }
-    if (!tasks.map((item)=>item.status)) {
-      isValid = false;
-      newErrors.status = "Task Status is required";
-    }
-    if (!tasks.map((item)=>item.task)) {
-      isValid = false;
-      newErrors.task = "Task description is required";
-    }
-
-    setErrors(newErrors);
+    if (
+      tasks.map((item) => {
+        if (!item.workingHour || item.workingHour === "00:00") {
+          isValid = false;
+          newErrors.workingHour = "workingHour is required";
+        }
+      })
+    )
+      if (
+        tasks.map((item) => {
+          if (!item.status) {
+            isValid = false;
+            newErrors.status = "Task Status is required";
+          }
+        })
+      )
+        if (
+          tasks.map((item) => {
+            if (!item.task.trim()) {
+              isValid = false;
+              newErrors.task = "Task description is required";
+            }
+          })
+        )
+          setErrors(newErrors);
     return isValid;
   };
   const navigate = useNavigate();
@@ -100,38 +112,49 @@ const SendMyDailyStatus = () => {
 
   const updateStatus = () => {
     const { date, tasks, email } = location.state.item;
-    let d = new Date(date);
-    d = d.toLocaleDateString();
-    // setStartDate(new Date(d));
+    const newDate = moment(date);
+    const myDate = newDate.format("yyyy-MM-DD");
+    setDate(myDate);
     setTasks([...tasks]);
     setEmail([...email]);
   };
 
   const handleUpdate = async (e, completed) => {
     e.preventDefault();
-
     const token = localStorage.getItem("jwtToken");
 
-    try {
-      await axios.put(
-        `${BaseURL}/tasks/${editId}`,
-        {
+    if (validationCheck()) {
+      try {
+        const newUpdatedData = {
           email: email,
-          // dueDate: newDate,
+          date: date,
           tasks: tasks,
           completed,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        };
+        await axios.put(
+          `${BaseURL}/tasks/${editId}`,
+          newUpdatedData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            "Content-Type": "application/json",
           },
-          "Content-Type": "application/json",
-        },
-      );
-      setEditData(false);
-      navigate("/daily_status_updates");
-    } catch (error) {
-      alert(error);
+        );
+        toast.success("New update added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          navigate("/daily_status_updates");
+        }, 2000);
+        setEditData(false);
+      } catch (error) {
+        toast.error("Something went wrong! Please login again", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
     }
   };
 
@@ -182,7 +205,6 @@ const SendMyDailyStatus = () => {
           tasks: tasks,
           completed,
         };
-        console.log("NEW:", newTask);
         await axios.post(`${BaseURL}/tasks`, newTask, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -329,7 +351,10 @@ const SendMyDailyStatus = () => {
                                 defaultOption="Select Status"
                               />
                             </Form.Select>
-                            <Form.Text className="text-danger">{errors.status}</Form.Text>
+
+                            <Form.Text className="text-danger">
+                              {errors.status}
+                            </Form.Text>
                           </Form.Group>
 
                           <Form.Group as={Col} md="4" className="mt-3">
@@ -337,6 +362,7 @@ const SendMyDailyStatus = () => {
                             <Form.Control
                               type="time"
                               value={task.workingHour}
+                              style={{ colorScheme: "dark" }}
                               onChange={(e) =>
                                 setTasks((prevTasks) =>
                                   prevTasks.map((prevTask, i) =>
@@ -350,7 +376,9 @@ const SendMyDailyStatus = () => {
                                 )
                               }
                             />
-                            <Form.Text className="text-danger">{errors.workingHour}</Form.Text>
+                            <Form.Text className="text-danger">
+                              {errors.workingHour}
+                            </Form.Text>
                           </Form.Group>
                         </Row>
                         <Row>
@@ -370,7 +398,9 @@ const SendMyDailyStatus = () => {
                                 )
                               }
                             />
-                            <Form.Text className="text-danger">{errors.task}</Form.Text>
+                            <Form.Text className="text-danger">
+                              {errors.task}
+                            </Form.Text>
                           </Form.Group>
                           <Form.Group
                             as={Col}
@@ -508,13 +538,19 @@ const SendMyDailyStatus = () => {
                     </Button>
                   </div>
                 ) : (
-                  <div className="save_send_btn_container">
+                  <div className="d-flex mt-4 justify-content-center">
                     <Button
-                      className="px-5"
-                      variant="outline-primary"
+                      variant="outline-success"
                       onClick={(e) => handleUpdate(e, true)}
                     >
                       Update
+                    </Button>
+                    <Button
+                      className="px-4 ms-4"
+                      variant="outline-info"
+                      onClick={() => navigate("/daily_status_updates")}
+                    >
+                      Back
                     </Button>
                   </div>
                 )}

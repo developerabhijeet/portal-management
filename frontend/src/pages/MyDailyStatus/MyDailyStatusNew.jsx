@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import "../index.css";
+
 export const MyDailyStatusNew_id = () => {
   const { state } = useLocation();
   const data = state.item;
