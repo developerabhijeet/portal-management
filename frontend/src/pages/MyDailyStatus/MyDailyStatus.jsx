@@ -5,7 +5,9 @@ import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
 import StatusTable from "./MyStatusTable";
-export const MyDailyStatus = ({}) => {
+import { Button } from "react-bootstrap";
+
+export const MyDailyStatus = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -79,43 +81,49 @@ export const MyDailyStatus = ({}) => {
 
   return (
     <>
-      <Layout>
-        <div className="container mt-4 py-3" style={{backgroundColor: "#191C24"}}>
-          <h2 className="text-heading">All Status</h2>
+      <Layout newIndex="2">
+        <div
+          className="container mt-5 py-3"
+          style={{ backgroundColor: "#191C24" }}
+        >
+          <h2 className="text-brand">All Status</h2>
           <StatusTable
             data={data}
             handleNavigate={handleNavigate}
             handleNavigate_Edit={handleNavigate_Edit}
           />
-        
-        <div className="d-flex justify-content-center">
-          <button
-            className="btn btn-success me-2"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                className="btn btn-success ms-2"
-                key={page}
-                onClick={() => handlePageChange(page)}
-                disabled={currentPage === page}
-              >
-                {page}
-              </button>
-            ),
-          )}
-          <button
-            className="btn btn-success ms-2"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div></div>
+
+          <div className="d-flex justify-content-center">
+            <Button
+              className="me-4"
+              variant="success"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </Button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <Button
+                  className="btn btn-success"
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  disabled={currentPage === page}
+                >
+                  {page}
+                </Button>
+              ),
+            )}
+            <Button
+              className="ms-4"
+              variant="success"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
       </Layout>
     </>
   );

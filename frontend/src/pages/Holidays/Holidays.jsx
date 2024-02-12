@@ -6,13 +6,13 @@ const Holidays = () => {
   const currentYear = newDate.getFullYear();
   return (
     <>
-      <Layout>
-        <div className="container mt-4 p-0">
-          <h3 className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}>
+      <Layout newIndex="4">
+        <div className="container mt-5 p-0">
+          <h3 className="bg text-brand px-3 py-2 m-0">
             Holiday Calendar <span>{currentYear}</span>
           </h3>
-          <div className="p-3 bg-dark m-0">
-            <Table hover variant="dark">
+          <div className="p-3 bg m-0">
+            <Table hover>
               <thead>
                 <tr>
                   <th>Date</th>
@@ -30,8 +30,8 @@ const Holidays = () => {
             </Table>
           </div>
         </div>
-        <div className="container mt-4 bg-dark p-3">
-          <h3>Note</h3>
+        <div className="container mt-4 bg p-3">
+          <h3 className="text-white">Note</h3>
           <ol>
             <li>
               For the year {currentYear}, There would be 1 optional holiday that

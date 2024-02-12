@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../components/Layout";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -12,10 +12,10 @@ export const MyLeave = () => {
 
   return (
     <>
-      <Layout>
+      <Layout newIndex="3">
         <div className="container">
           <DropdownButton
-            variant="secondary"
+            variant="outline-info"
             title="Apply Leaves"
             className="my-4 d-flex justify-content-end"
             menuVariant="dark"
@@ -31,19 +31,14 @@ export const MyLeave = () => {
               );
             })}
           </DropdownButton>
-          <div className="bg-dark p-3 d-flex justify-content-between mb-4">
-            <h3 className="m-0">Leave Balance</h3>
-            <h3 className="m-0 me-4 pe-5">0.0</h3>
+          <div className="bg p-3 d-flex justify-content-between mb-4">
+            <h3 className="m-0 text-brand">Leave Balance</h3>
+            <h3 className="m-0 me-4 pe-5 text-brand">0.0</h3>
           </div>
-          <div className="bg-dark mb-4">
-            <h3
-              className="px-3 py-2 m-0"
-              style={{ backgroundColor: "#515151" }}
-            >
-              Alloted Balance
-            </h3>
-            <div className="p-3 bg-dark m-0">
-              <Table hover variant="dark">
+          <div className="mb-4">
+            <h3 className="px-3 py-2 m-0 text-brand bg">Alloted Balance</h3>
+            <div className="p-3 bg m-0">
+              <Table hover>
                 <thead>
                   <tr>
                     <th>Month</th>
@@ -68,14 +63,11 @@ export const MyLeave = () => {
             </div>
           </div>
           <div className="bg-dark">
-            <h3
-              className="px-3 py-2 m-0"
-              style={{ backgroundColor: "#515151" }}
-            >
+            <h3 className="px-3 py-2 m-0 bg text-brand">
               All Leaves of {firstName} {lastName}
             </h3>
-            <div className="p-3 bg-dark m-0">
-              <Table hover variant="dark">
+            <div className="p-3 m-0 bg">
+              <Table hover>
                 <thead>
                   <tr>
                     <th>Applied By</th>

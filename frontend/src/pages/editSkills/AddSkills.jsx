@@ -15,12 +15,12 @@ export const AddSkills = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Layout>
-        <div className="container mt-4">
-          <h3 className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}>
+      <Layout newIndex="5">
+        <div className="container mt-5">
+          <h3 className="px-3 py-2 m-0 bg text-brand">
             Add Skills
           </h3>
-          <div className="p-3 bg-dark m-0">
+          <div className="p-4 bg m-0">
             <Form>
               {label.map((val) => (
                 <Form.Group
@@ -37,8 +37,8 @@ export const AddSkills = () => {
                       searchable
                       style={{ colorScheme: "dark" }}
                       placeholder="Select Technology"
-                      color="#717171"
-                      className="text-secondary border border-secondary"
+                      color="#515151"
+                      className="text-light bg-dark p-1 border-secondary"
                       options={options}
                       onChange={(values) => {
                         if (val === "Beginner") {
@@ -57,7 +57,8 @@ export const AddSkills = () => {
             <div style={{ textAlign: "center" }}>
               <Button
                 onClick={() => navigate("/edit_skills")}
-                variant="success"
+                variant="outline-info"
+                style={{width: "140px"}}
               >
                 UPDATE
               </Button>

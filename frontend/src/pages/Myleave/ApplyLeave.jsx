@@ -67,11 +67,10 @@ export const ApplyLeave = () => {
     }
   };
   return (
-    <Layout>
+    <Layout newIndex="3">
       <div className="containerOne">
-        <div>
-          <h3 className="headOne">Apply {leaveType}</h3>
-          <Form className="m-4">
+        <h3 className="bg heading">Apply {leaveType}</h3>
+          <Form className="newform">
             <Form.Group className="mb-3">
               <Form.Label className="fw">From date</Form.Label>
               <Form.Control
@@ -80,7 +79,7 @@ export const ApplyLeave = () => {
                 name="fromDate"
                 value={fromDate}
                 onChange={(e) => handleChange(e)}
-                className="text-light bg-dark border-secondary"
+                className="text-white border-secondary"
               />
               <Form.Text className="text-danger">{errors.fromDate}</Form.Text>
             </Form.Group>
@@ -105,7 +104,7 @@ export const ApplyLeave = () => {
                 style={{ colorScheme: "dark" }}
                 value={toDate}
                 onChange={(e) => handleChange(e)}
-                className="text-light bg-dark border-secondary"
+                className="text-white bg-dark border-secondary"
               />
               <Form.Text className="text-danger">{errors.toDate}</Form.Text>
             </Form.Group>
@@ -128,7 +127,7 @@ export const ApplyLeave = () => {
                 disabled
                 name="days"
                 value={days}
-                className="text-light bg-dark border-secondary"
+                className="text-white bg-dark border-secondary"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -137,7 +136,7 @@ export const ApplyLeave = () => {
                 multi
                 searchable
                 placeholder=""
-                color="#717171"
+                color="#414141"
                 style={{ colorScheme: "dark" }}
                 className="text-secondary bg-dark border-secondary"
                 options={emails}
@@ -153,14 +152,15 @@ export const ApplyLeave = () => {
                 onChange={(e) => handleChange(e)}
                 as="textarea"
                 placeholder="Leave a reason here"
-                className="text-light bg-dark border-secondary"
+                className="text-white bg-dark border-secondary"
               />
               <Form.Text className="text-danger">{errors.reason}</Form.Text>
             </Form.Group>
             <div className="d-flex justify-content-between">
               <Button
                 className="fw"
-                variant="success"
+                style={{width: "120px"}}
+                variant="outline-success"
                 type="submit"
                 onClick={(e) => handleSubmit(e)}
               >
@@ -168,14 +168,14 @@ export const ApplyLeave = () => {
               </Button>{" "}
               <Button
                 className="fw"
-                variant="outline-primary"
+                style={{width: "120px"}}
+                variant="outline-danger"
                 onClick={() => navigate("/my_leave")}
               >
                 BACK
               </Button>
             </div>
           </Form>
-        </div>
       </div>
     </Layout>
   );

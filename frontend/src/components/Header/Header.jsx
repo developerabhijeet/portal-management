@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Nav, NavDropdown, Button, Container } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../style.css";
@@ -9,9 +9,11 @@ import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { AiOutlineDashboard } from "react-icons/ai";
+import { FaPenToSquare } from "react-icons/fa6";
+import { BiSolidHomeHeart } from "react-icons/bi";
+import { FaMedal } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ newIndex }) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
@@ -20,6 +22,7 @@ const Header = () => {
   const lastName = localStorage.getItem("lastName");
 
   const role = localStorage.getItem("role");
+
   useEffect(() => {
     if (!localToken) {
       navigate("/login");
@@ -76,38 +79,50 @@ const Header = () => {
             </div>
             <div className="navbar-nav w-100 mt-5">
               <Link to="/">
-                <div className=" nav-link active d-flex  align-items-center">
-                  <div className="bg-secondary rounded-circle d-flex me-2 align-items-center justify-content-center h3 w3 m-0 p-0">
-                    <AiOutlineDashboard size={20} />
-                  </div>
-                  <div>Dashboard</div>
+                <div className={!newIndex ? `nav-link active` : "nav-link"}>
+                  <i className="fa fa-th me-2"></i>Dashboard
                 </div>
               </Link>
 
               <Link to="/send_daily_status">
-                <div className="nav-link">
-                  <i className="fa fa-laptop me-2"></i>Send Updates
+                <div className={newIndex == 1 ? `nav-link active` : "nav-link"}>
+                  <i className="me-2">
+                    <FaPenToSquare />
+                  </i>
+                  Send Updates
                 </div>
               </Link>
               <Link to="/daily_status_updates">
-                <div className="nav-link">
+                <div className={newIndex == 2 ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-laptop me-2"></i>My Updates
                 </div>
               </Link>
               <Link to="/my_leave">
-                <div className="nav-link">
-                  <i className="fa fa-th me-2"></i>My Leaves
+                <div
+                  className={
+                    newIndex == 3
+                      ? `nav-link d-flex align-items-center active`
+                      : "nav-link d-flex align-items-center"
+                  }
+                >
+                  <i className="me-2">
+                    <BiSolidHomeHeart size={18} />
+                  </i>
+                  <span>My Leaves</span>
                 </div>
               </Link>
 
               <Link to="/holidays">
-                <div className="nav-link">
+                <div className={newIndex == 4 ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-table me-2"></i>Holidays
                 </div>
               </Link>
               <Link to="/edit_skills">
-                <div className="nav-link">
-                  <i className="fa fa-th me-2"></i>Skills
+                <div className={newIndex == 5 ? `nav-link active` : "nav-link"}>
+                  <i className="me-2">
+                    <FaMedal />
+                  </i>
+                  Skills
                 </div>
               </Link>
             </div>
@@ -129,6 +144,7 @@ const Header = () => {
             >
               <i className="fa fa-bars"></i>
             </span>
+            {toggleNav ? <span className="showLogo">BESTPEERS</span> : ""}
             <Container className="pe-0 me-4">
               <div>
                 <h2 className="m-0 text-brand"></h2>

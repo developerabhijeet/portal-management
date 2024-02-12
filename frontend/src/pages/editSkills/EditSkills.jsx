@@ -3,24 +3,15 @@ import Table from "react-bootstrap/Table";
 import { MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
+import { Button } from "react-bootstrap";
 export const EditSkills = () => {
   return (
     <>
-      <Layout>
-        <div className="container mt-4">
-          <h3
-            className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}
-          >
-            All Skills
-          </h3>
-          <div
-            style={{
-              padding: "16px 16px 0",
-              backgroundColor: "#212529",
-              margin: 0,
-            }}
-          >
-            <Table hover variant="dark">
+      <Layout newIndex="5">
+        <div className="container mt-5">
+          <h3 className="bg text-brand px-3 py-2 m-0">All Skills</h3>
+          <div className="bg p-4">
+            <Table hover>
               <thead>
                 <tr>
                   <th>Beginner</th>
@@ -36,18 +27,10 @@ export const EditSkills = () => {
                   <td></td>
                   <td>
                     <Link to="/add-skills">
-                      <span
-                        style={{
-                          backgroundColor: "#337ab7",
-                          margin: 0,
-                          padding: "5px 10px",
-                          borderRadius: 5,
-                          cursor: "pointer",
-                        }}
-                      >
+                      <Button variant="outline-success">
                         <MdEdit className="text-white" />
-                        <span className="text-white"> Edit</span>
-                      </span>
+                        Edit
+                      </Button>
                     </Link>
                   </td>
                 </tr>

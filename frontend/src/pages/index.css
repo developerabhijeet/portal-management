@@ -3,358 +3,51 @@
   margin-bottom: 0.5rem;
   color: cadetblue;
 }
+.new{
+  background-color: #191c24;  
+  transition: 1s;
+  padding-inline: 20px;
+  padding-block: 35px;
+  border-radius: 0 0px 20px 20px;
+}
 
+.new:hover{
+  box-shadow: 0 0 5px #60c2cf;
+  transition: 1s;
+}
 .text-white {
-  color: #a7a4a4 !important;
+  color:  #bdb9b9  !important;
 }
 
-
-.nav-list {
-  list-style-type: none;
-  display: flex;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0;
-}
-.nav-item {
-  color: white;
-}
-.email-box {
-  display: flex;
-  justify-content: space-between;
-}
-.nav-item a {
-  text-decoration: none;
-  color: inherit;
+td{
+  color: #bdb9b9 !important;
 }
 
-.dropdown {
-  position: relative;
+th{
+  color: cadetblue;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #333;
-  min-width: 160px;
-  z-index: 1;
+h6{
+  color: #9ba1c7;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-
-
-.daily-status {
-  text-align: center;
-  display: block;
-}
-
-.daily-status-btn {
-  background-color: #1d5968;
-}
-
-.delete_btn {
-  display: block;
-  padding: 5px 5px;
-  margin-top: 30px;
-  margin-left: 10px;
-}
-.delete_buttonInner {
-  background-color: rgb(134, 30, 16);
-  width: 20px;
-  height: 30px;
-  opacity: 1;
-}
-.save_send_btn_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-.daily-statusSave {
-  margin-right: 50px;
-}
-
-.daily-status-savebtn {
-  background-color: #f0ad4e;
-}
-.daily-status-sendbtn {
-  text-align: center;
-  display: block;
-}
-
-.daily-status-btnsend {
-  width: 200px;
-  background-color: rgba(3, 85, 35, 0.8);
-}
-.status_header {
-  display: flex;
-}
-.eyeicon {
-  max-width: 100px;
-  width: 100%;
-  background: #5bc0de;
-  color: #ccc;
-  border-color: #46b8da;
-  border-radius: 4x;
-  margin: 10px;
-  padding: 8px;
-  text-align: center;
-}
-.Edit_icon {
-  max-width: 100px;
-  width: 100%;
-  background: #337ab7;
-  color: #ccc;
-  border-color: #337ab7;
-  border-radius: 4x;
-  margin: 10px;
-  padding: 8px;
-  text-align: center;
-}
-
-.status {
-  color: #ccc;
-}
-
-.date_picker_input {
-  background-color: "#333";
-  color: "#fff";
-  border: 1px solid #fff;
+.border-color{
+  border: 1px solid  rgb(72, 78, 78);
   padding: 10px;
+  margin-bottom: 25px;
 }
 
-.date_picker_calendar {
-  background-color: "#333";
-  color: "#fff";
+.form-select{
+  color: #bdb9b9 !important;
 }
 
-.justify-content-center {
-  display: "flex" !important;
-  justify-content: center !important;
-  align-items: "center" !important;
-}
-.status-update-form-main {
-  margin: 0 auto 50px;
-  max-width: 700px;
-  padding-top: 20px;
-  display: block !important;
-}
-input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
-input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
-.panel-heading {
-  background-color: rgb(142, 194, 189);
-  flex: 1;
-  border-radius: 3px;
- 
-  padding: 10px;
-  color: rgb(34, 79, 100);
-}
-.panel-title {
-  color: #ccc;
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 25px;
-  color: inherit;
-  text-transform: capitalize;
-  text-align: start;
-  margin: 5px;
-}
-.available_container {
-  display: flex;
-  font-weight: 600;
-  padding-top: 15px;
-  font-size: 16px;
-  margin-bottom: 0;
-  color: #ccc;
-}
-.available_p {
-  font-weight: 600;
-  padding: 0 15px;
-  font-size: 16px;
-  margin-bottom: 0;
-  color: #ccc;
-  margin-right: 250px;
-  cursor: pointer;
-}
-.available_p_link {
-  color: #ccc;
-}
-.Available_heading {
-  font-weight: 600;
-  padding: 0 15px;
-  font-size: 16px;
-}
-.project_select {
-  background-color: #000;
-  color: #ccc;
-  margin-right: 30px;
-}
-.status_select {
-  background-color: #000;
-  color: #ccc;
-  width: 100%;
-  border-radius: 5px solid rgb(203, 204, 204);
-}
-#select_option {
-  background-color: #050706;
-  width: 210px;
-  color: rgb(238, 240, 241);
-  height: 40px;
-}
-.custom-datepicker {
-  background-color: #ffffff;
-  color: #000000;
-  height: 38px;
-  width: 200px;
-  border-radius: 5px;
-  border: 1px solid rgb(203, 204, 204);
-  position: relative;
-  top: -8px;
+.form-control{
+  color: #bdb9b9 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  .custom-datepicker {
-    background-color: #333333;
-    color: #ffffff;
-  }
+.taskDetails{
+  padding-block: 25px;
+  border-top: 1px solid #626577;
+  border-bottom: 1px solid #626577;
 }
-.emailContrainer {
-  display: flex;
-  padding-top: 20px;
-}
-
-.tomail {
-  padding-right: 50px;
-  max-width: 700px !important ;
-  height: 100px;
-}
-.ccstatus {
-  padding-right: 20px;
-}
-#inputBox {
-  margin-left: 40px;
-}
-.addtask {
-  margin-top: 80px;
-}
-.taskContainer {
-  display: block;
-  margin-bottom: 2;
-  padding-top: 20px;
-  width: 100%;
-}
-.working_hours {
-  position: relative;
-  padding-right: 20px;
-  margin: 0px 20px;
-  margin-left: 50px;
-}
-.task {
-  margin: 20px 0px;
-}
-.task-box {
-  display: flex;
-}
-.task:focus {
-  border-color: #2e6da4;
-}
-.task-input {
-  border: 1px solid #ccc;
-  color: #f4f7f8;
-  background-color: #039eec;
-  border-radius: 0;
-  max-width: 100%;
-  resize: none;
-  width: 100%;
-  min-height: 100px;
-  padding: 8px;
-  background: transparent;
-}
-
-.projectupdateBtn {
-  background-color: #2267bd;
-  color: #fff;
-  border-radius: 0%;
-  border-color: #0d6efd;
-}
-.projectInput {
-  background-color: #000;
-  color: #ccc;
-}
-.errorText {
-  color: red;
-}
-.main-container {
-  flex: 1;
-  border: 1px solid rgb(22, 34, 33);
-  position: relative;
-  top: 20px;
-  border-radius: 5px;
-  background-color: rgb(27, 26, 26);
-}
-.form-container {
-  display: block;
-  padding: 0px 20px;
-  margin-top: 30px;
-  padding-bottom: 20px;
-}
-#myfilled-name {
-  width: 200px;
-}
-.task_status_box {
-  display: flex;
-}
-@media screen and ((max-width: 724px)) {
-  .emailContrainer,
-  .email-box {
-    display: block;
-  }
-  #myfilled-name,
-  #select_option {
-    width: 100%;
-  }
-  .mail {
-    margin-right: 20px;
-  }
-  .working_hours {
-    margin-left: -1px;
-    width: 100%;
-    padding-right: 0px;
-  }
-  .custom-datepicker {
-    height: 38px;
-    width: 660px;
-  }
-  .addtask {
-    margin-top: 0px;
-  }
-  .task_status_box {
-    display: block;
-  }
-}
-@media screen and ((max-width: 624px)) {
-  .custom-datepicker {
-    width: 560px;
-  }
-}
-@media screen and ((max-width: 524px)) {
-  .custom-datepicker {
-    width: 460px;
-  }
-  .save_send_btn_container {
-    display: block;
-    margin-top: 10px;
-  }
-  .daily-status-btnsend {
-    margin-top: 10px;
-    margin-left: -230px;
-  }
-}
-
+/* ------------------------------------------------------------------ */
