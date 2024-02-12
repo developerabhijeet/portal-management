@@ -37,35 +37,45 @@ const Users = () => {
   return (
     <>
       <Layout>
-        <Table className="container mt-4" striped hover variant="dark">
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Email</th>
-              <th>Operation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 &&
-              users.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    {item.firstName} {item.lastName}
-                  </td>
-                  <td>{item.email}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDeleteUser(item._id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+        <div className="my-4 mx-4">
+          <h3
+            className="px-3 py-3 m-0"
+            style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
+          >
+            All Employees
+          </h3>
+          <div>
+            <Table striped hover style={{ backgroundColor: "#191c24" }}>
+              <thead>
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Email</th>
+                  <th>Operation</th>
                 </tr>
-              ))}
-          </tbody>
-        </Table>
+              </thead>
+              <tbody>
+                {users.length > 0 &&
+                  users.map((item) => (
+                    <tr key={item._id}>
+                      <td>
+                        {item.firstName} {item.lastName}
+                      </td>
+                      <td>{item.email}</td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDeleteUser(item._id)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
         <ToastContainer />
       </Layout>
     </>

@@ -42,9 +42,9 @@ const Tests = () => {
         <div className={style.mainContainer}>
           <div className="container" style={{ flex: 2 }}>
             <h4 className={style.createheading}>Test Tasks</h4>
-            <Table striped hover style={{backgroundColor:'#191c24'}}>
+            <Table striped hover style={{ backgroundColor: "#191c24" }}>
               <thead>
-                <tr style={{color:'#ccc'}}>
+                <tr style={{ color: "#ccc" }}>
                   <th>Client's Details</th>
                   <th>Profile</th>
                   <th>Status</th>
@@ -115,10 +115,16 @@ const Tests = () => {
                   name="status"
                   id="status"
                 >
-                  <OptionsSelect options={selectStatus} />
+                  <OptionsSelect
+                    options={selectStatus}
+                    defaultOption={"Select Status"}
+                  />
                 </SelectInput>
                 <SelectInput label="Mode" id="mode" name="mode" style={style}>
-                  <OptionsSelect options={selectMode} />
+                  <OptionsSelect
+                    options={selectMode}
+                    defaultOption={"Select Mode"}
+                  />
                 </SelectInput>
                 <Input
                   label="Deadline from"
@@ -140,7 +146,10 @@ const Tests = () => {
                   name="priority"
                   style={style}
                 >
-                  <OptionsSelect options={selectPriority} />
+                  <OptionsSelect
+                    options={selectPriority}
+                    defaultOption={"Select Priority"}
+                  />
                 </SelectInput>
                 <SelectInput
                   label="Primary technology"
@@ -148,7 +157,10 @@ const Tests = () => {
                   name="technology"
                   style={style}
                 >
-                  <OptionsSelect options={selectTech} />
+                  <OptionsSelect
+                    options={selectTech}
+                    defaultOption={"Select Technology"}
+                  />
                 </SelectInput>
                 <button type="submit" className={style.submitbtn}>
                   Search

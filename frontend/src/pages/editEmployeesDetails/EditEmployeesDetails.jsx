@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Layout from "../../components/Layout";
 export const EditEmployeesDetails = () => {
   const navigate = useNavigate();
-  const [fetchData, setFetchData] = useState(false)
+  const [fetchData, setFetchData] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [showCRPassword, setShowCRPassword] = useState(false);
@@ -123,12 +123,12 @@ export const EditEmployeesDetails = () => {
           localStorage.setItem("password", data.password);
           localStorage.setItem("lastName", data.lastName);
           localStorage.setItem("firstName", data.firstName);
-          
+
           toast.success("Employee Details Updated Successfully...", {
             position: "top-right",
             autoClose: 2000,
           });
-          setFetchData(!fetchData)
+          setFetchData(!fetchData);
         } catch (error) {
           toast.error("Something went wrong! please login again", {
             position: "top-right",
@@ -144,165 +144,159 @@ export const EditEmployeesDetails = () => {
     <>
       <Layout>
         <div className="containerOne">
-          
-            <h3 className="headOne">Edit Employee</h3>
-            <Form className="p-4 bg" >
-              <Form.Group className="mb-4" controlId="formGroupEmail">
-                <Form.Label className="fw">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  disabled
-                  value={email}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">{errors.email}</Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label className="fw">First name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  placeholder="Enter first name"
-                  value={firstName}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">
-                  {errors.firstName}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label className="fw">Last name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter last name"
-                  name="lastName"
-                  value={lastName}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">{errors.lastName}</Form.Text>
-              </Form.Group>
-              <Form.Group
-                className={errors.password ? "mb-3" : null}
-                controlId="formGroupPassword"
+          <h3 className="headOne">Edit Employee</h3>
+          <Form className="p-4 bg">
+            <Form.Group className="mb-4" controlId="formGroupEmail">
+              <Form.Label className="fw">Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                disabled
+                value={email}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <Form.Text className="text-danger">{errors.email}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">First name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                placeholder="Enter first name"
+                value={firstName}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <Form.Text className="text-danger">{errors.firstName}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">Last name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter last name"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <Form.Text className="text-danger">{errors.lastName}</Form.Text>
+            </Form.Group>
+            <Form.Group
+              className={errors.password ? "mb-3" : null}
+              controlId="formGroupPassword"
+            >
+              <Form.Label className="fw">
+                New Password{" "}
+                <span className="fw-normal text-secondary">
+                  (leave blank if you don't want to change it)
+                </span>
+              </Form.Label>
+
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter Password"
+                name="password"
+                value={password}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <span
+                className="position-relative"
+                style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
+                onClick={() => setShowPassword(!showPassword)}
               >
-                <Form.Label className="fw">
-                  New Password{" "}
-                  <span className="fw-normal text-secondary">
-                    (leave blank if you don't want to change it)
-                  </span>
-                </Form.Label>
+                {showPassword ? (
+                  <IoIosEyeOff size={20} />
+                ) : (
+                  <IoIosEye size={20} />
+                )}
+              </span>
+              <Form.Text
+                className="text-danger position-relative"
+                style={{ left: "-20px" }}
+              >
+                {errors.password}
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className={errors.confirmPass ? "mb-3" : null}>
+              <Form.Label className="fw">New Password confirmation</Form.Label>
+              <Form.Control
+                type={showCPassword ? "text" : "password"}
+                name="confirmPass"
+                placeholder="Enter confirm password"
+                value={confirmPass}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <span
+                className="position-relative"
+                style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
+                onClick={() => setShowCPassword(!showCPassword)}
+              >
+                {showCPassword ? (
+                  <IoIosEyeOff size={20} />
+                ) : (
+                  <IoIosEye size={20} />
+                )}
+              </span>
+              <Form.Text
+                className="text-danger position-relative"
+                style={{ left: "-20px" }}
+              >
+                {errors.confirmPass}
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className={errors.currentPass ? "mb-4" : "mb-2"}>
+              <Form.Label className="fw">
+                Current password <span className="text-danger">*</span>
+              </Form.Label>
 
-                <Form.Control
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <span
-                  className="position-relative"
-                  style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <IoIosEyeOff size={20} />
-                  ) : (
-                    <IoIosEye size={20} />
-                  )}
-                </span>
-                <Form.Text
-                  className="text-danger position-relative"
-                  style={{ left: "-20px" }}
-                >
-                  {errors.password}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className={errors.confirmPass ? "mb-3" : null}>
-                <Form.Label className="fw">
-                  New Password confirmation
-                </Form.Label>
-                <Form.Control
-                  type={showCPassword ? "text" : "password"}
-                  name="confirmPass"
-                  placeholder="Enter confirm password"
-                  value={confirmPass}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <span
-                  className="position-relative"
-                  style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
-                  onClick={() => setShowCPassword(!showCPassword)}
-                >
-                  {showCPassword ? (
-                    <IoIosEyeOff size={20} />
-                  ) : (
-                    <IoIosEye size={20} />
-                  )}
-                </span>
-                <Form.Text
-                  className="text-danger position-relative"
-                  style={{ left: "-20px" }}
-                >
-                  {errors.confirmPass}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className={errors.currentPass ? "mb-4" : "mb-2"}>
-                <Form.Label className="fw">
-                  Current password <span className="text-danger">*</span>
-                </Form.Label>
-
-                <Form.Control
-                  type={showCRPassword ? "text" : "password"}
-                  name="currentPass"
-                  placeholder="Enter current password"
-                  value={currentPass}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <span
-                  className="position-relative"
-                  style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
-                  onClick={() => setShowCRPassword(!showCRPassword)}
-                >
-                  {showCRPassword ? (
-                    <IoIosEyeOff size={20} />
-                  ) : (
-                    <IoIosEye size={20} />
-                  )}
-                </span>
-                <Form.Text
-                  className="text-danger position-relative"
-                  style={{ left: "-20px" }}
-                >
-                  {errors.currentPass}
-                </Form.Text>
-              </Form.Group>
-              <div className="d-flex justify-content-between">
-                <Button
-                  className="fw"
-                  variant="outline-success"
-                  type="submit"
-                  onClick={(e) => handleSubmit(e)}
-                >
-                  UPDATE
-                </Button>{" "}
-                <Button
-                  className="fw"
-                  variant="outline-primary"
-                  onClick={() => navigate("/")}
-                >
-                  BACK
-                </Button>
-              </div>
-            </Form>
-          
+              <Form.Control
+                type={showCRPassword ? "text" : "password"}
+                name="currentPass"
+                placeholder="Enter current password"
+                value={currentPass}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <span
+                className="position-relative"
+                style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
+                onClick={() => setShowCRPassword(!showCRPassword)}
+              >
+                {showCRPassword ? (
+                  <IoIosEyeOff size={20} />
+                ) : (
+                  <IoIosEye size={20} />
+                )}
+              </span>
+              <Form.Text
+                className="text-danger position-relative"
+                style={{ left: "-20px" }}
+              >
+                {errors.currentPass}
+              </Form.Text>
+            </Form.Group>
+            <div className="d-flex justify-content-between">
+              <Button
+                className="fw"
+                variant="outline-success"
+                type="submit"
+                onClick={(e) => handleSubmit(e)}
+              >
+                UPDATE
+              </Button>{" "}
+              <Button
+                className="fw"
+                variant="outline-primary"
+                onClick={() => navigate("/")}
+              >
+                BACK
+              </Button>
+            </div>
+          </Form>
         </div>
         <ToastContainer />
       </Layout>

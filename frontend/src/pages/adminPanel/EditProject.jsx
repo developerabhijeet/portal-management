@@ -180,11 +180,11 @@ const EditProject = () => {
   return (
     <>
       <Layout>
-        <div className={style.containerCls} bg-dark>
+        <div className={style.containerCls}>
           <h3 className={style.heading}>
             {firstName} {lastName}
           </h3>
-          <Form className="m-3">
+          <Form className="p-4 bg">
             <Form.Group className="mb-4">
               <Form.Label className="fw">Add Project</Form.Label>
               <Form.Control
@@ -233,8 +233,8 @@ const EditProject = () => {
         </div>
         <div>
           {projects.length > 0 ? (
-            <>
-              <Table className="container mt-4" striped hover variant="dark">
+            <div className="p-4">
+              <Table className="container mt-4" striped hover>
                 <thead>
                   <tr>
                     <th>Assigned Project Name</th>
@@ -250,7 +250,7 @@ const EditProject = () => {
                           <Button
                             className="me-3"
                             size="sm"
-                            variant="primary"
+                            variant="info"
                             onClick={() => handleEditProject(item._id)}
                           >
                             Edit
@@ -273,16 +273,12 @@ const EditProject = () => {
                 style={{ marginTop: 100 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title style={{ color: "black" }}>
-                    Edit Project
-                  </Modal.Title>
+                  <Modal.Title>Edit Project</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form onSubmit={handleEditSubmit}>
                     <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "black" }}>
-                        Project Name
-                      </Form.Label>
+                      <Form.Label>Project Name</Form.Label>
                       <Form.Control
                         type="text"
                         name="projectName"
@@ -295,7 +291,7 @@ const EditProject = () => {
                     {editProjectError && (
                       <p className={style.errors}>{editProjectError}</p>
                     )}
-                    <Button variant="primary" type="submit">
+                    <Button variant="success" type="submit">
                       Submit
                     </Button>
 
@@ -309,7 +305,7 @@ const EditProject = () => {
                   </Form>
                 </Modal.Body>
               </Modal>
-            </>
+            </div>
           ) : (
             <p className={style.noProjects}>No Projects Alloted</p>
           )}

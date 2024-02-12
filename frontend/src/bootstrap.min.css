@@ -2576,7 +2576,7 @@ fieldset:disabled .btn {
   pointer-events: none;
   opacity: 0.65;
 }
-.btn-primary {
+/* .btn-primary {
   color: #fff;
   background-color: #eb1616;
   border-color: #eb1616;
@@ -2614,7 +2614,7 @@ fieldset:disabled .btn {
   color: #fff;
   background-color: #eb1616;
   border-color: #eb1616;
-}
+} */
 .btn-secondary {
   color: #fff;
   background-color: #191c24;
@@ -4983,11 +4983,12 @@ fieldset:disabled .btn {
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
+  background-color: #191c24;
+  color: cadetblue;
 }
 .modal-backdrop {
   position: fixed;
@@ -5021,6 +5022,7 @@ fieldset:disabled .btn {
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;
+  color: #60c2cf;
 }
 .modal-body {
   position: relative;

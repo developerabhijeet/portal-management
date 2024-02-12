@@ -109,7 +109,7 @@ const Calls = () => {
                   name="status"
                   id="status"
                 >
-                  <OptionsSelect options={selectStatus} />
+                  <OptionsSelect options={selectStatus} defaultOption={"Select Status"}/>
                 </SelectInput>
                 <Input
                   label="Scheduled at from"
@@ -131,7 +131,7 @@ const Calls = () => {
                   name="priority"
                   style={style}
                 >
-                  <OptionsSelect options={selectPriority} />
+                  <OptionsSelect options={selectPriority} defaultOption={"Select Priority"}/>
                 </SelectInput>
                 <SelectInput
                   label="Primary technology"
@@ -139,7 +139,7 @@ const Calls = () => {
                   name="technology"
                   style={style}
                 >
-                  <OptionsSelect options={selectTech} />
+                  <OptionsSelect options={selectTech} defaultOption={"Select Technology"}/>
                 </SelectInput>
                 <button type="submit" className={style.submitbtn}>
                   Search

@@ -130,7 +130,7 @@
 .content .navbar .navbar-nav .nav-link {
   transition: 0.5s;
   margin: 0px 15px;
-  padding: 12px 0;
+  padding: 10px 0;
   color: var(--light);
   outline: none;
 }
@@ -181,7 +181,13 @@
 .content .navbar .dropdown-toggle[aria-expanded="true"]::after {
   transform: rotate(-180deg);
 }
+.show{
+  width: 100%;
+}
 
+.icondisplay {
+  display: none;
+}
 @media (max-width: 900.98px) {
   .content .navbar .navbar-nav .nav-link {
     transition: 1s;

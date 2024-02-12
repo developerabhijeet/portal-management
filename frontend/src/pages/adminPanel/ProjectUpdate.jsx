@@ -26,40 +26,52 @@ const ProjectUpdate = () => {
   return (
     <>
       <Layout>
-        <Table className="container mt-4" striped hover>
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Operation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 &&
-              users.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    {item.firstName} {item.lastName}
-                  </td>
-                  <td>
-                    <Button
-                      variant="info"
-                      onClick={() => {
-                        navigate("/edit_project", {
-                          state: {
-                            id: `${item._id}`,
-                            firstName: `${item.firstName}`,
-                            lastName: `${item.lastName}`,
-                          },
-                        });
-                      }}
-                    >
-                      Show
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+        <div className="container p-4">
+        <h3
+            className="px-3 py-3 m-0"
+            style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
+          >
+            Assigned Projects
+          </h3>
+          <Table
+            striped
+            hover
+            style={{ backgroundColor: "#191c24" }}
+          >
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.length > 0 &&
+                users.map((item) => (
+                  <tr key={item._id}>
+                    <td>
+                      {item.firstName} {item.lastName}
+                    </td>
+                    <td>
+                      <Button
+                        variant="info"
+                        onClick={() => {
+                          navigate("/edit_project", {
+                            state: {
+                              id: `${item._id}`,
+                              firstName: `${item.firstName}`,
+                              lastName: `${item.lastName}`,
+                            },
+                          });
+                        }}
+                      >
+                        Show
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
       </Layout>
     </>
   );

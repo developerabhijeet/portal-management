@@ -7,20 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
-import { logo } from "../../assets/assets";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { FaUser, FaUserLock } from "react-icons/fa";
-import { BiSupport } from "react-icons/bi";
-import { GrStatusGood } from "react-icons/gr";
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const localToken = localStorage.getItem("jwtToken");
   const [toggleNav, setToggleNav] = useState(false);
-
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
 
@@ -141,12 +136,12 @@ const Header = () => {
               <div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                  <Nav className="">
+                  <Nav className="bg-secondary">
                     <div className="d-flex nav-link">
                       <NavDropdown
-                        className=""
+                        title="Tests/Calls"
+                        align="end"
                         menuVariant="dark"
-                        title="Tests/calls"
                         id="collapsible-nav-dropdown"
                       >
                         <NavDropdown.Item onClick={() => navigate("/calls")}>
@@ -161,7 +156,8 @@ const Header = () => {
                       <NavDropdown
                         menuVariant="dark"
                         title="Support"
-                        id="collapsible-nav-dropdown"
+                        align="end"
+                        id="collapsible-nav-dropdown-2"
                       >
                         <NavDropdown.Item
                           onClick={() => navigate("/discussion_desk")}
@@ -180,8 +176,11 @@ const Header = () => {
                         align="end"
                         menuVariant="dark"
                         title={`${firstName} ${lastName}`}
-                        id="collapsible-nav-dropdown"
+                        id="collapsible-nav-dropdown-3"
                       >
+                        <NavDropdown.Item onClick={() => handleChangeStatus()}>
+                          Change Status
+                        </NavDropdown.Item>
                         <NavDropdown.Item
                           onClick={() => navigate("/edit_profile")}
                         >
@@ -203,7 +202,7 @@ const Header = () => {
                           title="Admin Panel"
                           menuVariant="dark"
                           align="end"
-                          id="collapsible-nav-dropdown"
+                          id="collapsible-nav-dropdown-4"
                         >
                           <NavDropdown.Item onClick={() => navigate("/Signup")}>
                             Add User

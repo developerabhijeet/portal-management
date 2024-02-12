@@ -11,20 +11,20 @@ export const DiscussionDesk = () => {
       <Layout>
         <div className="container mt-4">
           <div className="justify-content-end d-flex ">
-            <Button onClick={() => navigate("new")} variant="outline-primary">
+            <Button onClick={() => navigate("new")} variant="outline-info">
               New Discussion
             </Button>
           </div>
 
-          <div className="bg-dark my-4">
+          <div className="my-4 mx-4">
             <h3
-              className="px-3 py-2 m-0"
-              style={{ backgroundColor: "#292b3a" }}
+              className="px-3 py-3 m-0"
+              style={{ backgroundColor: "#191c24", color:'#60c2cf' }}
             >
               Discussion Desk
             </h3>
-            <div className="p-3 bg-dark m-0">
-              <Table striped hover>
+            <div>
+              <Table striped hover style={{ backgroundColor: "#191c24" }}>
                 <thead>
                   <tr>
                     <th>Topic</th>
