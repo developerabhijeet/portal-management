@@ -63,7 +63,7 @@ const Users = () => {
                       <td>{item.email}</td>
                       <td>
                         <Button
-                          variant="danger"
+                          variant="outline-danger"
                           size="sm"
                           onClick={() => handleDeleteUser(item._id)}
                         >

@@ -225,7 +225,7 @@ const EditProject = () => {
             {action && <p className={style.errors}>{action}</p>}
             <Button
               className="me-3 fw"
-              variant="success"
+              variant="outline-success"
               onClick={() => handleAddProject(id)}
             >
               Add
@@ -251,13 +251,13 @@ const EditProject = () => {
                           <Button
                             className="me-3"
                             size="sm"
-                            variant="info"
+                            variant="outline-info"
                             onClick={() => handleEditProject(item._id)}
                           >
                             Edit
                           </Button>
                           <Button
-                            variant="danger"
+                            variant="outline-danger"
                             size="sm"
                             onClick={() => handleDeleteProject(item._id)}
                           >
@@ -292,12 +292,12 @@ const EditProject = () => {
                     {editProjectError && (
                       <p className={style.errors}>{editProjectError}</p>
                     )}
-                    <Button variant="success" type="submit">
+                    <Button variant="outline-success" type="submit">
                       Submit
                     </Button>
 
                     <Button
-                      variant="danger"
+                      variant="outline-danger"
                       className="m-2"
                       onClick={() => handleCloseModal()}
                     >

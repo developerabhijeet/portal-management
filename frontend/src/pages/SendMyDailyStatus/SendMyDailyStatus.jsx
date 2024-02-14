@@ -142,16 +142,12 @@ const SendMyDailyStatus = () => {
           tasks: tasks,
           completed,
         };
-        await axios.put(
-          `${BaseURL}/tasks/${editId}`,
-          newUpdatedData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            "Content-Type": "application/json",
+        await axios.put(`${BaseURL}/tasks/${editId}`, newUpdatedData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+          "Content-Type": "application/json",
+        });
         toast.success("New update added successfully", {
           position: "top-right",
           autoClose: 2000,
@@ -424,7 +420,6 @@ const SendMyDailyStatus = () => {
                             />
                           </Form.Group>
                         </Row>
-
                       </div>
                     ))}
                   </div>

@@ -8,7 +8,7 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -37,7 +37,7 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
                 <Form.Label>
                   How Many Hours?
                 </Form.Label>
-                <Form.Control type="time" style={{ marginBottom: 10 }} />
+                <Form.Control type="time" style={{ marginBottom: 10, colorScheme:'dark'}} />
               </>
             )}
             <Form.Label>Any Note</Form.Label>
@@ -45,10 +45,10 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="outline-danger" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button variant="outline-success" onClick={handleClose}>
             Change Availability
           </Button>
         </Modal.Footer>

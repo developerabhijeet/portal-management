@@ -48,27 +48,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
 
-.submitbtn {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-  padding: 6px 12px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.searchbtn {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
-  margin-left: 10px;
-  padding: 5px 10px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
 .error {
   color: red;
 }

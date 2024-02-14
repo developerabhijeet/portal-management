@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import style from "./InterviewCalls.module.css";
 import Input from "./Input";
 import SelectInput from "./SelectInput";
@@ -141,12 +141,12 @@ const Calls = () => {
                 >
                   <OptionsSelect options={selectTech} defaultOption={"Select Technology"}/>
                 </SelectInput>
-                <button type="submit" className={style.submitbtn}>
+                <Button type="submit" className="me-3" variant="outline-success">
                   Search
-                </button>
-                <button type="reset" className={style.searchbtn}>
+                </Button>
+                <Button type="reset" variant="outline-danger">
                   Clear Search
-                </button>
+                </Button>
               </Form>
             </Formik>
           </div>

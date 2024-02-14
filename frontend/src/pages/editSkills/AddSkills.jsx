@@ -1,25 +1,87 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
-import { options } from "../../Utils/constant";
+import { skillOptions } from "../../Utils/constant";
 import Select from "react-dropdown-select";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
+import axios from "axios";
+import { BaseURL } from "../../Utils/utils";
+import { ToastContainer, toast } from "react-toastify";
+
+
 export const AddSkills = () => {
   const [beginnerTech, setBeginnerTech] = useState([]);
   const [intermediateTech, setIntermediateTech] = useState([]);
   const [proficientTech, setProficientTech] = useState([]);
+  const [editSkills, setEditSkills] = useState([]);
   const label = ["Beginner", "Intermediate", "Proficient"];
   const navigate = useNavigate();
+
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BaseURL}/EditSkills/${userId}`);
+        setEditSkills(response.data.EditSkills);
+      } catch (error) {
+        console.error("Error while fetching the skills: ", error);
+      }
+    };
+    fetchData();
+  }, [userId]);
+
+  const editSkillsId = editSkills?.map((item) => item._id);
+  const handleAddSkillsSubmit = async () => {
+    if (editSkills.length > 0) {
+      try {
+        await axios.put(`${BaseURL}/EditSkills/${editSkillsId}`, {
+          beginnerTech: beginnerTech,
+          intermediateTech: intermediateTech,
+          proficientTech: proficientTech,
+          user: userId,
+        });
+        toast.success("Skills updated successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+        });
+        setTimeout(() => {
+          navigate("/edit_skills");
+        }, 1000);
+      } catch (error) {
+        console.error("Error Updating Skills: ", error);
+      }
+    } else {
+      try {
+        await axios.post(`${BaseURL}/EditSkills/${userId}`, {
+          beginnerTech: beginnerTech,
+          intermediateTech: intermediateTech,
+          proficientTech: proficientTech,
+          user: userId,
+        });
+
+        toast.success("Skills added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: true,
+        });
+        setTimeout(() => {
+          navigate("/edit_skills");
+        }, 2000);
+      } catch (error) {
+        console.error("Error Adding Skills: ", error);
+      }
+    }
+  };
   return (
     <>
       <Layout newIndex="5">
         <div className="container mt-5">
-          <h3 className="px-3 py-2 m-0 bg text-brand">
-            Add Skills
-          </h3>
+          <h3 className="px-3 py-2 m-0 bg text-brand">Add Skills</h3>
           <div className="p-4 bg m-0">
             <Form>
               {label.map((val) => (
@@ -39,14 +101,16 @@ export const AddSkills = () => {
                       placeholder="Select Technology"
                       color="#515151"
                       className="text-light bg-dark p-1 border-secondary"
-                      options={options}
+                      options={skillOptions}
                       onChange={(values) => {
                         if (val === "Beginner") {
-                          setBeginnerTech(values);
+                          setBeginnerTech(values?.map((item) => item.label));
                         } else if (val === "Intermediate") {
-                          setIntermediateTech(values);
+                          setIntermediateTech(
+                            values?.map((item) => item.label),
+                          );
                         } else if (val === "Proficient") {
-                          setProficientTech(values);
+                          setProficientTech(values?.map((item) => item.label));
                         }
                       }}
                     />
@@ -56,15 +120,17 @@ export const AddSkills = () => {
             </Form>
             <div style={{ textAlign: "center" }}>
               <Button
-                onClick={() => navigate("/edit_skills")}
+                type="submit"
+                onClick={() => handleAddSkillsSubmit()}
                 variant="outline-info"
-                style={{width: "140px"}}
+                style={{ width: "140px" }}
               >
                 UPDATE
               </Button>
             </div>
           </div>
         </div>
+        <ToastContainer />
       </Layout>
     </>
   );

@@ -6,7 +6,7 @@ import { Table, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 
-const ProjectUpdate = () => {
+const Skills = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const ProjectUpdate = () => {
             className="px-3 py-3 m-0"
             style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
           >
-            Assigned Projects
+            Employees
           </h3>
           <Table striped hover style={{ backgroundColor: "#191c24" }}>
             <thead>
@@ -51,16 +51,14 @@ const ProjectUpdate = () => {
                       <Button
                         variant="outline-info"
                         onClick={() => {
-                          navigate("/edit_project", {
+                          navigate("/show_Skills", {
                             state: {
                               id: `${item._id}`,
-                              firstName: `${item.firstName}`,
-                              lastName: `${item.lastName}`,
                             },
                           });
                         }}
                       >
-                        Show
+                        Show Skills
                       </Button>
                     </td>
                   </tr>
@@ -73,4 +71,4 @@ const ProjectUpdate = () => {
   );
 };
 
-export default ProjectUpdate;
+export default Skills;
