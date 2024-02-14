@@ -6,6 +6,7 @@ import Layout from "../../components/Layout";
 import "../index.css";
 import StatusTable from "./MyStatusTable";
 import { Button } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
 export const MyDailyStatus = () => {
   const [data, setData] = useState([]);
@@ -22,6 +23,7 @@ export const MyDailyStatus = () => {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
+
         const formattedTasks = response?.data?.tasks.map((task) => {
           const formattedDate = new Date(task.date).toLocaleDateString(
             "en-US",
@@ -40,7 +42,10 @@ export const MyDailyStatus = () => {
         setData(formattedTasks);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        alert(error);
+        toast.error("Session expired! Please login again", {
+          position: "top-right",
+          autoClose: 2000,
+        });
       }
     };
 
@@ -84,7 +89,7 @@ export const MyDailyStatus = () => {
       <Layout newIndex="2">
         <div
           className="container mt-5 py-3"
-          style={{ backgroundColor: "#191C24" }}
+          style={{ backgroundColor: "#191C24", maxWidth: 950 }}
         >
           <h2 className="text-brand">All Status</h2>
           <StatusTable
@@ -125,6 +130,7 @@ export const MyDailyStatus = () => {
           </div>
         </div>
       </Layout>
+      <ToastContainer />
     </>
   );
 };

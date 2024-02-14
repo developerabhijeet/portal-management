@@ -1,35 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import Table from "react-bootstrap/Table";
-const Holidays = () => {
-  const newDate = new Date();
-  const currentYear = newDate.getFullYear();
+import { MyHolidays } from "../adminPanel/AddHoliday";
+
+const newDate = new Date();
+const currentYear = newDate.getFullYear();
+export const Holidays = () => {
   return (
     <>
       <Layout newIndex="4">
-        <div className="container mt-5 p-0">
-          <h3 className="bg text-brand px-3 py-2 m-0">
-            Holiday Calendar <span>{currentYear}</span>
-          </h3>
-          <div className="p-3 bg m-0">
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Occassion</th>
-                  <th>Days</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
-        </div>
+        <MyHolidays />
         <div className="container mt-4 bg p-3">
           <h3 className="text-white">Note</h3>
           <ol>
@@ -44,4 +23,3 @@ const Holidays = () => {
     </>
   );
 };
-export default Holidays;

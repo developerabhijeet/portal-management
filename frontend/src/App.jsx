@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { MyDailyStatus } from "./pages/MyDailyStatus/MyDailyStatus";
 import { MyLeave } from "./pages/Myleave/MyLeave";
-import Holidays from "./pages/Holidays/Holidays";
+import {Holidays} from "./pages/Holidays/Holidays";
 import SendMyDailyStatus from "./pages/SendMyDailyStatus/SendMyDailyStatus";
 import { MyDailyStatusNew_id } from "./pages/MyDailyStatus/MyDailyStatusNew";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -9,8 +9,6 @@ import NotFound from "./pages/notFound/NotFound";
 import ForgotPassword from "./Auth/ForgotPassword";
 import Signup from "../src/Auth/signup/index";
 import Login from "../src/Auth/Login/index";
-// import { ThemeProvider, createTheme } from "@mui/material/styles";
-// import CssBaseline from "@mui/material/CssBaseline";
 import { AuthenticationRoutes } from "./Auth/authentication";
 import { EditEmployeesDetails } from "./pages/editEmployeesDetails/EditEmployeesDetails";
 import { AddSkills } from "./pages/editSkills/AddSkills";
@@ -29,6 +27,7 @@ import Users from "./pages/adminPanel/Users";
 import Projects from "./pages/ProjectUpdate/Projects";
 import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
+import {AddHoliday} from "./pages/adminPanel/AddHoliday";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -73,6 +72,7 @@ function App() {
           <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
           <Route path="/my_leave" element={<MyLeave />} />
           <Route path="/holidays" element={<Holidays />} />
+          <Route path="/add_holidays" element={<AddHoliday />} />
           <Route path="/add-skills" element={<AddSkills />} />
           <Route path="/edit_skills" element={<EditSkills />} />
           <Route path="/edit_profile" element={<EditEmployeesDetails />} />

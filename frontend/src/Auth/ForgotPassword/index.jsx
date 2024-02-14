@@ -57,7 +57,7 @@ const ForgotPassword = () => {
           </Button>
           <Button
             className="fw"
-            style={{backgroundColor:'purple', color:'white'}}
+            variant="outline-info"
             onClick={() => navigate("/login")}
           >
             LOGIN

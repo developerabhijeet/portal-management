@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
 import { ToastContainer, toast } from "react-toastify";
+import { FaPersonCircleCheck } from "react-icons/fa6";
 import moment from "moment";
 
 const SendMyDailyStatus = () => {
@@ -241,17 +242,17 @@ const SendMyDailyStatus = () => {
   return (
     <>
       <Layout newIndex="1">
-        <div className="my-5 mx-auto" style={{ maxWidth: 800 }}>
+        <div className="mt-5 mx-auto" style={{ maxWidth: 800 }}>
           <h2 className="heading bg">Send Daily Status Update</h2>
           <div className="new">
             <div className="d-flex justify-content-between border-bottom border-light p-3 text-info">
               <div role="button" onClick={() => handleModalShow()}>
                 Do you want to change your availability?
               </div>
-              <div>Available</div>
+              <div className="d-flex">Available<FaPersonCircleCheck color="green" size={22} className="ms-2"/></div>
             </div>
-            <Form className="mt-4">
-              <Row className="mb-5 pb-5">
+            <Form className="">
+              <Row className="mb-5">
                 <Form.Group as={Col} md="4" className="mt-3">
                   <Form.Label className="fw">To</Form.Label>
                   <Select
@@ -306,7 +307,7 @@ const SendMyDailyStatus = () => {
               </Row>
 
               <div>
-                <div className="taskDetails">
+                <div className="borders">
                   <div>
                     <h6>+ ADD YOUR TASK DETAILS</h6>
                   </div>

@@ -19,6 +19,22 @@ export const maritalStatusOptions = [
   "Widowed",
   "Separated",
 ];
+
+export const newHolidays = [
+  {
+    name: "date",
+    label: "Date",
+    type: "date",
+    value: ""
+  },
+  {
+    name: "occasion",
+    label: "Occasion",
+    type: "text",
+    value: ""
+  },
+];
+
 export const selectTech = [
   "Ror",
   "Django",

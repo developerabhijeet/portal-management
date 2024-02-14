@@ -88,6 +88,7 @@
 .header-container{
   position: sticky;
   top: 0;
+  z-index: 999;
 }
 @media (min-width: 992px) {
   .sidebar {
@@ -230,6 +231,6 @@
     margin: 0px 5px;
   }
   .content .navbar .navbar-nav {
-    margin-right: -15px;
+    margin-right: -22px;
   }
 }

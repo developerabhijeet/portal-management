@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 interface IHoliDays extends Document {
   date: Date;
-  occassion: string;
+  occasion: string;
   user: any;
 }
 const holiDaysSchema = new Schema<IHoliDays>({
@@ -10,7 +10,7 @@ const holiDaysSchema = new Schema<IHoliDays>({
     type: Date,
     required: true,
   },
-  occassion: {
+  occasion: {
     type: String,
     required: true,
   },

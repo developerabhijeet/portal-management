@@ -29,7 +29,7 @@ const sendForgotEmailController = {
         service: "gmail",
         auth: {
           user: "portal9589@gmail.com",
-          pass: "your password",
+          pass: "tskm ljfm qauv oskz",
         },
       });
 
