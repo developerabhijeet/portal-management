@@ -2,10 +2,10 @@ import mongoose, { Document, Schema } from "mongoose";
 interface ILeave extends Document {
   email: string[];
   leaveType: string;
-  fromDate: Date;
-  ToDate: Date;
-  fromSession: number;
-  toSession: number;
+  fromDate: string;
+  ToDate: string;
+  fromSession: string;
+  toSession: string;
   days: number;
   reason: string;
   user: any;
@@ -20,19 +20,19 @@ const leaveSchema = new Schema<ILeave>({
     required: true,
   },
   fromDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   ToDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   fromSession: {
-    type: Number,
+    type: String,
     required: true,
   },
   toSession: {
-    type: Number,
+    type: String,
     required: true,
   },
   days: {

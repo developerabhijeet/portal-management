@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { Button, Form } from "react-bootstrap";
 import Select from "react-dropdown-select";
 import { emails } from "../../Utils/constant";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BaseURL } from "../../Utils/utils";
+import moment from "moment";
+import { toast,ToastContainer } from "react-toastify";
 export const ApplyLeave = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,9 +15,9 @@ export const ApplyLeave = () => {
   const [mailTo, setMailTo] = useState([]);
   const [data, setData] = useState({
     fromDate: "",
-    fromSession: "",
+    fromSession: "session-1",
     toDate: "",
-    toSession: "",
+    toSession: "session-2",
     days: "",
     reason: "",
   });
@@ -24,6 +28,24 @@ export const ApplyLeave = () => {
     reason: "",
   });
   const { fromDate, toDate, fromSession, toSession, reason, days } = data;
+  useEffect(()=>{
+    let day;
+    if(fromDate && toDate){
+      const fromDay = new Date(fromDate).getDate()
+      const toDay = new Date(toDate).getDate()
+      day = (toDay-fromDay)+1
+      setData({...data,days:day})
+    }
+    if(fromSession==="session-2"){
+      day = day-0.5
+      setData({...data,days:day})
+    } 
+    if(toSession==="session-1"){
+      day = day-0.5
+      setData({...data,days:day})
+    }     
+    
+  },[data.fromDate,data.toDate,fromSession,toSession])
 
   const validationCheck = () => {
     let isValid = true;
@@ -33,10 +55,18 @@ export const ApplyLeave = () => {
       isValid = false;
       newErrors.fromDate = "Please select Date";
     }
+    if(moment(fromDate).format('DD/MM/YYYY') < moment().format('DD/MM/YYYY')){
+      newErrors.fromDate = "Date can't be earlier than today"
+      isValid = false;
+     }
     if (!toDate.trim()) {
       isValid = false;
       newErrors.toDate = "Please select Date";
     }
+    if(moment(toDate).format('DD/MM/YYYY') < moment().format('DD/MM/YYYY')){
+      newErrors.toDate = "Date can't be earlier than today"
+      isValid = false;
+     }
     if (!reason.trim()) {
       isValid = false;
       newErrors.reason = "Please write reason of leave";
@@ -61,9 +91,39 @@ export const ApplyLeave = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("jwtToken");
+
     if (validationCheck()) {
+      const getUserID = localStorage.getItem("userId");
+      const mail = mailTo.map((val)=>val.label)
+      const leaveData = {
+        email : mail,
+        leaveType:leaveType,
+        fromDate : fromDate,
+        ToDate : toDate,
+        fromSession : fromSession,
+        toSession : toSession,
+        days : days,
+        reason:reason,
+        user : getUserID
+      }
+      try{
+        await axios.post(`${BaseURL}/leaveSection/${getUserID}`, leaveData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          "Content-Type": "application/json",
+        });
+        toast.success("Your leave applied successfully", {
+          position: "top-right",
+          autoClose: 2000, 
+        });
+        setTimeout(()=>{
+          navigate("/my_leave")
+        },3000)
+      }catch(err){console.log(err)}
     }
   };
   return (
@@ -177,6 +237,7 @@ export const ApplyLeave = () => {
             </div>
           </Form>
       </div>
+      <ToastContainer />
     </Layout>
   );
 };

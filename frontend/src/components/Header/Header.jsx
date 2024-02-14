@@ -53,7 +53,7 @@ const Header = ({ newIndex }) => {
 
   return (
     <>
-      <div className="">
+      <div className="header-container">
         {/* sidebar start */}
         <div
           className={toggleNav ? "sidebar pe-4 pb-3 open" : "sidebar pe-4 pb-3"}

@@ -41,7 +41,8 @@ const SendMyDailyStatus = () => {
     task: "",
     index: "",
   });
-
+ 
+  const previosDate = moment().subtract(1, 'days').format('DD/MM/YYYY');
   const validationCheck = () => {
     let isValid = true;
     const newErrors = { errors };
@@ -78,6 +79,16 @@ const SendMyDailyStatus = () => {
             }
           })
         )
+        if(moment(date).format('DD/MM/YYYY') != moment().format('DD/MM/YYYY')){
+          if(moment(date).format('DD/MM/YYYY') != previosDate && moment(date).format('DD/MM/YYYY') < previosDate){
+            newErrors.date = "Date can't be earlier than yesterday."
+            isValid = false;
+          }  
+        }
+         if(moment(date).format('DD/MM/YYYY') > moment().format('DD/MM/YYYY')){
+          newErrors.date = "Date can't be in the future"
+          isValid = false;
+         }
           setErrors(newErrors);
     return isValid;
   };
@@ -294,6 +305,7 @@ const SendMyDailyStatus = () => {
                     onChange={(e) => setDate(e.target.value)}
                   ></Form.Control>
                   <Form.Text className="text-danger">{errors.date}</Form.Text>
+
                 </Form.Group>
               </Row>
 
@@ -413,106 +425,6 @@ const SendMyDailyStatus = () => {
                           </Form.Group>
                         </Row>
 
-                        {/* <div className="task_status_box">
-                        <div className="">
-                          <div>
-                            <Form.Label>Project</Form.Label>
-                          </div>
-
-                          <Form.Select
-                            id="select_option"
-                            value={task.projectStatus}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? {
-                                        ...prevTask,
-                                        projectStatus: e.target.value,
-                                      }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          >
-                            <OptionsSelect
-                              options={projectUpdate}
-                              defaultOption="Select Status"
-                            />
-                          </Form.Select>
-                        </div>
-                        <div className="working_hours">
-                          <div>
-                            <Form.Label>Working Hours</Form.Label>
-                          </div>
-                          <Form.Control
-                            type="time"
-                            placeholder="hh:mm"
-                            value={task.workingHour}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? {
-                                        ...prevTask,
-                                        workingHour: e.target.value,
-                                      }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          />
-                        </div>
-                        <div style={{ marginLeft: 10 }}>
-                          <div>
-                            <Form.Label>Status</Form.Label>
-                          </div>
-                          <Form.Select
-                            id="select_option"
-                            name="task"
-                            value={task.status}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? { ...prevTask, status: e.target.value }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          >
-                            <OptionsSelect
-                              options={statusOption}
-                              defaultOption="Select Status"
-                            />
-                          </Form.Select>
-                        </div>
-                      </div> */}
-
-                        {/* <div className="task">
-                        <label>Task</label>
-                        <div className="task-box">
-                          <textarea
-                            className="task-input"
-                            value={task.task}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? { ...prevTask, task: e.target.value }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          />
-                          <div className="delete_btn">
-                            <RiDeleteBin6Line
-                              color="red"
-                              onClick={deleteTask}
-                            />
-                          </div>
-                        </div>
-                      </div> */}
                       </div>
                     ))}
                   </div>

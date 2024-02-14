@@ -50,4 +50,20 @@ h6{
   border-top: 1px solid #626577;
   border-bottom: 1px solid #626577;
 }
+.session{
+  width: 73px;
+  text-align: center;
+  border-radius: 3px; 
+}
+.from-session{
+  color:rgb(91, 160, 163) ;
+}
+.to-session{
+  color: rgb(86, 124, 153);
+}
+.container{
+  width: 90%;
+  font-size: 15px;
+}
+
 /* ------------------------------------------------------------------ */
