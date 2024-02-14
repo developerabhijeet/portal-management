@@ -242,7 +242,7 @@ const SendMyDailyStatus = () => {
   return (
     <>
       <Layout newIndex="1">
-        <div className="mt-5 mx-auto" style={{ maxWidth: 800 }}>
+        <div className="mt-5 mx-auto container" style={{ maxWidth: 800 }}>
           <h2 className="heading bg">Send Daily Status Update</h2>
           <div className="new">
             <div className="d-flex justify-content-between border-bottom border-light p-3 text-info">

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form,Table } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import { newHolidays } from "../../Utils/constant";
 import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
 import { IoCloseSharp } from "react-icons/io5";
-import { toast } from "react-toastify";
-import Table from "react-bootstrap/Table";
-
+import { toast,ToastContainer } from "react-toastify";
+import moment from "moment";
 const newDate = new Date();
 const currentYear = newDate.getFullYear();
 
@@ -15,37 +14,67 @@ export const AddHoliday = () => {
   const [date, setDate] = useState("");
   const [occasion, setOccasion] = useState("");
   const [errors, setErrors] = useState("");
-  const [refresh, setRefresh] = useState(false); // Add state to trigger refresh
-
+  const [editId,setEditId] = useState(null)
+  
   const validateCheck = () => {
     let isValid = true;
-
     if (!date || !occasion.trim()) {
       isValid = false;
       setErrors("Input field should not be empty");
     }
-
     return isValid;
   };
+
+
+  const handleUpdate = (item)=>{
+    const {date,occasion,_id} = item;
+    const newDate = moment(date);
+    const myDate = newDate.format("yyyy-MM-DD");
+    setDate(myDate);
+    setOccasion(occasion)
+    setEditId(_id)
+  }
+ 
+  const handleReset = ()=>{
+    setEditId(null)
+    setDate("")
+    setOccasion("")
+  }
+
   const handleAdd = async () => {
     setErrors("");
     if (validateCheck()) {
-      try {
-        const data = {
-          date: date,
-          occasion: occasion,
-        };
-        await axios.post(`${BaseURL}/holiDays`, data);
-        toast.success("Holiday Added", {
-          position: "top-right",
-          autoClose: 1500,
-        });
-        setRefresh(!refresh);
-      } catch (error) {
-        toast.error("Something went wrong! please try again", {
-          position: "top-right",
-          autoClose: 1500,
-        });
+      const data = {
+        date: date,
+        occasion: occasion,
+      };
+      if(editId){
+        try {
+          const editData = await axios.put(`${BaseURL}/holiDays/${editId}`,data);
+          toast.success("Holiday Updated", {
+            position: "top-right",
+            autoClose: 1500,
+          });
+          setEditId(null)
+          setDate("")
+          setOccasion("")
+        } catch (error) {console.log(error)}
+      }
+      else{
+        try {
+          await axios.post(`${BaseURL}/holiDays`, data);
+          toast.success("Holiday Added", {
+            position: "top-right",
+            autoClose: 1500,
+          });
+          setDate("")
+          setOccasion("")
+        } catch (error) {
+          toast.error("Something went wrong! please try again", {
+            position: "top-right",
+            autoClose: 1500,
+          });
+        }
       }
     }
   };
@@ -53,7 +82,7 @@ export const AddHoliday = () => {
   return (
     <Layout newIndex="6">
       <div className="containerOne bg">
-        <h1 className="headOne">Add Holiday</h1>
+        <h1 className="headOne">{editId ? "Update":"Add"} Holiday</h1>
         <Form className="p-3">
           {errors ? (
             <div
@@ -70,6 +99,7 @@ export const AddHoliday = () => {
               <Form.Control
                 name={item.name}
                 type={item.type}
+                value={item.name == "date" ?date:occasion}
                 onChange={(e) => {
                   if (item.name === "date") {
                     setDate(e.target.value);
@@ -83,23 +113,24 @@ export const AddHoliday = () => {
             </Form.Group>
           ))}
           <Button variant="outline-success" onClick={() => handleAdd()}>
-            Add
+          {editId ? "Update":"Add"}
           </Button>
-          <Button variant="outline-primary" className="ms-3">
-            Reset
+         
+          <Button variant="outline-primary"  className="ms-3" onClick={handleReset}>
+          {editId ? "Cancel":"Reset"}
           </Button>
         </Form>
       </div>
-      <MyHolidays refresh={refresh} setRefresh={setRefresh} />
+      <MyHolidays handleUpdate={handleUpdate}/>
+      <ToastContainer/>
     </Layout>
   );
 };
 
-export const MyHolidays = ({ refresh, setRefresh }) => {
+export const MyHolidays = ({handleUpdate}) => {
   const [allHolidays, setAllHolidays] = useState([]);
-  const [update, setUpdate] = useState("");
   const role = localStorage.getItem("role");
-
+  console.log(typeof(handleUpdate))
   const fetchHoliday = async () => {
     try {
       const res = await axios.get(`${BaseURL}/holiDays`);
@@ -112,18 +143,12 @@ export const MyHolidays = ({ refresh, setRefresh }) => {
 
   useEffect(() => {
     fetchHoliday();
-  }, [refresh]);
+  }, [allHolidays]);
 
-  const handleEdit = async (item) => {
-    try {
-      const editData = await axios.put(`${BaseURL}/holiDays/${item._id}`);
-      setUpdate(editData.data);
-    } catch (error) {}
-  };
+
   const handleDelete = async (item) => {
     try {
       await axios.delete(`${BaseURL}/holiDays/${item._id}`);
-      setRefresh(!refresh);
     } catch (error) {
       toast.error("Something went wrong! please try again", {
         position: "top-right",
@@ -145,7 +170,7 @@ export const MyHolidays = ({ refresh, setRefresh }) => {
                 <th>Date</th>
                 <th>Occassion</th>
                 <th>Days</th>
-                {role === "admin" ? <th></th> : null}
+                {role === "admin"  && typeof(handleUpdate) !== "string"? <th></th> : null}
               </tr>
             </thead>
             <tbody>
@@ -171,13 +196,13 @@ export const MyHolidays = ({ refresh, setRefresh }) => {
                     <td>{newDate}</td>
                     <td>{item.occasion}</td>
                     <td>{day}</td>
-                    {role === "admin" ? (
+                    {role === "admin"  && typeof(handleUpdate) == "function" ? (
                       <td>
                         <Button
                           variant="outline-info"
                           size="sm"
                           className="mx-3"
-                          onClick={() => handleEdit(item)}
+                          onClick={() => handleUpdate(item)}
                         >
                           Edit
                         </Button>
