@@ -84,7 +84,7 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/send_daily_status">
-                <div className={newIndex == 1 ? `nav-link active` : "nav-link"}>
+                <div className={newIndex === 1 ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaPenToSquare />
                   </i>
@@ -92,12 +92,12 @@ const Header = ({ newIndex }) => {
                 </div>
               </Link>
               <Link to="/daily_status_updates">
-                <div className={newIndex == 2 ? `nav-link active` : "nav-link"}>
+                <div className={newIndex === 2 ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-laptop me-2"></i>My Updates
                 </div>
               </Link>
               <Link to="/projects">
-                <div className={newIndex == 7 ? `nav-link active` : "nav-link"}>
+                <div className={newIndex === 7 ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaRegClipboard />
                   </i>
@@ -107,7 +107,7 @@ const Header = ({ newIndex }) => {
               <Link to="/my_leave">
                 <div
                   className={
-                    newIndex == 3
+                    newIndex === 3
                       ? `nav-link d-flex align-items-center active`
                       : "nav-link d-flex align-items-center"
                   }
@@ -120,12 +120,12 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/holidays">
-                <div className={newIndex == 4 ? `nav-link active` : "nav-link"}>
+                <div className={newIndex === 4 ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-table me-2"></i>Holidays
                 </div>
               </Link>
               <Link to="/edit_skills">
-                <div className={newIndex == 5 ? `nav-link active` : "nav-link"}>
+                <div className={newIndex === 5 ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaMedal />
                   </i>
@@ -154,7 +154,7 @@ const Header = ({ newIndex }) => {
             {toggleNav ? <span className="showLogo">BESTPEERS</span> : ""}
             <Container className="pe-0 me-4">
               <div>
-                <h2 className="m-0 text-brand"></h2>
+                
               </div>
               <div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -250,6 +250,11 @@ const Header = ({ newIndex }) => {
                             onClick={() => navigate("/my_leave")}
                           >
                             Leaves
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => navigate("/skills")}
+                          >
+                            Skills
                           </NavDropdown.Item>
                         </NavDropdown>
                       </div>

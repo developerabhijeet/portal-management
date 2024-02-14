@@ -37,7 +37,7 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
                 <Form.Label>
                   How Many Hours?
                 </Form.Label>
-                <Form.Control type="time" style={{ marginBottom: 10 }} />
+                <Form.Control type="time" style={{ marginBottom: 10, colorScheme:'dark'}} />
               </>
             )}
             <Form.Label>Any Note</Form.Label>

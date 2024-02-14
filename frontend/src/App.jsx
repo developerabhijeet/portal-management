@@ -27,58 +27,70 @@ import ResetPassword from "./Auth/resetPassword";
 import { AddDiscussion } from "./pages/discussionDesk/AddDiscussion";
 import Users from "./pages/adminPanel/Users";
 import Projects from "./pages/ProjectUpdate/Projects";
-
+import Skills from "./pages/adminPanel/Skills";
+import ShowSkills from "./pages/adminPanel/ShowSkills";
 
 function App() {
   const role = localStorage.getItem("role");
   return (
-    <div style={{backgroundColor: "#000", margin: 0, padding: 0, flex: 1, width: "100%", height: "100%"}}>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            {role === "admin" && (
-              <>
-                <Route path="/Signup" element={<Signup />} />
-                <Route path="/projectUpdate" element={<ProjectUpdate />} />
-                <Route path="/edit_project" element={<EditProject />} />
-                <Route path="/All_users" element={<Users />} />
-              </>
-            )}
-            <Route
-              path="/"
-              element={
-                <AuthenticationRoutes>
-                  <Dashboard />{" "}
-                </AuthenticationRoutes>
-              }
-            />
-            <Route path="/daily_status_updates" element={<MyDailyStatus />} />
-            <Route
-              path="/daily_status_updates_details/"
-              element={<MyDailyStatusNew_id />}
-            />
-            <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
-            <Route path="/my_leave" element={<MyLeave />} />
-            <Route path="/holidays" element={<Holidays />} />
-            <Route path="/add-skills" element={<AddSkills />} />
-            <Route path="/edit_skills" element={<EditSkills />} />
-            <Route path="/edit_profile" element={<EditEmployeesDetails />} />
-            <Route path="/edit_personal_info" element={<EditPersonalInfo />} />
-            <Route path="/discussion_desk" element={<DiscussionDesk />} />
-            <Route path="/discussion_desk/:new" element={<AddDiscussion />} />
-            <Route path="/help_desk" element={<HelpDesk />} />
-            <Route path="/my_leave/:new" element={<ApplyLeave />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="Calls" element={<Calls />} />
-            <Route path="Tests" element={<Tests />} />
-            <Route
-              path="/forgotPass/reset-password/:id/:token"
-              element={<ResetPassword />}
-            />
-            <Route path="projects" element={<Projects />} />
-          </Routes>
-        </Router>
+    <div
+      style={{
+        backgroundColor: "#000",
+        margin: 0,
+        padding: 0,
+        flex: 1,
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {role === "admin" && (
+            <>
+              <Route path="/Signup" element={<Signup />} />
+              <Route path="/projectUpdate" element={<ProjectUpdate />} />
+              <Route path="/edit_project" element={<EditProject />} />
+              <Route path="/All_users" element={<Users />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/show_skills" element={<ShowSkills />} />
+            </>
+          )}
+          <Route
+            path="/"
+            element={
+              <AuthenticationRoutes>
+                <Dashboard />{" "}
+              </AuthenticationRoutes>
+            }
+          />
+          <Route path="/daily_status_updates" element={<MyDailyStatus />} />
+          <Route
+            path="/daily_status_updates_details/"
+            element={<MyDailyStatusNew_id />}
+          />
+          <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
+          <Route path="/my_leave" element={<MyLeave />} />
+          <Route path="/holidays" element={<Holidays />} />
+          <Route path="/add-skills" element={<AddSkills />} />
+          <Route path="/edit_skills" element={<EditSkills />} />
+          <Route path="/edit_profile" element={<EditEmployeesDetails />} />
+          <Route path="/edit_personal_info" element={<EditPersonalInfo />} />
+          <Route path="/discussion_desk" element={<DiscussionDesk />} />
+          <Route path="/discussion_desk/:new" element={<AddDiscussion />} />
+          <Route path="/help_desk" element={<HelpDesk />} />
+          <Route path="/my_leave/:new" element={<ApplyLeave />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="Calls" element={<Calls />} />
+          <Route path="Tests" element={<Tests />} />
+          <Route
+            path="/forgotPass/reset-password/:id/:token"
+            element={<ResetPassword />}
+          />
+          <Route path="projects" element={<Projects />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

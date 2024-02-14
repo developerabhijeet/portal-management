@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./EditPersonalInfo.css";
 import { bloodGroupOptions, maritalStatusOptions } from "../../Utils/constant";
@@ -8,6 +8,8 @@ import { BaseURL } from "../../Utils/utils";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from "../../assets/Profile.png";
+
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
   const [errors, setErrors] = useState({
@@ -25,6 +27,7 @@ const EditPersonalInfo = () => {
     permanentAddress: "",
   });
   const [userData, setUserData] = useState({
+    image:"",
     fatherName: "",
     motherName: "",
     personalEmail: "",
@@ -38,7 +41,9 @@ const EditPersonalInfo = () => {
     maritalStatus: "",
     permanentAddress: "",
   });
+  
   const userId = localStorage.getItem("userId");
+  const imgRef = useRef(null);
   useEffect(() => {
     const projectUpdate = async () => {
       try {
@@ -55,7 +60,7 @@ const EditPersonalInfo = () => {
       }
     };
     projectUpdate();
-  }, []);
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,6 +71,18 @@ const EditPersonalInfo = () => {
     setErrors((prevData) => ({
       ...prevData,
       [name]: null,
+    }));
+  };
+
+  const handleImageClick = () => {
+    imgRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: URL.createObjectURL(files[0]),
     }));
   };
   const validationCheck = () => {
@@ -164,6 +181,7 @@ const EditPersonalInfo = () => {
     }
   };
   const {
+    image,
     fatherName,
     motherName,
     personalEmail,
@@ -186,6 +204,38 @@ const EditPersonalInfo = () => {
         </div>
         <div>
           <Form className="p-4 backg">
+            <div onClick={handleImageClick} style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+              {image ? (
+                 <div> 
+                 <img
+                   width={100}
+                   height={100}
+                   style={{border:'5px solid black', borderRadius: 50 }}
+                   src={image}
+                   alt="Profile"
+                 />
+                 </div>
+              ) : (
+                <div> 
+                <img
+                  width={100}
+                  height={100}
+                  style={{border:'5px solid black', borderRadius: 50 }}
+                  src={Profile}
+                  alt="Default Profile"
+                />
+                </div>
+              )}
+
+              <br />
+              <input
+                type="file"
+                name="image"
+                onChange={handleImageChange}
+                ref={imgRef}
+                style={{ display: "none" }}
+              />
+            </div>
             <Row>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Father name</Form.Label>

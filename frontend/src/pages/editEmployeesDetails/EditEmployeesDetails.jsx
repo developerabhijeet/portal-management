@@ -189,7 +189,7 @@ export const EditEmployeesDetails = () => {
             >
               <Form.Label className="fw">
                 New Password{" "}
-                <span className="fw-normal text-secondary">
+                <span className="fw-normal text-light">
                   (leave blank if you don't want to change it)
                 </span>
               </Form.Label>

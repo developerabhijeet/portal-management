@@ -55,12 +55,12 @@ const Signup = () => {
     const namePattern = /^[A-Za-z]+(?: [A-Za-z]+){0,3}$/;
     if (!firstName.trim() || !namePattern.test(firstName)) {
       isValid = false;
-      newErrors.firstName = "Valid firstName is required";
+      newErrors.firstName = "Valid first name is required";
     }
 
     if (!lastName.trim() || !namePattern.test(lastName)) {
       isValid = false;
-      newErrors.lastName = "Valid lastName is required";
+      newErrors.lastName = "Valid last name is required";
     }
 
     if (!password.trim() || (password && password.length < 6)) {
@@ -241,7 +241,7 @@ const Signup = () => {
               </Button>{" "}
               <Button
                 className="fw"
-                variant="outline-secondary"
+                variant="outline-danger"
                 onClick={() => handleReset()}
               >
                 RESET
