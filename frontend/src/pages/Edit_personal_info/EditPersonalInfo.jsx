@@ -27,7 +27,7 @@ const EditPersonalInfo = () => {
     permanentAddress: "",
   });
   const [userData, setUserData] = useState({
-    image:"",
+    image: "",
     fatherName: "",
     motherName: "",
     personalEmail: "",
@@ -41,7 +41,6 @@ const EditPersonalInfo = () => {
     maritalStatus: "",
     permanentAddress: "",
   });
-  
   const userId = localStorage.getItem("userId");
   const imgRef = useRef(null);
   useEffect(() => {
@@ -54,6 +53,7 @@ const EditPersonalInfo = () => {
           setIsGetData(true);
           const userInfo = userIndexData[0];
           setUserData(userInfo);
+          localStorage.setItem("profileImg", userInfo.image);
         }
       } catch (error) {
         alert("error:", error);
@@ -77,12 +77,22 @@ const EditPersonalInfo = () => {
   const handleImageClick = () => {
     imgRef.current.click();
   };
+  const imagebase64 = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    const data = new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (err) => reject(err);
+    });
+    return data;
+  };
 
-  const handleImageChange = (e) => {
-    const { name, files } = e.target;
+  const handleImageChange = async (e) => {
+    const files = e.target.files[0];
+    const images = await imagebase64(files);
     setUserData((prevData) => ({
       ...prevData,
-      [name]: URL.createObjectURL(files[0]),
+      image: images,
     }));
   };
   const validationCheck = () => {
@@ -204,26 +214,33 @@ const EditPersonalInfo = () => {
         </div>
         <div>
           <Form className="p-4 backg">
-            <div onClick={handleImageClick} style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+            <div
+              onClick={handleImageClick}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
               {image ? (
-                 <div> 
-                 <img
-                   width={100}
-                   height={100}
-                   style={{border:'5px solid black', borderRadius: 50 }}
-                   src={image}
-                   alt="Profile"
-                 />
-                 </div>
+                <div>
+                  <img
+                    width={100}
+                    height={100}
+                    style={{ border: "5px solid black", borderRadius: 50 }}
+                    src={image}
+                    alt="Profile"
+                  />
+                </div>
               ) : (
-                <div> 
-                <img
-                  width={100}
-                  height={100}
-                  style={{border:'5px solid black', borderRadius: 50 }}
-                  src={Profile}
-                  alt="Default Profile"
-                />
+                <div>
+                  <img
+                    width={100}
+                    height={100}
+                    style={{ border: "5px solid black", borderRadius: 50 }}
+                    src={Profile}
+                    alt="Default Profile"
+                  />
                 </div>
               )}
 

@@ -123,7 +123,7 @@ export const ApplyLeave = () => {
         setTimeout(()=>{
           navigate("/my_leave")
         },3000)
-      }catch(err){console.log(err)}
+      }catch(err){console.error(err)}
     }
   };
   return (

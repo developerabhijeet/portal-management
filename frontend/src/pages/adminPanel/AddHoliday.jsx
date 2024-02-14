@@ -106,7 +106,7 @@ export const MyHolidays = ({ refresh, setRefresh }) => {
       const data = res.data.holiDays;
       setAllHolidays(data);
     } catch (error) {
-      console.log("error:", error);
+      console.error("error:", error);
     }
   };
 

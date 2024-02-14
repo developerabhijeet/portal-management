@@ -43,7 +43,7 @@ export const MyLeave = () => {
       const leaveData = response.data.leaveInfo;
       setData(leaveData);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -51,7 +51,7 @@ export const MyLeave = () => {
     try {
       await axios.delete(`${BaseURL}/leaveSection/${getUserID}/${id}`);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

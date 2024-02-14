@@ -13,56 +13,60 @@ interface IPersonal_info extends Document {
   maritalStatus: string;
   presentAddress: string;
   permanentAddress: string;
+  image: string;
   user: any;
 }
 const personalInfoSchema = new Schema<IPersonal_info>({
   fatherName: {
     type: String,
-  required: true,
+    required: true,
   },
   motherName: {
     type: String,
-  required: true,
+    required: true,
   },
   personalEmail: {
     type: String,
-  required: true,
+    required: true,
   },
   bloodGroup: {
     type: String,
-  required: true,
+    required: true,
   },
   personalContactNum: {
     type: String,
-  required: true,
+    required: true,
   },
   emergencyContactNum: {
     type: String,
-  required: true,
+    required: true,
   },
   dateOfBirth: {
     type: String,
-  required: true,
+    required: true,
   },
   birthDay: {
     type: String,
-  required: true,
+    required: true,
   },
   dateOfMarriage: {
     type: String,
-  required: true,
+    required: true,
   },
   maritalStatus: {
     type: String,
-  required: true,
+    required: true,
   },
   presentAddress: {
     type: String,
-  required: true,
+    required: true,
   },
   permanentAddress: {
     type: String,
-  required: true,
+    required: true,
+  },
+  image: {
+    type: String,
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });

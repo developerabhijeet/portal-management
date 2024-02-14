@@ -6,6 +6,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   tasks: any;
+  profile: string;
   role: "user" | "admin";
 }
 const userSchema = new mongoose.Schema<IUser>(
@@ -31,7 +32,9 @@ const userSchema = new mongoose.Schema<IUser>(
       enum: ["user", "admin"],
       default: "user",
     },
-
+    profile: {
+      type: String,
+    },
     tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
   },
   {

@@ -4,14 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../../style.css";
 import "react-toastify/dist/ReactToastify.css";
-// import "bootstrap/dist/css/bootstrap.min.css"
 import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
-import { FaRegCircleUser, FaPenToSquare } from "react-icons/fa6";
+import {FaPenToSquare } from "react-icons/fa6";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaMedal, FaRegClipboard } from "react-icons/fa";
-
+import Profile from "../../assets/Profile.png";
 const Header = ({ newIndex }) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Header = ({ newIndex }) => {
   const lastName = localStorage.getItem("lastName");
 
   const role = localStorage.getItem("role");
-
+  const profileImg = localStorage.getItem("profileImg");
   useEffect(() => {
     if (!localToken) {
       navigate("/login");
@@ -63,12 +62,33 @@ const Header = ({ newIndex }) => {
                 src={require("../../assets/logo.png")}
                 alt="logo"
                 height={50}
-                width={140}
+                width={100}
               />
             </div>
             <div className="d-flex align-items-center ms-4 mt-4">
               <div className="position-relative">
-                <FaRegCircleUser size={40} />
+                {profileImg ? (
+                  <div>
+                    <img
+                      width={60}
+                      height={60}
+                      style={{ border: "5px solid black", borderRadius: 50 }}
+                      src={profileImg}
+                      alt="Profile"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      width={50}
+                      height={50}
+                      style={{ border: "5px solid black", borderRadius: 50 }}
+                      src={Profile}
+                      alt="Default Profile"
+                    />
+                  </div>
+                )}
+
                 <div className="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
               </div>
               <div className="ms-3">
