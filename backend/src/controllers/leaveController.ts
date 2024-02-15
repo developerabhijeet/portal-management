@@ -25,5 +25,25 @@ const createLeaveController = {
       res.status(500).json({ error: "get Internal server error" });
     }
   },
+  async deleteLeave(req: any, res: Response) {
+    try {
+      const userId = req.params.id;
+      const leaveInfoBody = req.body;
+      const leaveInfo = await LeaveSections.findByIdAndDelete(
+        userId,
+        leaveInfoBody
+      );
+      if (leaveInfo) {
+        res.status(200).json({ message: "MyLeave deleted successfully" });
+      } else {
+        res.status(404).json({ error: "MyLeave is not found." });
+      }
+    } catch (error) {
+      console.error("Error updating MyLeave details:", error);
+      res.status(500).json({
+        error: "An error occurred while updating MyLeave details.",
+      });
+    }
+  },
 };
 export default createLeaveController;

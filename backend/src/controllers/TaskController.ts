@@ -4,7 +4,20 @@ import User from "../models/User";
 const taskController = {
   async createTask(req: any, res: Response) {
     try {
+      const { date } = req.body;
       const userData = await User.findById(req.user._id);
+      // Check if the user has already sent a task for the given date
+      const existingTask = await Task.findOne({
+        user: req.user._id,
+        date: date,
+      });
+
+      if (existingTask) {
+        return res.status(400).json({
+          error: "A task for this date already exists.",
+        });
+      }
+
       const newTaskData = {
         ...req.body,
         user: req.user._id,
@@ -22,6 +35,7 @@ const taskController = {
       });
     }
   },
+
   async getAllTasks(req: any, res: Response) {
     try {
       const { page, perPage, completed, sortByDueDate, sortByCompleted } =

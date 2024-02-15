@@ -42,8 +42,8 @@ const SendMyDailyStatus = () => {
     task: "",
     index: "",
   });
- 
-  const previosDate = moment().subtract(1, 'days').format('DD/MM/YYYY');
+
+  const previosDate = moment().subtract(1, "days").format("DD/MM/YYYY");
   const validationCheck = () => {
     let isValid = true;
     const newErrors = { errors };
@@ -80,17 +80,22 @@ const SendMyDailyStatus = () => {
             }
           })
         )
-        if(moment(date).format('DD/MM/YYYY') != moment().format('DD/MM/YYYY')){
-          if(moment(date).format('DD/MM/YYYY') != previosDate && moment(date).format('DD/MM/YYYY') < previosDate){
-            newErrors.date = "Date can't be earlier than yesterday."
-            isValid = false;
-          }  
-        }
-         if(moment(date).format('DD/MM/YYYY') > moment().format('DD/MM/YYYY')){
-          newErrors.date = "Date can't be in the future"
-          isValid = false;
-         }
-          setErrors(newErrors);
+          if (
+            moment(date).format("DD/MM/YYYY") != moment().format("DD/MM/YYYY")
+          ) {
+            if (
+              moment(date).format("DD/MM/YYYY") != previosDate &&
+              moment(date).format("DD/MM/YYYY") < previosDate
+            ) {
+              newErrors.date = "Date can't be earlier than yesterday.";
+              isValid = false;
+            }
+          }
+    if (moment(date).format("DD/MM/YYYY") > moment().format("DD/MM/YYYY")) {
+      newErrors.date = "Date can't be in the future";
+      isValid = false;
+    }
+    setErrors(newErrors);
     return isValid;
   };
   const navigate = useNavigate();
@@ -158,7 +163,19 @@ const SendMyDailyStatus = () => {
         }, 2000);
         setEditData(false);
       } catch (error) {
-        toast.error("Something went wrong! Please login again", {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          setErrors({ ...errors, server: error.response.data.error });
+        } else {
+          setErrors({
+            ...errors,
+            server: "A task for this date already exists.",
+          });
+        }
+        toast.error(errors.server, {
           position: "top-right",
           autoClose: 2000,
         });
@@ -227,7 +244,7 @@ const SendMyDailyStatus = () => {
           navigate("/daily_status_updates");
         }, 2000);
       } catch (error) {
-        toast.error("Something went wrong! Please login again", {
+        toast.error("A task for this date already exists", {
           position: "top-right",
           autoClose: 2000,
         });
@@ -249,10 +266,14 @@ const SendMyDailyStatus = () => {
               <div role="button" onClick={() => handleModalShow()}>
                 Do you want to change your availability?
               </div>
-              <div className="d-flex">Available<FaPersonCircleCheck color="green" size={22} className="ms-2"/></div>
+              <div className="d-flex">
+                Available
+                <FaPersonCircleCheck color="green" size={22} className="ms-2" />
+              </div>
             </div>
             <Form className="">
               <Row className="mb-5">
+                <Form.Text className="text-danger">{errors.server}</Form.Text>
                 <Form.Group as={Col} md="4" className="mt-3">
                   <Form.Label className="fw">To</Form.Label>
                   <Select
@@ -302,7 +323,6 @@ const SendMyDailyStatus = () => {
                     onChange={(e) => setDate(e.target.value)}
                   ></Form.Control>
                   <Form.Text className="text-danger">{errors.date}</Form.Text>
-
                 </Form.Group>
               </Row>
 
