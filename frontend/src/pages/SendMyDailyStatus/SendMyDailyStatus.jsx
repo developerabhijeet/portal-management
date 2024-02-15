@@ -43,7 +43,7 @@ const SendMyDailyStatus = () => {
     index: "",
   });
 
-  const previosDate = moment().subtract(1, "days").format("DD/MM/YYYY");
+  const previosDate = moment().subtract(1, "days")
   const validationCheck = () => {
     let isValid = true;
     const newErrors = { errors };
@@ -80,18 +80,13 @@ const SendMyDailyStatus = () => {
             }
           })
         )
-          if (
-            moment(date).format("DD/MM/YYYY") != moment().format("DD/MM/YYYY")
-          ) {
-            if (
-              moment(date).format("DD/MM/YYYY") != previosDate &&
-              moment(date).format("DD/MM/YYYY") < previosDate
-            ) {
-              newErrors.date = "Date can't be earlier than yesterday.";
+          if (new Date(date).getTime() < new Date().setHours(0,0,0,0)) {
+            if (new Date(date) < new Date(previosDate).setHours(0,0,0,0)) {
+              newErrors.date = "Date can't be earlier than yesterday";
               isValid = false;
             }
           }
-    if (moment(date).format("DD/MM/YYYY") > moment().format("DD/MM/YYYY")) {
+    if (new Date(date).getTime() > new Date().setHours(0,0,0,0)) {
       newErrors.date = "Date can't be in the future";
       isValid = false;
     }
