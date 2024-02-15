@@ -2,10 +2,6 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-const multer = require("multer");
-import path from 'path';
-
-const fs = require("fs");
 type RequestType = {
   email: string;
   password: string;
@@ -19,26 +15,10 @@ const hashPassword = (password: any) => {
 const handleError = (res: Response, errorMessage: string) => {
   res.status(500).json({ error: errorMessage });
 };
-// import mulss from "../../../frontend/src/assets"
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Specify the correct path to your images directory
-    cb(null, path.join(__dirname, '..', '..', '..', 'frontend', 'src', 'images'));
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-
-
-export const upload = multer({ storage: storage });
-
 const userController = {
   async signUp(req: Request<RequestType>, res: Response) {
     const { email, password, firstName, lastName } = req.body;
     try {
-      let profileimage = null;
       const user = await User.findOne({ email: email });
       if (user) {
         return res.status(400).json({
@@ -53,14 +33,13 @@ const userController = {
         firstName: firstName,
         lastName: lastName,
         password: hash,
-        profileimage: profileimage, // Save hashed password
       });
 
       await newUser.save();
       const token = jwt.sign(
         { email: newUser.email, _id: newUser._id },
         process.env.jwtSecret,
-        { expiresIn: "5h" }
+        { expiresIn: "15h" }
       );
 
       const maxAge = 3 * 60 * 60;
@@ -100,39 +79,35 @@ const userController = {
       });
     }
   },
-  async  UpdatePersonalDetails(req: any, res: Response) {
+  async UpdatePersonalDetails(req: Request, res: Response) {
     try {
       const userId = req.params.id;
       const updatedDetails: RequestType = req.body;
-      let profile = req.file ? req.file.filename : null;
-  
+
       // Hash the password if it is present in the update details
       if (updatedDetails.password) {
         updatedDetails.password = hashPassword(updatedDetails.password);
       }
-  
+
       // Construct the update object
       const updateObject: any = { ...updatedDetails };
-      if (profile) {
-        updateObject.profile = profile; // Assuming profile is a field in your User schema
-      }
-  
+
       // Find user by ID and update with new details
       const updateUserDetails = await User.findByIdAndUpdate(
         userId,
         updateObject,
         { new: true }
       );
-  
+
       if (updateUserDetails) {
         res.status(200).json(updateUserDetails);
       } else {
-        res.status(404).json({ error: 'User not found.' });
+        res.status(404).json({ error: "User not found." });
       }
     } catch (error) {
-      console.error('Error updating personal details:', error);
+      console.error("Error updating personal details:", error);
       res.status(500).json({
-        error: 'An error occurred while updating personal details.',
+        error: "An error occurred while updating personal details.",
       });
     }
   },
