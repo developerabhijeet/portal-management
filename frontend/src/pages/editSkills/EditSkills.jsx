@@ -20,7 +20,7 @@ export const EditSkills = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [userId]);
 
   return (
     <>

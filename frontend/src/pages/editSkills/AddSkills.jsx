@@ -11,7 +11,6 @@ import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
 import { ToastContainer, toast } from "react-toastify";
 
-
 export const AddSkills = () => {
   const [beginnerTech, setBeginnerTech] = useState([]);
   const [intermediateTech, setIntermediateTech] = useState([]);
@@ -27,6 +26,13 @@ export const AddSkills = () => {
       try {
         const response = await axios.get(`${BaseURL}/EditSkills/${userId}`);
         setEditSkills(response.data.EditSkills);
+
+        if (response.data.EditSkills.length > 0) {
+          const skills = response.data.EditSkills[0];
+          setBeginnerTech(skills.beginnerTech);
+          setIntermediateTech(skills.intermediateTech);
+          setProficientTech(skills.proficientTech);
+        }
       } catch (error) {
         console.error("Error while fetching the skills: ", error);
       }
@@ -100,8 +106,24 @@ export const AddSkills = () => {
                       style={{ colorScheme: "dark" }}
                       placeholder="Select Technology"
                       color="#515151"
-                      className="text-light bg-dark p-1 border-secondary"
+                      className="bg-dark p-1 border-secondary"
                       options={skillOptions}
+                      values={
+                        val === "Beginner"
+                          ? beginnerTech.map((label) => ({
+                              label,
+                              value: label,
+                            }))
+                          : val === "Intermediate"
+                            ? intermediateTech.map((label) => ({
+                                label,
+                                value: label,
+                              }))
+                            : proficientTech.map((label) => ({
+                                label,
+                                value: label,
+                              }))
+                      }
                       onChange={(values) => {
                         if (val === "Beginner") {
                           setBeginnerTech(values?.map((item) => item.label));

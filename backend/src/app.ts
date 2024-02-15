@@ -24,7 +24,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(express.json({limit:'10mb'}));
+app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 // Define routes after applying CORS middleware
 app.use("/tasks", taskRoutes);
