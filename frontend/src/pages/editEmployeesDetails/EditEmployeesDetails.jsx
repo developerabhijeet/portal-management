@@ -14,7 +14,6 @@ export const EditEmployeesDetails = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [showCRPassword, setShowCRPassword] = useState(false);
-  const [employeesPic, setEmployeesPic] = useState("");
   const [employeeData, setEmployeeData] = useState({
     email: "",
     firstName: "",
@@ -22,7 +21,6 @@ export const EditEmployeesDetails = () => {
     password: "",
     confirmPass: "",
     currentPass: "",
-    profilePic: "",
   });
   const [errors, setErrors] = useState({
     email: "",
@@ -32,6 +30,7 @@ export const EditEmployeesDetails = () => {
     confirmPass: "",
     currentPass: "",
   });
+
   const { email, firstName, lastName, password, confirmPass, currentPass } =
     employeeData;
   const validationCheck = () => {
@@ -87,15 +86,14 @@ export const EditEmployeesDetails = () => {
 
   const id = localStorage.getItem("userId");
   const currentPassword = localStorage.getItem("password");
+
   const getUser = async () => {
     try {
       const res = await axios.get(`${BaseURL}/users/getUserDetails/${id}`);
-      const { email, firstName, lastName, profile } = res.data;
-      setEmployeesPic(res.data);
+      const { email, firstName, lastName } = res.data;
       setEmployeeData((prevData) => ({
         ...prevData,
         email,
-        employeesPic: profile,
         firstName,
         lastName,
         password: "",
@@ -110,9 +108,6 @@ export const EditEmployeesDetails = () => {
   useEffect(() => {
     getUser();
   }, [fetchData]);
-  const imageUpload = (event) => {
-    setEmployeeData({ ...employeeData, profilePic: event.target.files[0] });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -123,16 +118,8 @@ export const EditEmployeesDetails = () => {
           lastName,
           password: password ? password : currentPass,
         };
-        const formData = new FormData();
-        formData.append("file", employeeData.profilePic);
-        formData.append("email", employeeData.email);
-        formData.append("firstName", employeeData.firstName);
-        formData.append("lastName", employeeData.lastName);
-        formData.append("password", employeeData.password);
-        formData.append("confirmPass", employeeData.confirmPass);
-        formData.append("currentPass", employeeData.currentPass);
         try {
-          await axios.put(`${BaseURL}/users/UpdateUserDetails/${id}`, formData);
+          await axios.put(`${BaseURL}/users/UpdateUserDetails/${id}`, data);
           localStorage.setItem("password", data.password);
           localStorage.setItem("lastName", data.lastName);
           localStorage.setItem("firstName", data.firstName);
@@ -157,79 +144,75 @@ export const EditEmployeesDetails = () => {
     <>
       <Layout newIndex="6">
         <div className="containerOne">
-          <div>
-            <h3 className="headOne">Edit Employee</h3>
-            <Form className="m-4">
-              <Form.Group className="mx-auto" controlId="formGroupProfile">
-                <Form.Label className="">Profile</Form.Label>
-                <Form.Control
-                  type="file"
-                  name="file"
-                  value={""}
-                  onChange={(e) => imageUpload(e)}
-                  className="text-white bg-dark"
-                />
-              </Form.Group>
-              {employeesPic.profile == null ? (
-                ""
-              ) : (
-                <img
-                  src={require(`../../images/${employeesPic.profile || null}`)}
-                  height={100}
-                  width={100}
-                  alt="Profile"
-                />
-              )}
+          <h3 className="headOne">Edit Employee</h3>
+          <Form className="p-4 backg">
+            <Form.Group className="mb-4" controlId="formGroupEmail">
+              <Form.Label className="fw">Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+                disabled
+              />
+              <Form.Text className="text-danger">{errors.email}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">First name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                placeholder="Enter first name"
+                value={firstName}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <Form.Text className="text-danger">{errors.firstName}</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw">Last name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter last name"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <Form.Text className="text-danger">{errors.lastName}</Form.Text>
+            </Form.Group>
+            <Form.Group
+              className={errors.password ? "mb-3" : null}
+              controlId="formGroupPassword"
+            >
+              <Form.Label className="fw">
+                New Password{" "}
+                <span className="fw-normal text-light">
+                  (leave blank if you don't want to change it)
+                </span>
+              </Form.Label>
 
-              <Form.Group className="mb-4" controlId="formGroupEmail">
-                <Form.Label className="fw">Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  disabled
-                  value={email}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">{errors.email}</Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label className="fw">First name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  placeholder="Enter first name"
-                  value={firstName}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">
-                  {errors.firstName}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label className="fw">Last name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter last name"
-                  name="lastName"
-                  value={lastName}
-                  onChange={(e) => handleChange(e)}
-                  className="text-white bg-dark"
-                />
-                <Form.Text className="text-danger">{errors.lastName}</Form.Text>
-              </Form.Group>
-              <Form.Group
-                className={errors.password ? "mb-3" : null}
-                controlId="formGroupPassword"
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter Password"
+                name="password"
+                value={password}
+                onChange={(e) => handleChange(e)}
+                className="text-white bg-dark"
+              />
+              <span
+                className="position-relative"
+                style={{ top: "-32px", right: "-485px", cursor: "pointer" }}
+                onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
                   <IoIosEyeOff size={20} />
                 ) : (
                   <IoIosEye size={20} />
                 )}
-            
+              </span>
               <Form.Text
                 className="text-danger position-relative"
                 style={{ left: "-20px" }}
@@ -314,7 +297,6 @@ export const EditEmployeesDetails = () => {
               </Button>
             </div>
           </Form>
-        </div>
         </div>
         <ToastContainer />
       </Layout>
