@@ -83,15 +83,15 @@ const userController = {
     try {
       const userId = req.params.id;
       const updatedDetails: RequestType = req.body;
-
+  
       // Hash the password if it is present in the update details
       if (updatedDetails.password) {
         updatedDetails.password = hashPassword(updatedDetails.password);
       }
 
       // Construct the update object
-      const updateObject: any = { ...updatedDetails };
-
+      const updateObject: any = { ...updatedDetails }
+  
       // Find user by ID and update with new details
       const updateUserDetails = await User.findByIdAndUpdate(
         userId,

@@ -15,12 +15,14 @@ export const MyLeave = () => {
   const [data, setData] = useState([]);
   const [monthlyLeave, setmonthlyLeave] = useState(0);
   const [compoff,setCompOff] = useState(0)
+  const [len,setLen] = useState(0)
   const navigate = useNavigate();
   const getUserID = localStorage.getItem("userId");
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
   
   const index = totalMonths.indexOf(currentMonth);
   const months = totalMonths.slice(0, index + 1);
+
   useEffect(() => {
     getLeaves();
     const leaves = data.filter(
@@ -32,7 +34,7 @@ export const MyLeave = () => {
     currentMonth && val.leaveType === "Comp Off",)
     setmonthlyLeave(leaves);
     setCompOff(compoffData)
-  }, [data]);
+  }, [len]);
 
   const getLeaves = async () => {
     const token = localStorage.getItem("token");
@@ -42,6 +44,8 @@ export const MyLeave = () => {
       });
       const leaveData = response.data.leaveInfo;
       setData(leaveData);
+     
+      
     } catch (err) {
       console.error(err);
     }
@@ -49,7 +53,7 @@ export const MyLeave = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BaseURL}/leaveSection/${getUserID}/${id}`);
+      await axios.delete(`${BaseURL}/leaveSection/${id}`);
     } catch (err) {
       console.error(err);
     }

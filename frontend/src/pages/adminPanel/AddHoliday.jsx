@@ -14,8 +14,9 @@ export const AddHoliday = () => {
   const [date, setDate] = useState("");
   const [occasion, setOccasion] = useState("");
   const [errors, setErrors] = useState("");
-  const [editId,setEditId] = useState(null)
-  
+  const [editId,setEditId] = useState(null);
+  const [refresh,setRefresh] = useState(false);
+
   const validateCheck = () => {
     let isValid = true;
     if (!date || !occasion.trim()) {
@@ -31,15 +32,15 @@ export const AddHoliday = () => {
     const newDate = moment(date);
     const myDate = newDate.format("yyyy-MM-DD");
     setDate(myDate);
-    setOccasion(occasion)
-    setEditId(_id)
-  }
+    setOccasion(occasion);
+    setEditId(_id);
+  };
  
   const handleReset = ()=>{
-    setEditId(null)
-    setDate("")
-    setOccasion("")
-  }
+    setEditId(null);
+    setDate("");
+    setOccasion("");
+  };
 
   const handleAdd = async () => {
     setErrors("");
@@ -50,15 +51,16 @@ export const AddHoliday = () => {
       };
       if(editId){
         try {
-          const editData = await axios.put(`${BaseURL}/holiDays/${editId}`,data);
+           await axios.put(`${BaseURL}/holiDays/${editId}`,data);
           toast.success("Holiday Updated", {
             position: "top-right",
             autoClose: 1500,
           });
-          setEditId(null)
-          setDate("")
-          setOccasion("")
-        } catch (error) {console.log(error)}
+          setEditId(null);
+          setDate("");
+          setOccasion("");
+        }catch (error)
+         {console.log(error)};
       }
       else{
         try {
@@ -67,8 +69,8 @@ export const AddHoliday = () => {
             position: "top-right",
             autoClose: 1500,
           });
-          setDate("")
-          setOccasion("")
+          setDate("");
+          setOccasion("");
         } catch (error) {
           toast.error("Something went wrong! please try again", {
             position: "top-right",
@@ -76,6 +78,7 @@ export const AddHoliday = () => {
           });
         }
       }
+      setRefresh(!refresh);
     }
   };
 
@@ -99,7 +102,7 @@ export const AddHoliday = () => {
               <Form.Control
                 name={item.name}
                 type={item.type}
-                value={item.name == "date" ?date:occasion}
+                value={item.name === "date" ?date:occasion}
                 onChange={(e) => {
                   if (item.name === "date") {
                     setDate(e.target.value);
@@ -121,16 +124,15 @@ export const AddHoliday = () => {
           </Button>
         </Form>
       </div>
-      <MyHolidays handleUpdate={handleUpdate}/>
+      <MyHolidays handleUpdate={handleUpdate} refresh={refresh} setRefresh={setRefresh}/>
       <ToastContainer/>
     </Layout>
   );
 };
 
-export const MyHolidays = ({handleUpdate}) => {
+export const MyHolidays = ({handleUpdate,refresh,setRefresh}) => {
   const [allHolidays, setAllHolidays] = useState([]);
   const role = localStorage.getItem("role");
-  console.log(typeof(handleUpdate))
   const fetchHoliday = async () => {
     try {
       const res = await axios.get(`${BaseURL}/holiDays`);
@@ -143,12 +145,12 @@ export const MyHolidays = ({handleUpdate}) => {
 
   useEffect(() => {
     fetchHoliday();
-  }, [allHolidays]);
-
+  },[refresh]);
 
   const handleDelete = async (item) => {
     try {
       await axios.delete(`${BaseURL}/holiDays/${item._id}`);
+      setRefresh(!refresh);
     } catch (error) {
       toast.error("Something went wrong! please try again", {
         position: "top-right",
@@ -156,7 +158,15 @@ export const MyHolidays = ({handleUpdate}) => {
       });
     }
   };
-
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   return (
     <>
       <div className="container mt-5 p-0">
@@ -169,22 +179,13 @@ export const MyHolidays = ({handleUpdate}) => {
               <tr>
                 <th>Date</th>
                 <th>Occassion</th>
-                <th>Days</th>
+                <th>Day</th>
                 {role === "admin"  && typeof(handleUpdate) !== "string"? <th></th> : null}
               </tr>
             </thead>
             <tbody>
               {allHolidays.map((item, index) => {
-                const date = new Date(item.date);
-                const days = [
-                  "Sunday",
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ];
+                const date = new Date(item.date);  
                 const day = days[date.getDay()];
                 const newDate = date.toLocaleDateString("en-US", {
                   year: "numeric",
