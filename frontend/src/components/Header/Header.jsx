@@ -10,7 +10,7 @@ import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
 import {FaPenToSquare } from "react-icons/fa6";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaMedal, FaRegClipboard } from "react-icons/fa";
-import Profile from "../../assets/Profile.png";
+import Profile from "../../assets/Profile.jpeg";
 const Header = ({ newIndex }) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Header = ({ newIndex }) => {
   const handleChangeStatus = () => {
     setShowModal(!showModal);
   };
-
+  
   return (
     <>
       <div className="header-container">
@@ -70,9 +70,9 @@ const Header = ({ newIndex }) => {
                 {profileImg ? (
                   <div>
                     <img
-                      width={60}
-                      height={60}
-                      style={{ border: "5px solid black", borderRadius: 50 }}
+                      width={50}
+                      height={50}
+                      style={{ border: "1px solid #ccc", borderRadius: 50 }}
                       src={profileImg}
                       alt="Profile"
                     />
@@ -82,7 +82,7 @@ const Header = ({ newIndex }) => {
                     <img
                       width={50}
                       height={50}
-                      style={{ border: "5px solid black", borderRadius: 50 }}
+                      style={{ border: "1px solid #ccc", borderRadius: 50 }}
                       src={Profile}
                       alt="Default Profile"
                     />
@@ -104,9 +104,7 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/send_daily_status">
-                <div
-                  className={newIndex === "1" ? `nav-link active` : "nav-link"}
-                >
+                <div className={newIndex === "1" ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaPenToSquare />
                   </i>
@@ -114,16 +112,12 @@ const Header = ({ newIndex }) => {
                 </div>
               </Link>
               <Link to="/daily_status_updates">
-                <div
-                  className={newIndex === "2" ? `nav-link active` : "nav-link"}
-                >
+                <div className={newIndex === "2" ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-laptop me-2"></i>My Updates
                 </div>
               </Link>
               <Link to="/projects">
-                <div
-                  className={newIndex === "7" ? `nav-link active` : "nav-link"}
-                >
+                <div className={newIndex === "7" ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaRegClipboard />
                   </i>
@@ -146,16 +140,12 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/holidays">
-                <div
-                  className={newIndex === "4" ? `nav-link active` : "nav-link"}
-                >
+                <div className={newIndex === "4" ? `nav-link active` : "nav-link"}>
                   <i className="fa fa-table me-2"></i>Holidays
                 </div>
               </Link>
               <Link to="/edit_skills">
-                <div
-                  className={newIndex === "5" ? `nav-link active` : "nav-link"}
-                >
+                <div className={newIndex === "5" ? `nav-link active` : "nav-link"}>
                   <i className="me-2">
                     <FaMedal />
                   </i>

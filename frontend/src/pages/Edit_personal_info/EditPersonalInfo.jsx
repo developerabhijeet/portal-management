@@ -8,10 +8,13 @@ import { BaseURL } from "../../Utils/utils";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "../../assets/Profile.png";
+import Profile from "../../assets/Profile.jpeg";
+import { FaCamera } from "react-icons/fa";
+
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
   const [errors, setErrors] = useState({
+    image: "",
     fatherName: "",
     motherName: "",
     personalEmail: "",
@@ -67,6 +70,7 @@ const EditPersonalInfo = () => {
       ...prevData,
       [name]: value,
     }));
+
     setErrors((prevData) => ({
       ...prevData,
       [name]: null,
@@ -76,6 +80,7 @@ const EditPersonalInfo = () => {
   const handleImageClick = () => {
     imgRef.current.click();
   };
+
   const imagebase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -88,6 +93,17 @@ const EditPersonalInfo = () => {
 
   const handleImageChange = async (e) => {
     const files = e.target.files[0];
+    if (files.size > 1000000) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        image: "Image size should not be greater than 1MB",
+      }));
+      return;
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      image: "",
+    }));
     const images = await imagebase64(files);
     setUserData((prevData) => ({
       ...prevData,
@@ -223,24 +239,22 @@ const EditPersonalInfo = () => {
               }}
             >
               {image ? (
-                <div>
-                  <img
-                    width={100}
-                    height={100}
-                    style={{ border: "5px solid black", borderRadius: 50 }}
-                    src={image}
-                    alt="Profile"
-                  />
+                <div className="profile-icon-div">
+                  <img className="profile-img" src={image} alt="Profile" />
+                  <div className="icon-styles">
+                    <FaCamera size={20} />
+                  </div>
                 </div>
               ) : (
-                <div>
+                <div className="profile-icon-div">
                   <img
-                    width={100}
-                    height={100}
-                    style={{ border: "5px solid black", borderRadius: 50 }}
+                    className="profile-img"
                     src={Profile}
                     alt="Default Profile"
                   />
+                  <div className="icon-styles">
+                    <FaCamera size={20} />
+                  </div>
                 </div>
               )}
 
@@ -248,11 +262,15 @@ const EditPersonalInfo = () => {
               <input
                 type="file"
                 name="image"
+                accept="image/*"
                 onChange={handleImageChange}
                 ref={imgRef}
                 style={{ display: "none" }}
               />
             </div>
+            <span className="text-danger d-flex justify-content-center">
+              {errors.image}
+            </span>
             <Row>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Father name</Form.Label>
