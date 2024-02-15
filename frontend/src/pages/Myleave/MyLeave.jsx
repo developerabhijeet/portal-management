@@ -14,12 +14,12 @@ export const MyLeave = () => {
   const lastName = localStorage.getItem("lastName");
   const [data, setData] = useState([]);
   const [monthlyLeave, setmonthlyLeave] = useState(0);
-  const [compoff,setCompOff] = useState(0)
-  const [len,setLen] = useState(0)
+  const [compoff, setCompOff] = useState(0);
+  const [len, setLen] = useState(0);
   const navigate = useNavigate();
   const getUserID = localStorage.getItem("userId");
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
-  
+
   const index = totalMonths.indexOf(currentMonth);
   const months = totalMonths.slice(0, index + 1);
 
@@ -28,13 +28,25 @@ export const MyLeave = () => {
     const leaves = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-        currentMonth && val.leaveType !== "Comp Off",
+          currentMonth && val.leaveType !== "Comp Off",
+    );  
+    if (leaves.length !== 0) {
+      const l = leaves.map((val) => val.days);
+      const res = l.reduce((val, res) => res + val);
+      setmonthlyLeave(res);
+    }
+    const compoffData = data.filter(
+      (val) =>
+        new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
+          currentMonth && val.leaveType === "Comp Off",
     );
-    const compoffData = data.filter((val)=>new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-    currentMonth && val.leaveType === "Comp Off",)
-    setmonthlyLeave(leaves);
-    setCompOff(compoffData)
-  }, [len]);
+    if (compoffData.length !== 0) {
+      const l = compoffData.map((val) => val.days);
+      const res = l.reduce((val, res) => res + val);
+      setCompOff(res);
+    }
+    
+  }, [data.length, len]);
 
   const getLeaves = async () => {
     const token = localStorage.getItem("token");
@@ -44,8 +56,6 @@ export const MyLeave = () => {
       });
       const leaveData = response.data.leaveInfo;
       setData(leaveData);
-     
-      
     } catch (err) {
       console.error(err);
     }
@@ -54,6 +64,7 @@ export const MyLeave = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BaseURL}/leaveSection/${id}`);
+      setLen(len + 1);
     } catch (err) {
       console.error(err);
     }
@@ -82,7 +93,7 @@ export const MyLeave = () => {
           </DropdownButton>
           <div className="bg p-3 d-flex justify-content-between mb-3">
             <h3 className="m-0 text-brand">Leave Balance</h3>
-            <h3 className="m-0 me-4 pe-5 text-brand">-{monthlyLeave.length}</h3>
+            <h3 className="m-0 me-4 pe-5 text-brand">-{monthlyLeave}</h3>
           </div>
           <div className="mb-3">
             <h3 className="px-3 py-2 m-0 text-brand bg">Alloted Balance</h3>
@@ -106,14 +117,16 @@ export const MyLeave = () => {
                         <td>0.0</td>
                         <td>
                           {val === currentMonth && monthlyLeave !== 0
-                            ? monthlyLeave.length
+                            ? monthlyLeave
                             : 0}
                         </td>
                         <td>0</td>
                         <td>0</td>
-                        <td>{val === currentMonth && compoff !== 0
-                            ? compoff.length
-                            : 0}</td>
+                        <td>
+                          {val === currentMonth && compoff !== 0
+                            ? compoff
+                            : 0}
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -164,7 +177,7 @@ export const MyLeave = () => {
                               className="btn-sm"
                               onClick={() => handleDelete(val._id)}
                             >
-                           Cancel
+                              Cancel
                             </Button>
                           </td>
                         </tr>

@@ -31,9 +31,10 @@ export const ApplyLeave = () => {
   useEffect(()=>{
     let day;
     if(fromDate && toDate){
-      const fromDay = new Date(fromDate).getDate()
-      const toDay = new Date(toDate).getDate()
-      day = (toDay-fromDay)+1
+      const fromDay = moment(fromDate).format("MM/DD/YYYY")
+      const toDay = moment(toDate).format("MM/DD/YYYY")
+      const timeDiff = (new Date(toDay).getTime()- new Date(fromDay).getTime())
+      day = parseInt(timeDiff / (1000 * 60 * 60 * 24))+1;   
       setData({...data,days:day})
     }
     if(fromSession==="session-2"){
@@ -43,19 +44,22 @@ export const ApplyLeave = () => {
     if(toSession==="session-1"){
       day = day-0.5
       setData({...data,days:day})
-    }     
-    
+    } 
+    if(new Date(toDate).getTime() < new Date(fromDate).getTime()){
+      setData({...data,days:0})
+    }       
   },[data.fromDate,data.toDate,fromSession,toSession])
 
   const validationCheck = () => {
     let isValid = true;
+    let todayDate = new Date().setHours(0,0,0,0)
     const newErrors = { errors };
 
     if (!fromDate.trim()) {
       isValid = false;
       newErrors.fromDate = "Please select Date";
     }
-    if(moment(fromDate).format('DD/MM/YYYY') < moment().format('DD/MM/YYYY')){
+    if(new Date(fromDate).getTime() < todayDate){
       newErrors.fromDate = "Date can't be earlier than today"
       isValid = false;
      }
@@ -63,10 +67,10 @@ export const ApplyLeave = () => {
       isValid = false;
       newErrors.toDate = "Please select Date";
     }
-    if(moment(toDate).format('DD/MM/YYYY') < moment().format('DD/MM/YYYY')){
-      newErrors.toDate = "Date can't be earlier than today"
+    if (new Date(toDate).getTime() < todayDate) {
+      newErrors.toDate = "Date can't be earlier than today";
       isValid = false;
-     }
+    }
     if (!reason.trim()) {
       isValid = false;
       newErrors.reason = "Please write reason of leave";
