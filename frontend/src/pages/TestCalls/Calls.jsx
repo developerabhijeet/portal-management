@@ -35,11 +35,12 @@ const Calls = () => {
     <>
       <Layout newIndex="6">
         <div className={style.mainContainer}>
-          <div className="container" style={{ flex: 2 }}>
+          <div className="container  my-3" style={{ flex: 2 }}>
             <h4 className={style.createheading}>Calls</h4>
-            <Table striped hover style={{backgroundColor:'#191c24'}}>
+            <div className="bg p-2">
+            <Table striped hover>
               <thead>
-                <tr style={{color:'#ccc'}}>
+                <tr>
                   <th>Client's Details</th>
                   <th>Profile</th>
                   <th>Status</th>
@@ -53,6 +54,7 @@ const Calls = () => {
                 </tr>
               </tbody>
             </Table>
+            </div>
           </div>
           <div className={style.form}>
             <Formik

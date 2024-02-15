@@ -26,18 +26,14 @@ const Skills = () => {
   return (
     <>
       <Layout newIndex="6">
-        <div className="mt-5 container p-4">
-          <h3
-            className="px-3 py-3 m-0"
-            style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
-          >
-            Employees
-          </h3>
-          <Table striped hover style={{ backgroundColor: "#191c24" }}>
+        <div className="mt-5 container bg p-3">
+          <h3 className="text-brand">Employee's Skills</h3>
+          <div className="my-3">
+          <Table striped hover>
             <thead>
               <tr>
                 <th>Employee Name</th>
-                <th>Operation</th>
+                <th>Skills</th>
               </tr>
             </thead>
             <tbody>
@@ -65,6 +61,7 @@ const Skills = () => {
                 ))}
             </tbody>
           </Table>
+          </div>
         </div>
       </Layout>
     </>

@@ -246,31 +246,31 @@ const Header = ({ newIndex }) => {
                           id="collapsible-nav-dropdown-4"
                         >
                           <NavDropdown.Item onClick={() => navigate("/Signup")}>
-                            Add User
+                            Add Employee
                           </NavDropdown.Item>
                           <NavDropdown.Item
                             onClick={() => navigate("/All_users")}
                           >
-                            All Users
+                            All Employees
                           </NavDropdown.Item>
                           <NavDropdown.Item
                             onClick={() => navigate("/projectUpdate")}
                           >
-                            Projects
+                            Project Allot
                           </NavDropdown.Item>
                           <NavDropdown.Item onClick={() => navigate("/tests")}>
-                            Tests
+                            Add Tests
                           </NavDropdown.Item>
                           <NavDropdown.Item onClick={() => navigate("/calls")}>
-                            Calls
+                            Add Calls
                           </NavDropdown.Item>
                           <NavDropdown.Item
-                            onClick={() => navigate("/my_leave")}
+                            onClick={() => navigate("/all_leaves")}
                           >
-                            Leaves
+                            All Leaves
                           </NavDropdown.Item>
                           <NavDropdown.Item onClick={() => navigate("/skills")}>
-                            Skills{" "}
+                            Employees Skills
                           </NavDropdown.Item>
                           <NavDropdown.Item
                             onClick={() => navigate("/add_holidays")}

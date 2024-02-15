@@ -28,6 +28,7 @@ import Projects from "./pages/ProjectUpdate/Projects";
 import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
 import {AddHoliday} from "./pages/adminPanel/AddHoliday";
+import { AllLeaves } from "./pages/adminPanel/AllLeaves";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -71,6 +72,7 @@ function App() {
           />
           <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
           <Route path="/my_leave" element={<MyLeave />} />
+          <Route path="/all_leaves" element={<AllLeaves />} />
           <Route path="/holidays" element={<Holidays />} />
           <Route path="/add_holidays" element={<AddHoliday />} />
           <Route path="/add-skills" element={<AddSkills />} />

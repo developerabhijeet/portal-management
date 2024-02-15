@@ -1,0 +1,48 @@
+
+.card {
+  background-color: #1f212c;
+  margin: 0;
+  padding: 0;
+}
+
+.btnApp {
+  background-color: #87c9a2;
+  color: #32913f;
+  font-weight: bold;
+  margin: 0;
+  padding-block: 3px;
+}
+.btnDny {
+  background-color: #d48989;
+  color: #a81a1a;
+  font-weight: bold;
+  margin-left: 10px;
+  padding-block: 3px;
+}
+
+.container .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 15px;
+}
+
+.container .box-container .box {
+  transition: 0.3s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.container .box-container .box:hover {
+  transition: 0.3s;
+  /* box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); */
+  transform: scale(1.03);
+  /* background-color: rgb(54, 58, 58); */
+}
+
+@media (max-width: 768px) {
+  .box {
+    margin-inline: auto;
+  }
+}

@@ -127,12 +127,12 @@ export const ApplyLeave = () => {
         setTimeout(()=>{
           navigate("/my_leave")
         },3000)
-      }catch(err){console.error(err)}
+      }catch(err){console.log(err)}
     }
   };
   return (
     <Layout newIndex="3">
-      <div className="containerOne">
+      <div className="containerOne mt-4">
         <h3 className="bg heading">Apply {leaveType}</h3>
           <Form className="newform">
             <Form.Group className="mb-3">

@@ -5,15 +5,10 @@ export const HelpDesk = () => {
   return (
     <>
       <Layout newIndex="6">
-        <div className="mt-5 container p-4">
-          <h3
-            className="px-3 py-2 m-0"
-            style={{ backgroundColor: "#191c24", color: "#60c2cf" }}
-          >
-            HR Help Desk
-          </h3>
+        <div className="my-5 container bg py-3 px-3">
+          <h3 className="text-brand">HR Help Desk</h3>
           <div>
-            <Table hover style={{ backgroundColor: "#191c24" }}>
+            <Table hover striped>
               <thead>
                 <tr>
                   <th>Query Type</th>

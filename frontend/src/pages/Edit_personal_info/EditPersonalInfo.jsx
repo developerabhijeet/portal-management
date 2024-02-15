@@ -85,17 +85,19 @@ const EditPersonalInfo = () => {
 
   const imagebase64 = (file) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    const data = new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (err) => reject(err);
-    });
-    return data;
+    if (file) {
+      reader.readAsDataURL(file);
+      const data = new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (err) => reject(err);
+      });
+      return data;
+    }
   };
 
   const handleImageChange = async (e) => {
     const files = e.target.files[0];
-    if (files.size > 1000000) {
+    if (files?.size > 1000000) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         image: "Image size should not be greater than 1MB",
@@ -439,7 +441,9 @@ const EditPersonalInfo = () => {
               <Button variant="outline-success" onClick={handleFormSubmit}>
                 Update
               </Button>
-              <Button variant="outline-primary" onClick={()=>navigate('/')}>Back</Button>
+              <Button variant="outline-primary" onClick={() => navigate("/")}>
+                Back
+              </Button>
             </div>
           </Form>
         </div>

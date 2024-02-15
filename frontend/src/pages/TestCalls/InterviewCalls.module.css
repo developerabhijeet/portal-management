@@ -24,11 +24,13 @@
   padding-top: 20px;
   display: flex;
   flex-direction: row;
+  margin-inline: 10px;
 }
 
 .form {
   padding: 30px;
-  margin: 0 15px 0 15px;
+  margin-block: 15px;
+  margin-inline: 10px;
   flex: 1;
   background-color: #191c24;
   border: 1px solid none;

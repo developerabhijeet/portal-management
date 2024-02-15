@@ -9,7 +9,7 @@ export const AddDiscussion = () => {
   return (
     <>
       <Layout newIndex="6">
-        <div className="mt-5 p-4 container">
+        <div className="my-5 container">
           <h3
             className="px-3 py-2 m-0"
             style={{ backgroundColor: "#191c24", color: "#60c2cf" }}

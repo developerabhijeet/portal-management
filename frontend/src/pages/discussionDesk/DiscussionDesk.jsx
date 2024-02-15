@@ -15,15 +15,10 @@ export const DiscussionDesk = () => {
               New Discussion
             </Button>
           </div>
-          <div className="mt-1 py-3 ">
-            <h3
-              className="px-3 py-3 m-0"
-              style={{ backgroundColor: "#191c24", color:'#60c2cf' }}
-            >
-              Discussion Desk
-            </h3>
+          <div className="my-4 p-2 bg">
+            <h3 className="px-2 py-3 m-0 text-brand">Discussion Desk</h3>
             <div>
-              <Table striped hover style={{ backgroundColor: "#191c24" }}>
+              <Table striped hover>
                 <thead>
                   <tr>
                     <th>Topic</th>
