@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "../../assets/Profile.jpeg";
 import { FaCamera } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
@@ -43,6 +44,7 @@ const EditPersonalInfo = () => {
     maritalStatus: "",
     permanentAddress: "",
   });
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const imgRef = useRef(null);
   useEffect(() => {
@@ -257,8 +259,6 @@ const EditPersonalInfo = () => {
                   </div>
                 </div>
               )}
-
-              <br />
               <input
                 type="file"
                 name="image"
@@ -268,7 +268,7 @@ const EditPersonalInfo = () => {
                 style={{ display: "none" }}
               />
             </div>
-            <span className="text-danger d-flex justify-content-center">
+            <span className="text-danger d-flex justify-content-center m-2">
               {errors.image}
             </span>
             <Row>
@@ -439,7 +439,7 @@ const EditPersonalInfo = () => {
               <Button variant="outline-success" onClick={handleFormSubmit}>
                 Update
               </Button>
-              <Button variant="outline-primary">Back</Button>
+              <Button variant="outline-primary" onClick={()=>navigate('/')}>Back</Button>
             </div>
           </Form>
         </div>
