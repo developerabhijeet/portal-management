@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post("/:id", createLeaveController.createLeave);
 router.get("/:id", createLeaveController.getAllLeave);
+router.delete("/:id", createLeaveController.deleteLeave);
 
 export default router;

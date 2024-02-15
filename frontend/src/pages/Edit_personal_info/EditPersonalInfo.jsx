@@ -9,7 +9,6 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from "../../assets/Profile.png";
-
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
   const [errors, setErrors] = useState({
@@ -161,6 +160,7 @@ const EditPersonalInfo = () => {
       if (isGetData) {
         try {
           await axios.put(`${BaseURL}/editPesonalInfo/${userId}`, userData);
+          localStorage.setItem("profileImg", userData.image);
           toast.success("Information updated successfully!", {
             position: "top-right",
             autoClose: 2000,

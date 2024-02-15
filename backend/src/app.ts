@@ -31,7 +31,6 @@ app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
-app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
 app.use("/leaveSection", leaveSection);
 app.use("/EditSkills", EditSkills);
