@@ -12,9 +12,13 @@ import { statusOption } from "../../Utils/constant";
 import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
+import { ToastContainer, toast } from "react-toastify";
+import { FaPersonCircleCheck } from "react-icons/fa6";
+import moment from "moment";
+
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("");
   const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState([]);
   const [projectUpdate, setProjectUpdate] = useState([]);
@@ -29,6 +33,66 @@ const SendMyDailyStatus = () => {
       task: "",
     },
   ]);
+
+  const [errors, setErrors] = useState({
+    email: "",
+    date: "",
+    workingHour: "",
+    status: "",
+    task: "",
+    index: "",
+  });
+
+  const previosDate = moment().subtract(1, "days")
+  const validationCheck = () => {
+    let isValid = true;
+    const newErrors = { errors };
+
+    if (!email.length > 0) {
+      isValid = false;
+      newErrors.email = "Email is required";
+    }
+    if (!date) {
+      isValid = false;
+      newErrors.date = "Date is required";
+    }
+    if (
+      tasks.map((item) => {
+        if (!item.workingHour || item.workingHour === "00:00") {
+          isValid = false;
+          newErrors.workingHour = "workingHour is required";
+        }
+      })
+    )
+      if (
+        tasks.map((item) => {
+          if (!item.status) {
+            isValid = false;
+            newErrors.status = "Task Status is required";
+          }
+        })
+      )
+        if (
+          tasks.map((item) => {
+            if (!item.task.trim()) {
+              isValid = false;
+              newErrors.task = "Task description is required";
+            }
+          })
+        )
+          if (new Date(date).getTime() < new Date().setHours(0,0,0,0)) {
+            if (new Date(date) < new Date(previosDate).setHours(0,0,0,0)) {
+              newErrors.date = "Date can't be earlier than yesterday";
+              isValid = false;
+            }
+          }
+    if (new Date(date).getTime() > new Date().setHours(0,0,0,0)) {
+      newErrors.date = "Date can't be in the future";
+      isValid = false;
+    }
+    setErrors(newErrors);
+    return isValid;
+  };
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -60,38 +124,57 @@ const SendMyDailyStatus = () => {
 
   const updateStatus = () => {
     const { date, tasks, email } = location.state.item;
-    let d = new Date(date);
-    d = d.toLocaleDateString();
-    // setStartDate(new Date(d));
+    const newDate = moment(date);
+    const myDate = newDate.format("yyyy-MM-DD");
+    setDate(myDate);
     setTasks([...tasks]);
     setEmail([...email]);
   };
 
   const handleUpdate = async (e, completed) => {
     e.preventDefault();
-
     const token = localStorage.getItem("jwtToken");
 
-    try {
-      await axios.put(
-        `${BaseURL}/tasks/${editId}`,
-        {
+    if (validationCheck()) {
+      try {
+        const newUpdatedData = {
           email: email,
-          // dueDate: newDate,
+          date: date,
           tasks: tasks,
           completed,
-        },
-        {
+        };
+        await axios.put(`${BaseURL}/tasks/${editId}`, newUpdatedData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
           "Content-Type": "application/json",
-        },
-      );
-      setEditData(false);
-      navigate("/daily_status_updates");
-    } catch (error) {
-      alert(error);
+        });
+        toast.success("New update added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          navigate("/daily_status_updates");
+        }, 2000);
+        setEditData(false);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          setErrors({ ...errors, server: error.response.data.error });
+        } else {
+          setErrors({
+            ...errors,
+            server: "A task for this date already exists.",
+          });
+        }
+        toast.error(errors.server, {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
     }
   };
 
@@ -134,23 +217,33 @@ const SendMyDailyStatus = () => {
     e.preventDefault();
 
     const token = localStorage.getItem("jwtToken");
-
-    try {
-      const newTask = {
-        email: email,
-        date: date,
-        tasks: tasks,
-        completed,
-      };
-      await axios.post(`${BaseURL}/tasks`, newTask, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        "Content-Type": "application/json",
-      });
-      navigate("/daily_status_updates");
-    } catch (error) {
-      console.error("Error submitting status:", error);
+    if (validationCheck()) {
+      try {
+        const newTask = {
+          email: email,
+          date: date,
+          tasks: tasks,
+          completed,
+        };
+        await axios.post(`${BaseURL}/tasks`, newTask, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          "Content-Type": "application/json",
+        });
+        toast.success("New update added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          navigate("/daily_status_updates");
+        }, 2000);
+      } catch (error) {
+        toast.error("A task for this date already exists", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
     }
   };
 
@@ -160,38 +253,37 @@ const SendMyDailyStatus = () => {
 
   return (
     <>
-      <Layout>
-        <div
-          className="my-4 mx-auto border border-secondary"
-          style={{ maxWidth: 800 }}
-        >
-          <div className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}>
-            <h2 className="m-0 p-0">Send Daily Status Update</h2>
-          </div>
-
-          <div className="">
-            <div className="d-flex justify-content-between border-bottom border-secondary p-3 text-info">
+      <Layout newIndex="1">
+        <div className="mt-5 mx-auto container" style={{ maxWidth: 800 }}>
+          <h2 className="heading bg">Send Daily Status Update</h2>
+          <div className="new">
+            <div className="d-flex justify-content-between border-bottom border-light p-3 text-info">
               <div role="button" onClick={() => handleModalShow()}>
                 Do you want to change your availability?
               </div>
-              <div>Available</div>
+              <div className="d-flex">
+                Available
+                <FaPersonCircleCheck color="green" size={22} className="ms-2" />
+              </div>
             </div>
-            <Form className="p-4">
-              <Row className="mb-5 pb-5">
-                <Form.Group as={Col}>
+            <Form className="">
+              <Row className="mb-5">
+                <Form.Text className="text-danger">{errors.server}</Form.Text>
+                <Form.Group as={Col} md="4" className="mt-3">
                   <Form.Label className="fw">To</Form.Label>
                   <Select
                     label="select"
                     isMulti
                     options={createEmailObjects(emailList)}
                     isSearchable
+                    is
                     noOptionsMessage={() => "email not found"}
                     onChange={handleEmail}
                     styles={{
                       control: (prevStyle) => ({
                         ...prevStyle,
-                        backgroundColor: "#212529",
-                        borderColor: "#313131",
+                        backgroundColor: "#000",
+                        borderColor: "#000",
                       }),
                       menu: (prevStyle) => ({
                         ...prevStyle,
@@ -200,13 +292,14 @@ const SendMyDailyStatus = () => {
                       option: (prevStyle) => ({
                         ...prevStyle,
                         backgroundColor: "#212529",
-                        color: "#ccc",
+                        color: "#bdb9b9",
                       }),
                     }}
                   />
+                  <Form.Text className="text-danger">{errors.email}</Form.Text>
                 </Form.Group>
 
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md="4" className="mt-3">
                   <Form.Label className="fw">CC</Form.Label>
                   <Form.Control
                     value="status@bestpeers.com"
@@ -214,7 +307,7 @@ const SendMyDailyStatus = () => {
                     className="bg-dark text-white border-dark"
                   />
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md="4" className="mt-3">
                   <Form.Label className="fw">Status Date</Form.Label>
                   <Form.Control
                     type="date"
@@ -224,157 +317,163 @@ const SendMyDailyStatus = () => {
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                   ></Form.Control>
+                  <Form.Text className="text-danger">{errors.date}</Form.Text>
                 </Form.Group>
               </Row>
 
               <div>
-                <div className="">
-                  <h6>+ ADD YOUR TASK DETAILS</h6>
-                </div>
-                <div className="taskContainer">
-                  {tasks.map((task, index) => (
-                    <div key={index}>
-                      <div className="task_status_box">
-                        <div className="project_task">
-                          <div>
+                <div className="borders">
+                  <div>
+                    <h6>+ ADD YOUR TASK DETAILS</h6>
+                  </div>
+                  <div>
+                    {tasks.map((task, index) => (
+                      <div key={index} className="border-color">
+                        <Row className="mb-3">
+                          <Form.Group as={Col} md="4" className="mt-3">
                             <Form.Label>Project</Form.Label>
-                          </div>
+                            <Form.Select
+                              value={task.projectStatus}
+                              onChange={(e) =>
+                                setTasks((prevTasks) =>
+                                  prevTasks.map((prevTask, i) =>
+                                    i === index
+                                      ? {
+                                          ...prevTask,
+                                          projectStatus: e.target.value,
+                                        }
+                                      : prevTask,
+                                  ),
+                                )
+                              }
+                            >
+                              <OptionsSelect
+                                options={projectUpdate}
+                                defaultOption="Select Status"
+                              />
+                            </Form.Select>
+                          </Form.Group>
 
-                          <Form.Select
-                            id="select_option"
-                            value={task.projectStatus}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? {
-                                        ...prevTask,
-                                        projectStatus: e.target.value,
-                                      }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          >
-                            <OptionsSelect
-                              options={projectUpdate}
-                              defaultOption="Select Status"
-                            />
-                          </Form.Select>
-                        </div>
-                        <div className="working_hours">
-                          <div>
-                            <Form.Label>Working Hours</Form.Label>
-                          </div>
-                          <Form.Control
-                            className="project_select working-field"
-                            style={{
-                              borderRadius: 5,
-                              padding: 7,
-                              borderBlockColor: "rgb(203, 204, 204)",
-                            }}
-                            type="time"
-                            placeholder="hh:mm"
-                            value={task.workingHour}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? {
-                                        ...prevTask,
-                                        workingHour: e.target.value,
-                                      }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          />
-                        </div>
-                        <div style={{ marginLeft: 10 }}>
-                          <div>
+                          <Form.Group as={Col} md="4" className="mt-3">
                             <Form.Label>Status</Form.Label>
-                          </div>
-                          <Form.Select
-                            id="select_option"
-                            name="task"
-                            value={task.status}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? { ...prevTask, status: e.target.value }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          >
-                            <OptionsSelect
-                              options={statusOption}
-                              defaultOption="Select Status"
-                            />
-                          </Form.Select>
-                        </div>
-                      </div>
+                            <Form.Select
+                              id="select_option"
+                              name="task"
+                              value={task.status}
+                              onChange={(e) =>
+                                setTasks((prevTasks) =>
+                                  prevTasks.map((prevTask, i) =>
+                                    i === index
+                                      ? { ...prevTask, status: e.target.value }
+                                      : prevTask,
+                                  ),
+                                )
+                              }
+                            >
+                              <OptionsSelect
+                                options={statusOption}
+                                defaultOption="Select Status"
+                              />
+                            </Form.Select>
 
-                      <div className="task">
-                        <label>Task</label>
-                        <div className="task-box">
-                          <textarea
-                            className="task-input"
-                            value={task.task}
-                            onChange={(e) =>
-                              setTasks((prevTasks) =>
-                                prevTasks.map((prevTask, i) =>
-                                  i === index
-                                    ? { ...prevTask, task: e.target.value }
-                                    : prevTask,
-                                ),
-                              )
-                            }
-                          />
-                          <div className="delete_btn">
+                            <Form.Text className="text-danger">
+                              {errors.status}
+                            </Form.Text>
+                          </Form.Group>
+
+                          <Form.Group as={Col} md="4" className="mt-3">
+                            <Form.Label>Working Hours</Form.Label>
+                            <Form.Control
+                              type="time"
+                              value={task.workingHour}
+                              style={{ colorScheme: "dark" }}
+                              onChange={(e) =>
+                                setTasks((prevTasks) =>
+                                  prevTasks.map((prevTask, i) =>
+                                    i === index
+                                      ? {
+                                          ...prevTask,
+                                          workingHour: e.target.value,
+                                        }
+                                      : prevTask,
+                                  ),
+                                )
+                              }
+                            />
+                            <Form.Text className="text-danger">
+                              {errors.workingHour}
+                            </Form.Text>
+                          </Form.Group>
+                        </Row>
+                        <Row>
+                          <Form.Group className="mb-3" as={Col} md="11">
+                            <Form.Label>Task Description</Form.Label>
+                            <Form.Control
+                              as="textarea"
+                              rows={3}
+                              value={task.task}
+                              onChange={(e) =>
+                                setTasks((prevTasks) =>
+                                  prevTasks.map((prevTask, i) =>
+                                    i === index
+                                      ? { ...prevTask, task: e.target.value }
+                                      : prevTask,
+                                  ),
+                                )
+                              }
+                            />
+                            <Form.Text className="text-danger">
+                              {errors.task}
+                            </Form.Text>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            className="d-flex justify-content-center"
+                          >
                             <RiDeleteBin6Line
                               color="red"
                               onClick={deleteTask}
                             />
-                          </div>
-                        </div>
+                          </Form.Group>
+                        </Row>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
 
-                <Button variant="outline-primary" onClick={addMoreTask}>
-                  + ADD MORE TASK
-                </Button>
+                  <Button variant="outline-primary" onClick={addMoreTask}>
+                    + ADD MORE TASK
+                  </Button>
+                </div>
                 {!editData ? (
-                  <div className="save_send_btn_container">
-                    <div className="daily-statusSave">
-                      <Button
-                        variant="outline-warning"
-                        onClick={(e) => handleStatusSubmit(e, false)}
-                      >
-                        SAVE TO DRAFT
-                      </Button>
-                    </div>
-                    <div className="daily-status-sendbtn">
-                      <Button
-                        variant="outline-success"
-                        className="px-5"
-                        onClick={(e) => handleStatusSubmit(e, true)}
-                      >
-                        SEND
-                      </Button>
-                    </div>
+                  <div className="d-flex mt-4 justify-content-center">
+                    <Button
+                      variant="outline-warning"
+                      onClick={(e) => handleStatusSubmit(e, false)}
+                    >
+                      SAVE TO DRAFT
+                    </Button>
+                    <Button
+                      variant="outline-success"
+                      className="px-5 ms-4"
+                      onClick={(e) => handleStatusSubmit(e, true)}
+                    >
+                      SEND
+                    </Button>
                   </div>
                 ) : (
-                  <div className="save_send_btn_container">
+                  <div className="d-flex mt-4 justify-content-center">
                     <Button
-                      className="px-5"
-                      variant="outline-primary"
+                      variant="outline-success"
                       onClick={(e) => handleUpdate(e, true)}
                     >
                       Update
+                    </Button>
+                    <Button
+                      className="px-4 ms-4"
+                      variant="outline-info"
+                      onClick={() => navigate("/daily_status_updates")}
+                    >
+                      Back
                     </Button>
                   </div>
                 )}
@@ -386,6 +485,7 @@ const SendMyDailyStatus = () => {
           <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
         ) : null}
       </Layout>
+      <ToastContainer />
     </>
   );
 };

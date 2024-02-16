@@ -22,30 +22,30 @@ const Projects = () => {
 
   return (
     <>
-      <Layout>
-        <div className="container mt-4">
-          <h5 className="px-3 py-3 m-0" style={{ backgroundColor: "#454545" }}>
-            All Projects
-          </h5>
-          <Table striped hover variant="dark">
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Due Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projectData.length > 0 &&
-                projectData.map((item) => (
-                  <tr key={item._id}>
-                    <td>{item.projectName}</td>
-                    <td>{new Date(item.date).toLocaleDateString()}</td>
-                    <td>{item.action}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+      <Layout newIndex="7">
+        <div className="container mt-5 bg">
+          <h4 className="px-2 py-3 m-0 text-brand">All Projects</h4>
+          <div className="p-2">
+            <Table striped>
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Due Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {projectData.length > 0 &&
+                  projectData.map((item) => (
+                    <tr key={item._id}>
+                      <td>{item.projectName}</td>
+                      <td>{new Date(item.date).toLocaleDateString()}</td>
+                      <td>{item.action}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </Layout>
     </>

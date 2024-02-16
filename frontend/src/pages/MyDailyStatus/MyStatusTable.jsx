@@ -1,10 +1,11 @@
 import React from "react";
 import { FaPen } from "react-icons/fa6";
 import { BiSolidShow } from "react-icons/bi";
+import { Button } from "react-bootstrap";
 
 const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
   return (
-    <table className="table">
+    <table className="table my-3" style={{ backgroundColor: "#191C24" }}>
       <thead>
         <tr className="status">
           <th>Name</th>
@@ -30,21 +31,20 @@ const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
                   <td>
                     <div>
                       {item.completed ? (
-                        <button
-                          className="eyeicon"
+                        <Button
+                          variant="outline-info"
                           onClick={() => handleNavigate(item)}
                         >
-                          <BiSolidShow />
-                          Show
-                        </button>
+                          <BiSolidShow /> Show
+                        </Button>
                       ) : (
-                        <button
-                          className="Edit_icon"
+                        <Button
+                          variant="outline-success"
                           onClick={() => handleNavigate_Edit(item, index)}
                         >
                           <FaPen />
                           Edit
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </td>

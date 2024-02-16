@@ -42,9 +42,9 @@ const Login = () => {
   };
   return (
     <>
-      <div className="containerOne bg-dark" style={{ margin: "9% auto" }}>
+      <div className="containerOne" style={{ margin: "9% auto" }}>
         <h3 className="headOne">LOGIN</h3>
-        <Form className="m-4">
+        <Form className="p-4 backg" style={{ backgroundColor: "#191c24" }}>
           <Form.Group className="mb-3" controlId="formGroupEmail">
             <Form.Label className="fw">Email</Form.Label>
             <Form.Control
@@ -85,7 +85,8 @@ const Login = () => {
           </Form.Group>
           <Button
             className="fw"
-            variant="success"
+            style={{ marginTop: "-10px" }}
+            variant="outline-success"
             type="submit"
             onClick={(e) => handleLoginSubmit(e)}
           >

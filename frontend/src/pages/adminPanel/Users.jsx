@@ -36,36 +36,41 @@ const Users = () => {
   };
   return (
     <>
-      <Layout>
-        <Table className="container mt-4" striped hover variant="dark">
-          <thead>
-            <tr>
-              <th>Employee Name</th>
-              <th>Email</th>
-              <th>Operation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 &&
-              users.map((item) => (
-                <tr key={item._id}>
-                  <td>
-                    {item.firstName} {item.lastName}
-                  </td>
-                  <td>{item.email}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDeleteUser(item._id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
+      <Layout newIndex="6">
+        <div className="mt-5 container bg p-3">
+          <h3 className="text-brand m-0">All Employees</h3>
+          <div className="my-3">
+            <Table striped hover>
+              <thead>
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Email</th>
+                  <th>Operation</th>
                 </tr>
-              ))}
-          </tbody>
-        </Table>
+              </thead>
+              <tbody>
+                {users.length > 0 &&
+                  users.map((item) => (
+                    <tr key={item._id}>
+                      <td>
+                        {item.firstName} {item.lastName}
+                      </td>
+                      <td>{item.email}</td>
+                      <td>
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => handleDeleteUser(item._id)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
         <ToastContainer />
       </Layout>
     </>

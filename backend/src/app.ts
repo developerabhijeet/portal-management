@@ -11,7 +11,9 @@ import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
 import leaveSection from "./routes/leaveRoutes";
 import EditSkills from "./routes/editSkillsRoutes";
-import ForgotPass from './routes/forgotPasswordRoutes'
+import ForgotPass from "./routes/forgotPasswordRoutes";
+import HoliDays from "./routes/holiDaysRoutes";
+import Tests from "./routes/testRoutes"
 const app = express();
 const port = 4500;
 
@@ -22,18 +24,19 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 // Define routes after applying CORS middleware
 app.use("/tasks", taskRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
-app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
 app.use("/leaveSection", leaveSection);
 app.use("/EditSkills", EditSkills);
 app.use("/forgotPass", ForgotPass);
+app.use("/holiDays", HoliDays);
+app.use("/tests", Tests);
 
 
 mongoose

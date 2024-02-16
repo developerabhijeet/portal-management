@@ -28,8 +28,8 @@ const sendForgotEmailController = {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "portal9589@gmail.com",
-          pass: "your password",
+          user: "your email please",
+          pass: "your password please",
         },
       });
 

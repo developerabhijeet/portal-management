@@ -1,16 +1,20 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Layout from "../../components/Layout";
 import "../index.css";
+
 export const MyDailyStatusNew_id = () => {
   const { state } = useLocation();
   const data = state.item;
   return (
     <>
-      <Layout>
-        <div>
-          <h2>Status Update on {data.date}</h2>
-          <div>
+      <Layout newIndex="2">
+        <div className="p-3 mx-auto mt-5 bg" style={{ maxWidth: 850 }}>
+          <h2 className="text-brand">Status Update on {data.date}</h2>
+          <div
+            className="px-3 my-3"
+            style={{ borderLeft: "1px solid #60c2cf" }}
+          >
             <ul>
               <li>
                 <b>In Time</b>
@@ -22,36 +26,29 @@ export const MyDailyStatusNew_id = () => {
                 <b>Total Hours:</b>
               </li>
             </ul>
-            <h3>Please Find My Status Update:</h3>
-            <ul>
-              <span>
-                <ul>
-                  {data.tasks.map((task, index) => (
-                    <li key={index}>
-                      <span>
-                        <b>1: Project Name:</b> {task.projectStatus}
-                      </span>
-                      <br />
-                      <b>Tasks:</b>
-                      <br />
-                      <div>
-                        <div>
-                          {task.task}
-                          <br />
-                        </div>
-                        <div>
-                          <b>Working Hour:</b> {task.workingHour}
-                        </div>
-                        <div>
-                          <b>Status:</b> {task.status}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </span>
-              <br />
-            </ul>
+            <h4 className="text-white">Please Find My Status Update:</h4>
+            {data.tasks.map((task, index) => (
+              <ol key={index}>
+                <li className="my-2">
+                  <div className="d-flex align-items-center">
+                    <h6 className="me-3 m-0 p-0">Project Name:</h6>
+                    <span> {task.projectStatus}</span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <h6 className="me-3 m-0 p-0">Task:</h6>
+                    <span>{task.task}</span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <h6 className="me-3 m-0 p-0">Working Hours:</h6>
+                    <span>{task.workingHour}</span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <h6 className="me-3 m-0 p-0">Status:</h6>
+                    <span>{task.status}</span>
+                  </div>
+                </li>
+              </ol>
+            ))}
           </div>
         </div>
       </Layout>

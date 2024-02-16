@@ -8,12 +8,12 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title style={{ color: "black" }}>Confirmation</Modal.Title>
+        <Modal.Header closeButton >
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Label style={{ color: "black" }}>Status</Form.Label>
+            <Form.Label>Status</Form.Label>
             <Form.Select
               style={{ marginBottom: 10 }}
               onChange={(e) => {
@@ -34,21 +34,21 @@ const ChangeStatus = ({ showModal, setShowModal }) => {
             </Form.Select>
             {moreOptions && (
               <>
-                <Form.Label style={{ color: "black" }}>
+                <Form.Label>
                   How Many Hours?
                 </Form.Label>
-                <Form.Control type="time" style={{ marginBottom: 10 }} />
+                <Form.Control type="time" style={{ marginBottom: 10, colorScheme:'dark'}} />
               </>
             )}
-            <Form.Label style={{ color: "black" }}>Any Note</Form.Label>
+            <Form.Label>Any Note</Form.Label>
             <Form.Control as="textarea" rows={2} style={{ marginBottom: 10 }} />
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="outline-danger" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="outline-success" onClick={handleClose}>
             Change Availability
           </Button>
         </Modal.Footer>

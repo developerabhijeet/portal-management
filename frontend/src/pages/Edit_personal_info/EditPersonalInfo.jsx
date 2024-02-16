@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./EditPersonalInfo.css";
 import { bloodGroupOptions, maritalStatusOptions } from "../../Utils/constant";
@@ -8,9 +8,13 @@ import { BaseURL } from "../../Utils/utils";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from "../../assets/Profile.jpeg";
+import { FaCamera } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
   const [errors, setErrors] = useState({
+    image: "",
     fatherName: "",
     motherName: "",
     personalEmail: "",
@@ -25,6 +29,7 @@ const EditPersonalInfo = () => {
     permanentAddress: "",
   });
   const [userData, setUserData] = useState({
+    image: "",
     fatherName: "",
     motherName: "",
     personalEmail: "",
@@ -38,7 +43,9 @@ const EditPersonalInfo = () => {
     maritalStatus: "",
     permanentAddress: "",
   });
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
+  const imgRef = useRef(null);
   useEffect(() => {
     const projectUpdate = async () => {
       try {
@@ -49,13 +56,14 @@ const EditPersonalInfo = () => {
           setIsGetData(true);
           const userInfo = userIndexData[0];
           setUserData(userInfo);
+          localStorage.setItem("profileImg", userInfo.image);
         }
       } catch (error) {
         alert("error:", error);
       }
     };
     projectUpdate();
-  }, []);
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,9 +71,46 @@ const EditPersonalInfo = () => {
       ...prevData,
       [name]: value,
     }));
+
     setErrors((prevData) => ({
       ...prevData,
       [name]: null,
+    }));
+  };
+
+  const handleImageClick = () => {
+    imgRef.current.click();
+  };
+
+  const imagebase64 = (file) => {
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      const data = new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (err) => reject(err);
+      });
+      return data;
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    const files = e.target.files[0];
+    if (files?.size > 1000000) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        image: "Image size should not be greater than 1MB",
+      }));
+      return;
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      image: "",
+    }));
+    const images = await imagebase64(files);
+    setUserData((prevData) => ({
+      ...prevData,
+      image: images,
     }));
   };
   const validationCheck = () => {
@@ -134,6 +179,7 @@ const EditPersonalInfo = () => {
       if (isGetData) {
         try {
           await axios.put(`${BaseURL}/editPesonalInfo/${userId}`, userData);
+          localStorage.setItem("profileImg", userData.image);
           toast.success("Information updated successfully!", {
             position: "top-right",
             autoClose: 2000,
@@ -145,7 +191,6 @@ const EditPersonalInfo = () => {
           });
         }
       } else {
-      
         try {
           await axios.post(`${BaseURL}/editPesonalInfo`, {
             user: userId,
@@ -165,6 +210,7 @@ const EditPersonalInfo = () => {
     }
   };
   const {
+    image,
     fatherName,
     motherName,
     personalEmail,
@@ -180,13 +226,52 @@ const EditPersonalInfo = () => {
   } = userData;
 
   return (
-    <Layout>
+    <Layout newIndex="6">
       <div className="containerOne">
-        <div className="headOne">
-          <h3 className="p-0 m-0">Personal Information</h3>
+        <div>
+          <h3 className="headOne">Personal Information</h3>
         </div>
-        <div className="p-4">
-          <Form>
+        <div>
+          <Form className="p-4 backg">
+            <div
+              onClick={handleImageClick}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              {image ? (
+                <div className="profile-icon-div">
+                  <img className="profile-img" src={image} alt="Profile" />
+                  <div className="icon-styles">
+                    <FaCamera size={20} />
+                  </div>
+                </div>
+              ) : (
+                <div className="profile-icon-div">
+                  <img
+                    className="profile-img"
+                    src={Profile}
+                    alt="Default Profile"
+                  />
+                  <div className="icon-styles">
+                    <FaCamera size={20} />
+                  </div>
+                </div>
+              )}
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={imgRef}
+                style={{ display: "none" }}
+              />
+            </div>
+            <span className="text-danger d-flex justify-content-center m-2">
+              {errors.image}
+            </span>
             <Row>
               <Form.Group as={Col} md="6" className="mb-3">
                 <Form.Label>Father name</Form.Label>
@@ -355,7 +440,9 @@ const EditPersonalInfo = () => {
               <Button variant="outline-success" onClick={handleFormSubmit}>
                 Update
               </Button>
-              <Button variant="outline-secondary">Back</Button>
+              <Button variant="outline-primary" onClick={() => navigate("/")}>
+                Back
+              </Button>
             </div>
           </Form>
         </div>

@@ -5,7 +5,10 @@ import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
 import "../index.css";
 import StatusTable from "./MyStatusTable";
-export const MyDailyStatus = ({}) => {
+import { Button } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+
+export const MyDailyStatus = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -20,7 +23,8 @@ export const MyDailyStatus = ({}) => {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        const formattedTasks = response.data.tasks.map((task) => {
+
+        const formattedTasks = response?.data?.tasks.map((task) => {
           const formattedDate = new Date(task.date).toLocaleDateString(
             "en-US",
             {
@@ -38,7 +42,10 @@ export const MyDailyStatus = ({}) => {
         setData(formattedTasks);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        alert(error);
+        toast.error("Session expired! Please login again", {
+          position: "top-right",
+          autoClose: 2000,
+        });
       }
     };
 
@@ -79,44 +86,51 @@ export const MyDailyStatus = ({}) => {
 
   return (
     <>
-      <Layout>
-        <div>
-          <h4>All Status</h4>
+      <Layout newIndex="2">
+        <div
+          className="container mt-5 py-3"
+          style={{ backgroundColor: "#191C24", maxWidth: 950 }}
+        >
+          <h2 className="text-brand">All Status</h2>
           <StatusTable
             data={data}
             handleNavigate={handleNavigate}
             handleNavigate_Edit={handleNavigate_Edit}
           />
-        </div>
-        <div className="d-flex justify-content-center">
-          <button
-            className="btn btn-success me-2"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                className="btn btn-success ms-2"
-                key={page}
-                onClick={() => handlePageChange(page)}
-                disabled={currentPage === page}
-              >
-                {page}
-              </button>
-            ),
-          )}
-          <button
-            className="btn btn-success ms-2"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+
+          <div className="d-flex justify-content-center">
+            <Button
+              className="me-4"
+              variant="success"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </Button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <Button
+                  className="btn btn-success"
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  disabled={currentPage === page}
+                >
+                  {page}
+                </Button>
+              ),
+            )}
+            <Button
+              className="ms-4"
+              variant="success"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </Layout>
+      <ToastContainer />
     </>
   );
 };

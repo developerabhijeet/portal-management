@@ -12,7 +12,7 @@ const Input = ({ label, ...props }) => {
         <Form.Control
           {...field}
           {...props}
-          style={{ backgroundColor: "black", color: "#fff" }}
+          style={{ colorScheme:'dark', backgroundColor: "black", color: "#bdb9b9" }}
         />
         {meta.touched && meta.error ? (
           <p className={style.error}>{meta.error}</p>

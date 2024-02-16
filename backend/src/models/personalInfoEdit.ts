@@ -13,6 +13,7 @@ interface IPersonal_info extends Document {
   maritalStatus: string;
   presentAddress: string;
   permanentAddress: string;
+  image: string;
   user: any;
 }
 const personalInfoSchema = new Schema<IPersonal_info>({
@@ -63,6 +64,9 @@ const personalInfoSchema = new Schema<IPersonal_info>({
   permanentAddress: {
     type: String,
     required: true,
+  },
+  image: {
+    type: String,
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });

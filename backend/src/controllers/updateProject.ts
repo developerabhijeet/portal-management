@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Project from "../models/project";
+
 const ProjectUpdateController = {
   async createProject(req: Request, res: Response) {
     try {
@@ -13,8 +14,9 @@ const ProjectUpdateController = {
       res.status(500).json({ error: "Internal server error." });
     }
   },
-  async getAllUserProject(req: Request, res: Response) {
+  async getAllUserProject(req: any, res: Response) {
     try {
+    
       const userId = req.params.id;
       const projects = await Project.find({ user: userId });
       res.status(200).json({ projects });

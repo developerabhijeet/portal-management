@@ -35,11 +35,11 @@ const authController = {
           _id: user._id,
         },
         process.env.jwtSecret,
-        { expiresIn: "5h" }
+        { expiresIn: "55h" }
       );
       res.cookie("access_token", token, {
         httpOnly: true,
-        expiresIn: "10h",
+        expiresIn: "55h",
       });
       res.status(200).json({
         message: "Login successful",

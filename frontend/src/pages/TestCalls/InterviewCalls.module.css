@@ -2,16 +2,19 @@
   margin: 0;
   padding: 0;
 }
-
+.backg {
+  background-color: #191c24;
+}
 .createheading {
-  background-color: #454545;
+  color: #60c2cf;
   padding: 8px 10px;
   margin: 0;
   border-radius: 3px 3px 0 0;
+  background-color: #191c24;
 }
 
 .interviewHeading {
-  background-color: #454545;
+  background-color: #191c24;
   padding: 8px 10px;
   margin-bottom: 8px;
   border-radius: 3px;
@@ -21,12 +24,17 @@
   padding-top: 20px;
   display: flex;
   flex-direction: row;
+  margin-inline: 10px;
 }
 
 .form {
-  padding-left: 60px;
-  margin-right: 100px;
+  padding: 30px;
+  margin-block: 15px;
+  margin-inline: 10px;
   flex: 1;
+  background-color: #191c24;
+  border: 1px solid none;
+  border-radius: 5px;
 }
 
 #cv::file-selector-button {
@@ -40,27 +48,6 @@
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
-}
-
-.submitbtn {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-  padding: 6px 12px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.searchbtn {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d43f3a;
-  margin-left: 10px;
-  padding: 5px 10px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-size: 14px;
 }
 
 .error {

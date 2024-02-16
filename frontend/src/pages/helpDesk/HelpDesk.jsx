@@ -4,13 +4,11 @@ import { Table } from "react-bootstrap";
 export const HelpDesk = () => {
   return (
     <>
-      <Layout>
-        <div className="bg-dark mt-4 container p-0">
-          <h3 className="px-3 py-2 m-0" style={{ backgroundColor: "#515151" }}>
-            HR Help Desk
-          </h3>
-          <div className="p-3 bg-dark m-0">
-            <Table hover variant="dark">
+      <Layout newIndex="6">
+        <div className="my-5 container bg py-3 px-3">
+          <h3 className="text-brand">HR Help Desk</h3>
+          <div>
+            <Table hover striped>
               <thead>
                 <tr>
                   <th>Query Type</th>

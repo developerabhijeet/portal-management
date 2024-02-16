@@ -13,7 +13,7 @@ const EditProject = () => {
   const location = useLocation();
   const { id, firstName, lastName } = location.state;
   const [projectNames, setProjectNames] = useState({});
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("");
   const [actions, setActions] = useState("");
   const [projects, setProjects] = useState([]);
   const [editProject, setEditProject] = useState({
@@ -53,7 +53,7 @@ const EditProject = () => {
       isValid = false;
       Errors.projectName = "Please enter a project name";
     }
-    if (!date || !date.trim()) {
+    if (!date) {
       isValid = false;
       Errors.dateError = "Please select a date";
     }
@@ -179,12 +179,12 @@ const EditProject = () => {
   const { projectName, dateError, action } = addProjectError;
   return (
     <>
-      <Layout>
-        <div className={style.containerCls} bg-dark>
-          <h3 className={style.heading}>
+      <Layout newIndex="6">
+        <div className={style.containerCls}>
+          <p className={style.heading}>
             {firstName} {lastName}
-          </h3>
-          <Form className="m-3">
+          </p>
+          <Form className="p-4 bg">
             <Form.Group className="mb-4">
               <Form.Label className="fw">Add Project</Form.Label>
               <Form.Control
@@ -196,18 +196,19 @@ const EditProject = () => {
                 onChange={(e) => handleAddInput(e)}
               />
             </Form.Group>
-            {projectName && <p className="errors">{projectName}</p>}
+            {projectName && <p className={style.errors}>{projectName}</p>}
             <Form.Group className="mb-4">
               <Form.Label className="fw">Date</Form.Label>
               <Form.Control
                 type="date"
                 name="date"
+                style={{ colorScheme: "dark" }}
                 className="bg-dark text-white"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
             </Form.Group>
-            {dateError && <p className="errors">{dateError}</p>}
+            {dateError && <p className={style.errors}>{dateError}</p>}
             <Form.Group className="mb-4">
               <Form.Label className="fw">Action</Form.Label>
               <Form.Select
@@ -221,10 +222,10 @@ const EditProject = () => {
                 />
               </Form.Select>
             </Form.Group>
-            {action && <p className="errors">{action}</p>}
+            {action && <p className={style.errors}>{action}</p>}
             <Button
               className="me-3 fw"
-              variant="success"
+              variant="outline-success"
               onClick={() => handleAddProject(id)}
             >
               Add
@@ -233,8 +234,8 @@ const EditProject = () => {
         </div>
         <div>
           {projects.length > 0 ? (
-            <>
-              <Table className="container mt-4" striped hover variant="dark">
+            <div className="m-4">
+              <Table className={`container ${style.tablebg}`} striped hover>
                 <thead>
                   <tr>
                     <th>Assigned Project Name</th>
@@ -250,13 +251,13 @@ const EditProject = () => {
                           <Button
                             className="me-3"
                             size="sm"
-                            variant="primary"
+                            variant="outline-info"
                             onClick={() => handleEditProject(item._id)}
                           >
                             Edit
                           </Button>
                           <Button
-                            variant="danger"
+                            variant="outline-danger"
                             size="sm"
                             onClick={() => handleDeleteProject(item._id)}
                           >
@@ -273,16 +274,12 @@ const EditProject = () => {
                 style={{ marginTop: 100 }}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title style={{ color: "black" }}>
-                    Edit Project
-                  </Modal.Title>
+                  <Modal.Title>Edit Project</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form onSubmit={handleEditSubmit}>
                     <Form.Group className="mb-3">
-                      <Form.Label style={{ color: "black" }}>
-                        Project Name
-                      </Form.Label>
+                      <Form.Label>Project Name</Form.Label>
                       <Form.Control
                         type="text"
                         name="projectName"
@@ -295,12 +292,12 @@ const EditProject = () => {
                     {editProjectError && (
                       <p className={style.errors}>{editProjectError}</p>
                     )}
-                    <Button variant="primary" type="submit">
+                    <Button variant="outline-success" type="submit">
                       Submit
                     </Button>
 
                     <Button
-                      variant="danger"
+                      variant="outline-danger"
                       className="m-2"
                       onClick={() => handleCloseModal()}
                     >
@@ -309,7 +306,7 @@ const EditProject = () => {
                   </Form>
                 </Modal.Body>
               </Modal>
-            </>
+            </div>
           ) : (
             <p className={style.noProjects}>No Projects Alloted</p>
           )}

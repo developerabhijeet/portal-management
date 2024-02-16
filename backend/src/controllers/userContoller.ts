@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 type RequestType = {
   email: string;
   password: string;
@@ -16,7 +15,6 @@ const hashPassword = (password: any) => {
 const handleError = (res: Response, errorMessage: string) => {
   res.status(500).json({ error: errorMessage });
 };
-
 const userController = {
   async signUp(req: Request<RequestType>, res: Response) {
     const { email, password, firstName, lastName } = req.body;
@@ -34,14 +32,14 @@ const userController = {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        password: hash, // Save hashed password
+        password: hash,
       });
 
       await newUser.save();
       const token = jwt.sign(
         { email: newUser.email, _id: newUser._id },
         process.env.jwtSecret,
-        { expiresIn: "5h" }
+        { expiresIn: "15h" }
       );
 
       const maxAge = 3 * 60 * 60;
@@ -81,22 +79,24 @@ const userController = {
       });
     }
   },
-  async UpdatePersonalDetails(req: any, res: Response) {
+  async UpdatePersonalDetails(req: Request, res: Response) {
     try {
       const userId = req.params.id;
       const updatedDetails: RequestType = req.body;
-
+  
       // Hash the password if it is present in the update details
       if (updatedDetails.password) {
         updatedDetails.password = hashPassword(updatedDetails.password);
       }
 
+      // Construct the update object
+      const updateObject: any = { ...updatedDetails }
+  
+      // Find user by ID and update with new details
       const updateUserDetails = await User.findByIdAndUpdate(
         userId,
-        updatedDetails,
-        {
-          new: true,
-        }
+        updateObject,
+        { new: true }
       );
 
       if (updateUserDetails) {
