@@ -24,7 +24,7 @@ const Calls = () => {
   });
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
+  
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };

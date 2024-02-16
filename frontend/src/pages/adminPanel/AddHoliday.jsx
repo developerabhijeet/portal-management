@@ -62,7 +62,7 @@ export const AddHoliday = () => {
           setDate("");
           setOccasion("");
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       } else {
         try {

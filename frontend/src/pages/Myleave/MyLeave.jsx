@@ -29,7 +29,7 @@ export const MyLeave = () => {
 
   useEffect(() => {
     getLeaves();
-    console.log("DATA:", data)
+
     const leaves = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
