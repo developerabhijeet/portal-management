@@ -84,8 +84,8 @@ const Login = () => {
             </Form.Label>
           </Form.Group>
           <Button
-            className="fw" 
-            style={{marginTop: "-10px"}}
+            className="fw"
+            style={{ marginTop: "-10px" }}
             variant="outline-success"
             type="submit"
             onClick={(e) => handleLoginSubmit(e)}

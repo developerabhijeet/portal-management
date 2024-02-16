@@ -30,8 +30,7 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       enum: ["user", "admin"],
       default: "user",
-    },
-    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
+    }, 
   },
   {
     timestamps: true,

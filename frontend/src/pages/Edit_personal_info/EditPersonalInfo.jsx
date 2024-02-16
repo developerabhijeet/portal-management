@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "../../assets/Profile.jpeg";
 import { FaCamera } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
 const EditPersonalInfo = () => {
   const [isGetData, setIsGetData] = useState(false);
   const [errors, setErrors] = useState({

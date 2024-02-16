@@ -9,44 +9,38 @@ import { useNavigate } from "react-router-dom";
 import { totalMonths } from "../../Utils/constant";
 import { leaveType } from "../../Utils/constant";
 import "../index.css";
+
+const firstName = localStorage.getItem("firstName") || "";
+const lastName = localStorage.getItem("lastName") || "";
+const getUserID = localStorage.getItem("userId") || "";
+
 export const MyLeave = () => {
-  const firstName = localStorage.getItem("firstName");
-  const lastName = localStorage.getItem("lastName");
   const [data, setData] = useState([]);
   const [monthlyLeave, setmonthlyLeave] = useState(0);
   const [compoff, setCompOff] = useState(0);
-  const [len, setLen] = useState(0);
   const navigate = useNavigate();
-  const getUserID = localStorage.getItem("userId");
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
-
   const index = totalMonths.indexOf(currentMonth);
   const months = totalMonths.slice(0, index + 1);
 
   useEffect(() => {
     getLeaves();
+  }, []);
+
+  useEffect(() => {
     const leaves = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
           currentMonth && val.leaveType !== "Comp Off",
-    );  
-    if (leaves.length !== 0) {
-      const l = leaves.map((val) => val.days);
-      const res = l.reduce((val, res) => res + val);
-      setmonthlyLeave(res);
-    }
+    );
     const compoffData = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
           currentMonth && val.leaveType === "Comp Off",
     );
-    if (compoffData.length !== 0) {
-      const l = compoffData.map((val) => val.days);
-      const res = l.reduce((val, res) => res + val);
-      setCompOff(res);
-    }
-    
-  }, [data.length, len]);
+    setmonthlyLeave(leaves.length);
+    setCompOff(compoffData.length);
+  }, [data, currentMonth]); // Added currentMonth to the dependency array
 
   const getLeaves = async () => {
     const token = localStorage.getItem("token");
@@ -64,7 +58,6 @@ export const MyLeave = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BaseURL}/leaveSection/${id}`);
-      setLen(len + 1);
     } catch (err) {
       console.error(err);
     }
@@ -96,7 +89,7 @@ export const MyLeave = () => {
             <h3 className="m-0 me-4 pe-5 text-brand">-{monthlyLeave}</h3>
           </div>
           <div className="mb-3">
-            <h3 className="px-3 py-2 m-0 text-brand bg">Alloted Balance</h3>
+            <h3 className="px-3 py-2 m-0 text-brand bg">Allotted Balance</h3>
             <div className="p-3 bg m-0">
               <Table hover>
                 <thead>
@@ -118,14 +111,14 @@ export const MyLeave = () => {
                         <td>
                           {val === currentMonth && monthlyLeave !== 0
                             ? monthlyLeave
-                            : 0}
+                            : '0'}
                         </td>
                         <td>0</td>
                         <td>0</td>
                         <td>
                           {val === currentMonth && compoff !== 0
                             ? compoff
-                            : 0}
+                            : '0'}
                         </td>
                       </tr>
                     ))}

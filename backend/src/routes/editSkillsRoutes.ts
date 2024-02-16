@@ -1,5 +1,4 @@
 import express from "express";
-import ProjectUpdateController from "../controllers/updateProject";
 import createEditSkillsController from "../controllers/editSkillsController";
 const router = express.Router();
 router.post("/:id", createEditSkillsController.createEditSkills);

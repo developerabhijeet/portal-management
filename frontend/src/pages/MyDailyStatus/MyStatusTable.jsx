@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 
 const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
   return (
-    <table className="table my-3" style={{backgroundColor: "#191C24"}}>
+    <table className="table my-3" style={{ backgroundColor: "#191C24" }}>
       <thead>
         <tr className="status">
           <th>Name</th>
@@ -32,15 +32,14 @@ const StatusTable = ({ data, handleNavigate, handleNavigate_Edit }) => {
                     <div>
                       {item.completed ? (
                         <Button
-                        variant="outline-info"
+                          variant="outline-info"
                           onClick={() => handleNavigate(item)}
                         >
-                          <BiSolidShow />
-                          {" "}Show
+                          <BiSolidShow /> Show
                         </Button>
                       ) : (
                         <Button
-                        variant="outline-success"
+                          variant="outline-success"
                           onClick={() => handleNavigate_Edit(item, index)}
                         >
                           <FaPen />

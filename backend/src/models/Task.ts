@@ -27,7 +27,7 @@ const taskSchema = new Schema<ITask>({
   date: {
     type: Date,
     required: true,
-    unique:true
+    unique: true,
   },
   completed: {
     type: Boolean,

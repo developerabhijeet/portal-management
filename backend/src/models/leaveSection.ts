@@ -8,7 +8,11 @@ interface ILeave extends Document {
   toSession: string;
   days: number;
   reason: string;
+  status: string;
   user: any;
+  userEmail: string;
+  firstName: string;
+  lastName: string;
 }
 const leaveSchema = new Schema<ILeave>({
   email: {
@@ -42,6 +46,20 @@ const leaveSchema = new Schema<ILeave>({
   reason: {
     type: String,
     required: true,
+  },
+  userEmail: {
+    type: String,
+  },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "Approved", "Cancelled"],
+    default: "Pending",
   },
 
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
