@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form,Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import { newHolidays } from "../../Utils/constant";
 import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
 import { IoCloseSharp } from "react-icons/io5";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import moment from "moment";
+
 const newDate = new Date();
 const currentYear = newDate.getFullYear();
 
@@ -14,8 +15,8 @@ export const AddHoliday = () => {
   const [date, setDate] = useState("");
   const [occasion, setOccasion] = useState("");
   const [errors, setErrors] = useState("");
-  const [editId,setEditId] = useState(null);
-  const [refresh,setRefresh] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
   const validateCheck = () => {
     let isValid = true;
@@ -26,32 +27,33 @@ export const AddHoliday = () => {
     return isValid;
   };
 
-
-  const handleUpdate = (item)=>{
-    const {date,occasion,_id} = item;
+  const handleUpdate = (item) => {
+    const { date, occasion, _id } = item;
     const newDate = moment(date);
     const myDate = newDate.format("yyyy-MM-DD");
     setDate(myDate);
     setOccasion(occasion);
     setEditId(_id);
+    setErrors("");
   };
- 
-  const handleReset = ()=>{
+
+  const handleReset = () => {
     setEditId(null);
     setDate("");
     setOccasion("");
   };
 
-  const handleAdd = async () => {
+  const handleAdd = async (e) => {
+    e.preventDefault();
     setErrors("");
     if (validateCheck()) {
       const data = {
         date: date,
         occasion: occasion,
       };
-      if(editId){
+      if (editId) {
         try {
-           await axios.put(`${BaseURL}/holiDays/${editId}`,data);
+          await axios.put(`${BaseURL}/holiDays/${editId}`, data);
           toast.success("Holiday Updated", {
             position: "top-right",
             autoClose: 1500,
@@ -59,10 +61,10 @@ export const AddHoliday = () => {
           setEditId(null);
           setDate("");
           setOccasion("");
-        }catch (error)
-         {console.error(error)};
-      }
-      else{
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
         try {
           await axios.post(`${BaseURL}/holiDays`, data);
           toast.success("Holiday Added", {
@@ -85,7 +87,7 @@ export const AddHoliday = () => {
   return (
     <Layout newIndex="6">
       <div className="containerOne bg">
-        <h1 className="headOne">{editId ? "Update":"Add"} Holiday</h1>
+        <h1 className="headOne">{editId ? "Edit" : "Add"} Holiday</h1>
         <Form className="p-3">
           {errors ? (
             <div
@@ -102,7 +104,7 @@ export const AddHoliday = () => {
               <Form.Control
                 name={item.name}
                 type={item.type}
-                value={item.name === "date" ?date:occasion}
+                value={item.name === "date" ? date : occasion}
                 onChange={(e) => {
                   if (item.name === "date") {
                     setDate(e.target.value);
@@ -115,22 +117,40 @@ export const AddHoliday = () => {
               />
             </Form.Group>
           ))}
-          <Button variant="outline-success" onClick={() => handleAdd()}>
-          {editId ? "Update":"Add"}
+          <Button variant="outline-success" onClick={(e) => handleAdd(e)}>
+            {editId ? "Update" : "Add"}
           </Button>
-         
-          <Button variant="outline-primary"  className="ms-3" onClick={handleReset}>
-          {editId ? "Cancel":"Reset"}
+
+          <Button
+            variant="outline-primary"
+            className="ms-3"
+            onClick={handleReset}
+          >
+            {editId ? "Cancel" : "Reset"}
           </Button>
         </Form>
       </div>
-      <MyHolidays handleUpdate={handleUpdate} refresh={refresh} setRefresh={setRefresh}/>
-      <ToastContainer/>
+      <MyHolidays
+        handleUpdate={handleUpdate}
+        refresh={refresh}
+        setRefresh={setRefresh}
+        setErrors={setErrors}
+        setDate={setDate}
+        setOccasion={setOccasion}
+      />
+      <ToastContainer />
     </Layout>
   );
 };
 
-export const MyHolidays = ({handleUpdate,refresh,setRefresh}) => {
+export const MyHolidays = ({
+  handleUpdate,
+  refresh,
+  setRefresh,
+  setErrors,
+  setDate,
+  setOccasion,
+}) => {
   const [allHolidays, setAllHolidays] = useState([]);
   const role = localStorage.getItem("role");
   const fetchHoliday = async () => {
@@ -145,12 +165,19 @@ export const MyHolidays = ({handleUpdate,refresh,setRefresh}) => {
 
   useEffect(() => {
     fetchHoliday();
-  },[refresh]);
+  }, [refresh]);
 
   const handleDelete = async (item) => {
     try {
       await axios.delete(`${BaseURL}/holiDays/${item._id}`);
       setRefresh(!refresh);
+      toast.success("Holiday Deleted Successfully", {
+        position: "top-right",
+        autoClose: 1500,
+      });
+      setErrors("");
+      setDate("");
+      setOccasion("");
     } catch (error) {
       toast.error("Something went wrong! please try again", {
         position: "top-right",
@@ -180,12 +207,14 @@ export const MyHolidays = ({handleUpdate,refresh,setRefresh}) => {
                 <th>Date</th>
                 <th>Occassion</th>
                 <th>Day</th>
-                {role === "admin"  && typeof(handleUpdate) !== "string"? <th></th> : null}
+                {role === "admin" && typeof handleUpdate !== "string" ? (
+                  <th></th>
+                ) : null}
               </tr>
             </thead>
             <tbody>
               {allHolidays.map((item, index) => {
-                const date = new Date(item.date);  
+                const date = new Date(item.date);
                 const day = days[date.getDay()];
                 const newDate = date.toLocaleDateString("en-US", {
                   year: "numeric",
@@ -197,7 +226,7 @@ export const MyHolidays = ({handleUpdate,refresh,setRefresh}) => {
                     <td>{newDate}</td>
                     <td>{item.occasion}</td>
                     <td>{day}</td>
-                    {role === "admin"  && typeof(handleUpdate) == "function" ? (
+                    {role === "admin" && typeof handleUpdate == "function" ? (
                       <td>
                         <Button
                           variant="outline-info"

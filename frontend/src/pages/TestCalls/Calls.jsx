@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button, Table } from "react-bootstrap";
@@ -8,7 +8,8 @@ import SelectInput from "./SelectInput";
 import Layout from "../../components/Layout";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import { selectStatus, selectPriority, selectTech } from "../../Utils/constant";
-
+import axios from "axios";
+import { BaseURL } from "../../Utils/utils";
 const Calls = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required(),
@@ -22,7 +23,8 @@ const Calls = () => {
     priority: Yup.string().required(),
   });
 
-  const onSubmit = async (actions) => {
+  const onSubmit = async (values, actions) => {
+    console.log(values);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     actions.resetForm();
   };
@@ -30,7 +32,29 @@ const Calls = () => {
   const handleReset = (values) => {
     values = {};
   };
-  
+
+  const role = localStorage.getItem("role");
+
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(`${BaseURL}/auth/getUser`);
+      setUsers(response.data.users);
+    } catch (error) {
+      console.error("Error fetching users data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [setUsers]);
+
+  const empolyeeName = [];
+  users.map((item) => {
+    const fullName = `${item.firstName} ${item.lastName}`;
+    empolyeeName.push(fullName);
+  });
   return (
     <>
       <Layout newIndex="6">
@@ -38,22 +62,22 @@ const Calls = () => {
           <div className="container  my-3" style={{ flex: 2 }}>
             <h4 className={style.createheading}>Calls</h4>
             <div className="bg p-2">
-            <Table striped hover>
-              <thead>
-                <tr>
-                  <th>Client's Details</th>
-                  <th>Profile</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>one</td>
-                  <td>java</td>
-                  <td>online</td>
-                </tr>
-              </tbody>
-            </Table>
+              <Table striped hover>
+                <thead>
+                  <tr>
+                    <th>Client's Details</th>
+                    <th>Profile</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>one</td>
+                    <td>java</td>
+                    <td>online</td>
+                  </tr>
+                </tbody>
+              </Table>
             </div>
           </div>
           <div className={style.form}>
@@ -87,14 +111,24 @@ const Calls = () => {
                   type="text"
                   name="DeveloperProfile"
                   id="DeveloperProfile"
-                />
+                >
+                  <OptionsSelect
+                    options={empolyeeName}
+                    defaultOption={"Select developer profile"}
+                  />
+                </SelectInput>
                 <SelectInput
                   label="Assigned to"
                   style={style}
                   type="text"
                   name="assigned"
                   id="assigned"
-                />
+                >
+                  <OptionsSelect
+                    options={empolyeeName}
+                    defaultOption={"Select assigned to"}
+                  />
+                </SelectInput>
                 <Input
                   label="Round Contains"
                   style={style}
@@ -111,7 +145,10 @@ const Calls = () => {
                   name="status"
                   id="status"
                 >
-                  <OptionsSelect options={selectStatus} defaultOption={"Select Status"}/>
+                  <OptionsSelect
+                    options={selectStatus}
+                    defaultOption={"Select Status"}
+                  />
                 </SelectInput>
                 <Input
                   label="Scheduled at from"
@@ -133,7 +170,10 @@ const Calls = () => {
                   name="priority"
                   style={style}
                 >
-                  <OptionsSelect options={selectPriority} defaultOption={"Select Priority"}/>
+                  <OptionsSelect
+                    options={selectPriority}
+                    defaultOption={"Select Priority"}
+                  />
                 </SelectInput>
                 <SelectInput
                   label="Primary technology"
@@ -141,11 +181,28 @@ const Calls = () => {
                   name="technology"
                   style={style}
                 >
-                  <OptionsSelect options={selectTech} defaultOption={"Select Technology"}/>
+                  <OptionsSelect
+                    options={selectTech}
+                    defaultOption={"Select Technology"}
+                  />
                 </SelectInput>
-                <Button type="submit" className="me-3" variant="outline-success">
-                  Search
-                </Button>
+                {role === "admin" ? (
+                  <Button
+                    type="submit"
+                    className="me-3"
+                    variant="outline-success"
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="me-3"
+                    variant="outline-success"
+                  >
+                    Search
+                  </Button>
+                )}
                 <Button type="reset" variant="outline-danger">
                   Clear Search
                 </Button>

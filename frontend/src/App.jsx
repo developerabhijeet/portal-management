@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { MyDailyStatus } from "./pages/MyDailyStatus/MyDailyStatus";
 import { MyLeave } from "./pages/Myleave/MyLeave";
-import {Holidays} from "./pages/Holidays/Holidays";
+import { Holidays } from "./pages/Holidays/Holidays";
 import SendMyDailyStatus from "./pages/SendMyDailyStatus/SendMyDailyStatus";
 import { MyDailyStatusNew_id } from "./pages/MyDailyStatus/MyDailyStatusNew";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -27,8 +27,9 @@ import Users from "./pages/adminPanel/Users";
 import Projects from "./pages/ProjectUpdate/Projects";
 import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
-import {AddHoliday} from "./pages/adminPanel/AddHoliday";
+import { AddHoliday } from "./pages/adminPanel/AddHoliday";
 import { AllLeaves } from "./pages/adminPanel/AllLeaves";
+import TestsCalls, { CallsForm, TestForm } from "./pages/adminPanel/TestsCalls";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -55,13 +56,16 @@ function App() {
               <Route path="/All_users" element={<Users />} />
               <Route path="/skills" element={<Skills />} />
               <Route path="/show_skills" element={<ShowSkills />} />
+              <Route path="tests_calls" element={<TestsCalls />} />
+              <Route path="testsform" element={<TestForm />} />
+              <Route path="callsform" element={<CallsForm />} />
             </>
           )}
           <Route
             path="/"
             element={
               <AuthenticationRoutes>
-                <Dashboard />{" "}
+                <Dashboard />
               </AuthenticationRoutes>
             }
           />

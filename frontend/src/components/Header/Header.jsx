@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "font-awesome/css/font-awesome.min.css"; // Import Font Awesome CSS
 import "../../bootstrap.min.css";
 import ChangeStatus from "../../pages/ChangeStatus/ChangeStatus";
-import {FaPenToSquare } from "react-icons/fa6";
+import { FaPenToSquare } from "react-icons/fa6";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaMedal, FaRegClipboard } from "react-icons/fa";
 import Profile from "../../assets/Profile.jpeg";
@@ -48,7 +48,7 @@ const Header = ({ newIndex }) => {
   const handleChangeStatus = () => {
     setShowModal(!showModal);
   };
-  
+
   return (
     <>
       <div className="header-container">
@@ -104,7 +104,9 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/send_daily_status">
-                <div className={newIndex === "1" ? `nav-link active` : "nav-link"}>
+                <div
+                  className={newIndex === "1" ? `nav-link active` : "nav-link"}
+                >
                   <i className="me-2">
                     <FaPenToSquare />
                   </i>
@@ -112,12 +114,16 @@ const Header = ({ newIndex }) => {
                 </div>
               </Link>
               <Link to="/daily_status_updates">
-                <div className={newIndex === "2" ? `nav-link active` : "nav-link"}>
+                <div
+                  className={newIndex === "2" ? `nav-link active` : "nav-link"}
+                >
                   <i className="fa fa-laptop me-2"></i>My Updates
                 </div>
               </Link>
               <Link to="/projects">
-                <div className={newIndex === "7" ? `nav-link active` : "nav-link"}>
+                <div
+                  className={newIndex === "7" ? `nav-link active` : "nav-link"}
+                >
                   <i className="me-2">
                     <FaRegClipboard />
                   </i>
@@ -140,12 +146,16 @@ const Header = ({ newIndex }) => {
               </Link>
 
               <Link to="/holidays">
-                <div className={newIndex === "4" ? `nav-link active` : "nav-link"}>
+                <div
+                  className={newIndex === "4" ? `nav-link active` : "nav-link"}
+                >
                   <i className="fa fa-table me-2"></i>Holidays
                 </div>
               </Link>
               <Link to="/edit_skills">
-                <div className={newIndex === "5" ? `nav-link active` : "nav-link"}>
+                <div
+                  className={newIndex === "5" ? `nav-link active` : "nav-link"}
+                >
                   <i className="me-2">
                     <FaMedal />
                   </i>
@@ -256,14 +266,14 @@ const Header = ({ newIndex }) => {
                           <NavDropdown.Item
                             onClick={() => navigate("/projectUpdate")}
                           >
-                            Project Allot
+                            Projects
                           </NavDropdown.Item>
-                          <NavDropdown.Item onClick={() => navigate("/tests")}>
-                            Add Tests
+                          <NavDropdown.Item
+                            onClick={() => navigate("/tests_calls")}
+                          >
+                            Tests/Calls
                           </NavDropdown.Item>
-                          <NavDropdown.Item onClick={() => navigate("/calls")}>
-                            Add Calls
-                          </NavDropdown.Item>
+
                           <NavDropdown.Item
                             onClick={() => navigate("/all_leaves")}
                           >

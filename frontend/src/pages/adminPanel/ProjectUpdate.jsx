@@ -29,40 +29,40 @@ const ProjectUpdate = () => {
         <div className="mt-5 container bg p-3">
           <h3 className="text-brand">Assigned Projects</h3>
           <div className="my-3">
-          <Table striped hover>
-            <thead>
-              <tr>
-                <th>Employee Name</th>
-                <th>Operation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.length > 0 &&
-                users.map((item) => (
-                  <tr key={item._id}>
-                    <td>
-                      {item.firstName} {item.lastName}
-                    </td>
-                    <td>
-                      <Button
-                        variant="outline-info"
-                        onClick={() => {
-                          navigate("/edit_project", {
-                            state: {
-                              id: `${item._id}`,
-                              firstName: `${item.firstName}`,
-                              lastName: `${item.lastName}`,
-                            },
-                          });
-                        }}
-                      >
-                        Show
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+            <Table striped hover>
+              <thead>
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.length > 0 &&
+                  users.map((item) => (
+                    <tr key={item._id}>
+                      <td>
+                        {item.firstName} {item.lastName}
+                      </td>
+                      <td>
+                        <Button
+                          variant="outline-info"
+                          onClick={() => {
+                            navigate("/edit_project", {
+                              state: {
+                                id: item._id,
+                                firstName: item.firstName,
+                                lastName: item.lastName,
+                              },
+                            });
+                          }}
+                        >
+                          Show
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
           </div>
         </div>
       </Layout>
