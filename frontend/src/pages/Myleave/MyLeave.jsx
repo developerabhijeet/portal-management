@@ -28,19 +28,29 @@ export const MyLeave = () => {
   }, []);
 
   useEffect(() => {
+    getLeaves();
+    console.log("DATA:", data)
     const leaves = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-          currentMonth && val.leaveType !== "Comp Off",
+          currentMonth && val.leaveType !== "Comp Off" && val.status === "Approved",
     );
+    if (leaves.length !== 0) {
+      const l = leaves.map((val) => val.days);
+      const res = l.reduce((val, res) => res + val);
+      setmonthlyLeave(res);
+    }
     const compoffData = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-          currentMonth && val.leaveType === "Comp Off",
+          currentMonth && val.leaveType === "Comp Off" && val.status === "Approved",
     );
-    setmonthlyLeave(leaves.length);
-    setCompOff(compoffData.length);
-  }, [data, currentMonth]); // Added currentMonth to the dependency array
+    if (compoffData.length !== 0) {
+      const l = compoffData.map((val) => val.days);
+      const res = l.reduce((val, res) => res + val);
+      setCompOff(res);
+    }
+  }, [data.length]);
 
   const getLeaves = async () => {
     const token = localStorage.getItem("token");
@@ -58,6 +68,7 @@ export const MyLeave = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BaseURL}/leaveSection/${id}`);
+      getLeaves();
     } catch (err) {
       console.error(err);
     }
@@ -111,14 +122,14 @@ export const MyLeave = () => {
                         <td>
                           {val === currentMonth && monthlyLeave !== 0
                             ? monthlyLeave
-                            : '0'}
+                            : "0"}
                         </td>
                         <td>0</td>
                         <td>0</td>
                         <td>
                           {val === currentMonth && compoff !== 0
                             ? compoff
-                            : '0'}
+                            : "0"}
                         </td>
                       </tr>
                     ))}
@@ -135,7 +146,7 @@ export const MyLeave = () => {
                 <thead>
                   <tr>
                     <th>Applied By</th>
-                    <th>Leave</th>
+                    <th>Leave (Days)</th>
                     <th>From</th>
                     <th>To</th>
                     <th>Leave Type</th>
@@ -146,9 +157,12 @@ export const MyLeave = () => {
                 <tbody>
                   {data &&
                     data.map((val) => {
+                      const status = val.status;
                       return (
                         <tr key={val._id}>
-                          <td>UserName</td>
+                          <td>
+                            {val.firstName} {val.lastName}
+                          </td>
                           <td>{val.days} Days</td>
                           <td>
                             {new Date(val.fromDate).toLocaleDateString()}
@@ -165,13 +179,23 @@ export const MyLeave = () => {
                           <td>{val.leaveType}</td>
                           <td>{val.reason}</td>
                           <td>
-                            <Button
-                              variant="outline-warning"
-                              className="btn-sm"
-                              onClick={() => handleDelete(val._id)}
-                            >
-                              Cancel
-                            </Button>
+                            {status === "Pending" ? (
+                              <Button
+                                variant="outline-warning"
+                                className="px-3"
+                                onClick={() => handleDelete(val._id)}
+                              >
+                                Cancel
+                              </Button>
+                            ) : (
+                              <Button
+                                variant={
+                                  status === "Approved" ? "success" : "danger"
+                                }
+                              >
+                                {status}
+                              </Button>
+                            )}
                           </td>
                         </tr>
                       );
