@@ -196,7 +196,7 @@ export const MyHolidays = ({
   ];
   return (
     <>
-      <div className="container mt-5 p-0">
+      <div className="container my-4 p-0">
         <h3 className="bg text-brand px-3 py-2 m-0">
           Holiday Calendar <span>{currentYear}</span>
         </h3>

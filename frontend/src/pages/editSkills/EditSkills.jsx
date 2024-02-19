@@ -25,10 +25,10 @@ export const EditSkills = () => {
   return (
     <>
       <Layout newIndex="5">
-        <div className="container mt-5">
-          <h3 className="bg text-brand px-3 py-2 m-0">All Skills</h3>
-          <div className="d-flex flex-row ">
-            <div className="bg p-4" style={{ flex: 1 }}>
+        <div className="container bg mt-5 p-3">
+          <h3 className="text-brand m-0">All Skills</h3>
+          <div className="d-flex flex-row">
+            <div className="py-3" style={{ flex: 1 }}>
               <Table hover>
                 <thead>
                   <tr>
@@ -67,7 +67,7 @@ export const EditSkills = () => {
                 </tbody>
               </Table>
             </div>
-            <div className="bg pe-4 d-flex align-items-center">
+            <div className="pe-4 d-flex align-items-center">
               <Link to="/add-skills">
                 <Button variant="outline-success">
                   <MdEdit className="text-white" />
