@@ -29,7 +29,12 @@ import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
 import { AddHoliday } from "./pages/adminPanel/AddHoliday";
 import { AllLeaves } from "./pages/adminPanel/AllLeaves";
-import TestsCalls, { CallsForm, TestForm } from "./pages/adminPanel/TestsCalls";
+import TestsCalls, {
+  CallsForm,
+  TestForm,
+} from "./pages/adminPanel/testscalls/TestsCalls";
+import ViewTests, { ShowTests } from "./pages/adminPanel/testscalls/ViewTests";
+import ViewCalls from "./pages/adminPanel/testscalls/ViewCalls";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -59,6 +64,9 @@ function App() {
               <Route path="tests_calls" element={<TestsCalls />} />
               <Route path="testsform" element={<TestForm />} />
               <Route path="callsform" element={<CallsForm />} />
+              <Route path="viewtests" element={<ViewTests />} />
+              <Route path="viewcalls" element={<ViewCalls />} />
+              <Route path="showtests" element={<ShowTests />} />
             </>
           )}
           <Route

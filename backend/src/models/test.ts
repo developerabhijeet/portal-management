@@ -6,12 +6,13 @@ interface ITest extends Document {
   round: string;
   status: string;
   mode: string;
-  scheduleDatefrom: Date;
-  scheduleDateTo: Date;
+  deadlineTo: Date;
+  deadlineFrom: Date;
   technology: string;
   priority: string;
   user: any;
 }
+
 const testsSchema = new Schema<ITest>({
   clientName: {
     type: String,
@@ -33,11 +34,11 @@ const testsSchema = new Schema<ITest>({
     type: String,
     required: true,
   },
-  scheduleDatefrom: {
+  deadlineTo: {
     type: Date,
     required: true,
   },
-  scheduleDateTo: {
+  deadlineFrom: {
     type: Date,
     required: true,
   },
@@ -51,5 +52,6 @@ const testsSchema = new Schema<ITest>({
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
+
 const Tests = mongoose.model<ITest>("Test", testsSchema);
 export default Tests;

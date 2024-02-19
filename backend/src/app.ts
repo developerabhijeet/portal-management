@@ -14,6 +14,8 @@ import EditSkills from "./routes/editSkillsRoutes";
 import ForgotPass from "./routes/forgotPasswordRoutes";
 import HoliDays from "./routes/holiDaysRoutes";
 import Tests from "./routes/testRoutes"
+import Calls from "./routes/callsRoutes"
+
 const app = express();
 const port = 4500;
 
@@ -37,6 +39,7 @@ app.use("/EditSkills", EditSkills);
 app.use("/forgotPass", ForgotPass);
 app.use("/holiDays", HoliDays);
 app.use("/tests", Tests);
+app.use("/calls", Calls);
 
 
 mongoose

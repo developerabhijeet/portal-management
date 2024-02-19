@@ -6,9 +6,8 @@ interface ICalls extends Document {
   assignedTo: string;
   round: string;
   status: string;
-  mode: string;
-  deeadlineDatefrom: Date;
-  deeadlineDateTo: Date;
+  scheduledTo: Date;
+  scheduledFrom: Date;
   technology: string;
   priority: string;
   user: any;
@@ -34,11 +33,11 @@ const callsSchema = new Schema<ICalls>({
     type: String,
     required: true,
   },
-  deeadlineDatefrom: {
+  scheduledTo: {
     type: Date,
     required: true,
   },
-  deeadlineDateTo: {
+  scheduledFrom: {
     type: Date,
     required: true,
   },

@@ -17,7 +17,7 @@ const TestController = {
   async getAllUserTests(req: any, res: Response) {
     try {
     
-      const userId = req.params.id;
+      const userId = req.params.id
       const tests = await Tests.find({ user: userId });
       res.status(200).json({ tests });
     } catch (error) {
