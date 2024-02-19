@@ -160,11 +160,10 @@ const ResetPassword = () => {
           <ToastContainer />
         </div>
       ) : (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-          <strong>Please try again!</strong>
-          <br />
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <div className="fw">Session expired to reset password! please try again</div>
           <div
-            className="spinner-border text-primary"
+            className="spinner-border text-primary d-block"
             role="status"
             aria-hidden="true"
           ></div>

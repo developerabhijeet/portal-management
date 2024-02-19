@@ -95,7 +95,11 @@ export const AllLeaves = () => {
                 day: "numeric",
               });
               return (
-                <Card className="box" style={{ width: "18rem" }} key={index}>
+                <Card
+                  className={pendingLeaves.length > 3 ? "box mx-auto" : "box"}
+                  style={{ width: "18rem" }}
+                  key={index}
+                >
                   <Card.Title variant="top">
                     {item.firstName} {item.lastName}
                   </Card.Title>
@@ -147,7 +151,11 @@ export const AllLeaves = () => {
                 day: "numeric",
               });
               return (
-                <Card className="box" style={{ width: "18rem" }} key={index}>
+                <Card
+                  className="box"
+                  style={{ width: "18rem" }}
+                  key={index}
+                >
                   <Card.Title variant="top">
                     {item.firstName} {item.lastName}
                   </Card.Title>
@@ -188,7 +196,11 @@ export const AllLeaves = () => {
                 day: "numeric",
               });
               return (
-                <Card className="box" style={{ width: "18rem" }} key={index}>
+                <Card
+                  className="box"
+                  style={{ width: "18rem" }}
+                  key={index}
+                >
                   <Card.Title variant="top">
                     {item.firstName} {item.lastName}
                   </Card.Title>

@@ -43,7 +43,7 @@ const SendMyDailyStatus = () => {
     index: "",
   });
 
-  const previosDate = moment().subtract(1, "days")
+  const previosDate = moment().subtract(1, "days");
   const validationCheck = () => {
     let isValid = true;
     const newErrors = { errors };
@@ -62,6 +62,7 @@ const SendMyDailyStatus = () => {
           isValid = false;
           newErrors.workingHour = "workingHour is required";
         }
+        return isValid;
       })
     )
       if (
@@ -70,6 +71,7 @@ const SendMyDailyStatus = () => {
             isValid = false;
             newErrors.status = "Task Status is required";
           }
+          return isValid;
         })
       )
         if (
@@ -78,15 +80,16 @@ const SendMyDailyStatus = () => {
               isValid = false;
               newErrors.task = "Task description is required";
             }
+            return isValid;
           })
         )
-          if (new Date(date).getTime() < new Date().setHours(0,0,0,0)) {
-            if (new Date(date) < new Date(previosDate).setHours(0,0,0,0)) {
+          if (new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)) {
+            if (new Date(date) < new Date(previosDate).setHours(0, 0, 0, 0)) {
               newErrors.date = "Date can't be earlier than yesterday";
               isValid = false;
             }
           }
-    if (new Date(date).getTime() > new Date().setHours(0,0,0,0)) {
+    if (new Date(date).getTime() > new Date()) {
       newErrors.date = "Date can't be in the future";
       isValid = false;
     }
