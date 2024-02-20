@@ -16,6 +16,7 @@ import ForgotPass from "./routes/forgotPasswordRoutes";
 import HoliDays from "./routes/holiDaysRoutes";
 import Tests from "./routes/testRoutes"
 import Calls from "./routes/callsRoutes"
+import changeStatus from "./routes/changeStatusRoutes"
 
 const app = express();
 const port = 4500;
@@ -42,7 +43,7 @@ app.use("/forgotPass", ForgotPass);
 app.use("/holiDays", HoliDays);
 app.use("/tests", Tests);
 app.use("/calls", Calls);
-
+app.use('/changeStatus', changeStatus);
 
 mongoose
   .connect(process.env.MONGODB_URL, {

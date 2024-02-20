@@ -24,7 +24,7 @@ const ViewTests = () => {
   return (
     <>
       <Layout newIndex="6">
-        <div className="mt-4 container bg p-3">
+        <div className="my-5 container bg p-3">
           <h3 className="text-brand">Assigned Test Tasks</h3>
           <div className="my-3">
             <Table striped hover>
@@ -75,44 +75,53 @@ export const ShowTests = () => {
   const location = useLocation();
   const { firstName, lastName, id } = location.state;
 
-  console.log(id,"id of employee");
   useEffect(() => {
     const fetchTests = async () => {
       try {
         const response = await axios.get(`${BaseURL}/tests/${id}`);
-        console.log(response.data);
-        setTests(response.data);
+        setTests(response.data.tests);
       } catch (error) {
-        console.error("Error fetching employees test tasks")
+        console.error("Error fetching employees test tasks");
       }
     };
     fetchTests();
-  }, []);
+  }, [id]);
   return (
     <>
-      <div className="container bg my-3">
-        <h4 className="text-brand p-2 d-flex justify-content-center m-0">
-          {firstName} {lastName}
-        </h4>
-        <div className="">
-          <Table striped hover>
-            <thead>
-              <tr>
-                <th>Client's Details</th>
-                <th>Profile</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </Table>
+      <Layout newIndex="6">
+        <div className="container bg my-5">
+          <h4 className="text-brand p-4 d-flex justify-content-center m-0">
+            {firstName} {lastName}
+          </h4>
+          <div>
+            {tests.length > 0 ? (
+              <Table striped hover>
+                <thead>
+                  <tr>
+                    <th>Client's Details</th>
+                    <th>Profile</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tests.length > 0 &&
+                    tests.map((item) => (
+                      <tr key={item._id}>
+                        <td>{item.clientName}</td>
+                        <td>{item.developerProfile}</td>
+                        <td>{item.status}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            ) : (
+              <p style={{fontSize:20}} className="text-brand d-flex justify-content-center">
+                No Test task assigned
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+      </Layout>
     </>
   );
 };

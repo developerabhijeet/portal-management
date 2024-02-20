@@ -1,58 +1,77 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+import OptionsSelect from "../../components/selectOption/selectOption";
+import { changeStatus } from "../../Utils/constant";
 
-const ChangeStatus = ({ showModal, setShowModal }) => {
+const ChangeStatus = ({
+  showModal,
+  setShowModal,
+  data,
+  handleInputChange,
+  handleSubmit,
+}) => {
+  const { Status, Hours, Note } = data;
   const handleClose = () => setShowModal(false);
   const [moreOptions, setMoreOptions] = useState(false);
 
   return (
     <>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton >
-          <Modal.Title>Confirmation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
+      <Form>
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmation</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Label>Status</Form.Label>
             <Form.Select
               style={{ marginBottom: 10 }}
+              name="Status"
+              value={Status}
               onChange={(e) => {
+                handleInputChange(e);
                 if (e.target.value === "I am available partially")
                   setMoreOptions(true);
                 else setMoreOptions(false);
               }}
             >
-              <option value="I am avialable for any new work">
-                I am available for any new work
-              </option>
-              <option value="I am busy for assigned work">
-                I am busy for assigned work
-              </option>
-              <option value="I am available partially">
-                I am available partially
-              </option>
+              <OptionsSelect options={changeStatus} />
             </Form.Select>
             {moreOptions && (
               <>
-                <Form.Label>
-                  How Many Hours?
-                </Form.Label>
-                <Form.Control type="time" style={{ marginBottom: 10, colorScheme:'dark'}} />
+                <Form.Label>How Many Hours?</Form.Label>
+                <Form.Control
+                  type="time"
+                  name="Hours"
+                  value={Hours}
+                  onChange={(e) => handleInputChange(e)}
+                  style={{ marginBottom: 10, colorScheme: "dark" }}
+                />
               </>
             )}
             <Form.Label>Any Note</Form.Label>
-            <Form.Control as="textarea" rows={2} style={{ marginBottom: 10 }} />
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="outline-danger" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="outline-success" onClick={handleClose}>
-            Change Availability
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Form.Control
+              as="textarea"
+              name="Note"
+              value={Note}
+              onChange={(e) => handleInputChange(e)}
+              rows={2}
+              style={{ marginBottom: 10 }}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-danger" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+              variant="outline-success"
+            >
+              Change Availability
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Form>
     </>
   );
 };

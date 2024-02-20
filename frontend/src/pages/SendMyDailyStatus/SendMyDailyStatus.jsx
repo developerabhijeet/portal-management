@@ -18,6 +18,12 @@ import moment from "moment";
 
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState({
+    Status: "",
+    Hours: "",
+    Note: "",
+  });
+  const [userStatus, setUserStatus] = useState([]);
   const [date, setDate] = useState("");
   const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState([]);
@@ -42,7 +48,7 @@ const SendMyDailyStatus = () => {
     task: "",
     index: "",
   });
-
+  const userId = localStorage.getItem("userId");
   const previosDate = moment().subtract(1, "days");
   const validationCheck = () => {
     let isValid = true;
@@ -212,7 +218,6 @@ const SendMyDailyStatus = () => {
         console.error("Error fetching project data:", error);
       }
     };
-
     projectUpdate();
   }, []);
 
@@ -250,10 +255,60 @@ const SendMyDailyStatus = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchChangeStatus = async () => {
+      try {
+        const response = await axios.get(`${BaseURL}/changeStatus/${userId}`);
+        setUserStatus(response.data.status);
+      } catch (error) {
+        console.error("Error fetching change status");
+      }
+    };
+    fetchChangeStatus();
+  }, [userId]);
+
   const handleModalShow = () => {
     setShowModal(!showModal);
   };
+  const handleClose = () => setShowModal(false);
+  const { Status, Hours, Note } = data;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
+  const statusid = userStatus?.map((item) => item._id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userStatus.length > 0) {
+      try {
+        await axios.put(`${BaseURL}/changeStatus/${statusid}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        handleClose();
+      } catch (error) {
+        console.error("Error updating status", error);
+      }
+    } else {
+      try {
+        await axios.post(`${BaseURL}/changeStatus/${userId}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        handleClose();
+      } catch (error) {
+        console.error("Error changing status", error);
+      }
+    }
+  };
   return (
     <>
       <Layout newIndex="1">
@@ -486,7 +541,13 @@ const SendMyDailyStatus = () => {
           </div>
         </div>
         {showModal ? (
-          <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
+          <ChangeStatus
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            data={data}
+          />
         ) : null}
       </Layout>
       <ToastContainer />

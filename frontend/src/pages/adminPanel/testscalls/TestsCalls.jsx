@@ -11,6 +11,7 @@ import Input from "../../TestCalls/Input";
 import SelectInput from "../../TestCalls/SelectInput";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
 import OptionsSelect from "../../../components/selectOption/selectOption";
 import {
   selectMode,
@@ -34,7 +35,7 @@ const TestsCalls = () => {
     };
 
     fetchData();
-  }, [setUsers]);
+  }, []);
 
   return (
     <>
@@ -71,7 +72,7 @@ const TestsCalls = () => {
                       </td>
                       <td>
                         <Button
-                          variant="outline-info me-2"
+                          variant="outline-warning me-3"
                           onClick={() => {
                             navigate("/testsform", {
                               state: {
@@ -117,7 +118,6 @@ export default TestsCalls;
 export const TestForm = () => {
   const location = useLocation();
   const { users, id } = location.state;
-  console.log(id,"################33");
   const validationSchema = Yup.object({
     clientName: Yup.string().required(),
     developerProfile: Yup.string().required(),
@@ -157,6 +157,12 @@ export const TestForm = () => {
         technology: technology,
         priority: priority,
         user: id,
+      });
+
+      toast.success("Test task added successfully!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
       });
     } catch (error) {
       console.error("Error assigning test task");
@@ -296,6 +302,7 @@ export const TestForm = () => {
             </Formik>
           </div>
         </div>
+        <ToastContainer />
       </Layout>
     </>
   );
@@ -339,6 +346,13 @@ export const CallsForm = () => {
         scheduledFrom: scheduledFrom,
         technology: technology,
         priority: priority,
+        user: id,
+      });
+
+      toast.success("Call added successfully!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
       });
     } catch (error) {
       console.error("Error assigning calls");
@@ -472,6 +486,7 @@ export const CallsForm = () => {
             </Formik>
           </div>
         </div>
+        <ToastContainer />
       </Layout>
     </>
   );

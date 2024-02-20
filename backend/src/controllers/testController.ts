@@ -16,8 +16,7 @@ const TestController = {
   },
   async getAllUserTests(req: any, res: Response) {
     try {
-    
-      const userId = req.params.id
+      const userId = req.params.id;
       const tests = await Tests.find({ user: userId });
       res.status(200).json({ tests });
     } catch (error) {
@@ -25,5 +24,5 @@ const TestController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
-}
-export default  TestController;
+};
+export default TestController;

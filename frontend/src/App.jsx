@@ -34,7 +34,7 @@ import TestsCalls, {
   TestForm,
 } from "./pages/adminPanel/testscalls/TestsCalls";
 import ViewTests, { ShowTests } from "./pages/adminPanel/testscalls/ViewTests";
-import ViewCalls from "./pages/adminPanel/testscalls/ViewCalls";
+import ViewCalls, { ShowCalls } from "./pages/adminPanel/testscalls/ViewCalls";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -67,6 +67,7 @@ function App() {
               <Route path="viewtests" element={<ViewTests />} />
               <Route path="viewcalls" element={<ViewCalls />} />
               <Route path="showtests" element={<ShowTests />} />
+              <Route path="showcalls" element={<ShowCalls />} />
             </>
           )}
           <Route

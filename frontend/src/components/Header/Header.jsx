@@ -11,6 +11,9 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { FaMedal, FaRegClipboard } from "react-icons/fa";
 import Profile from "../../assets/Profile.jpeg";
+import axios from "axios";
+import { BaseURL } from "../../Utils/utils";
+
 const Header = ({ newIndex }) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -18,15 +21,34 @@ const Header = ({ newIndex }) => {
   const [toggleNav, setToggleNav] = useState(false);
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
-
+  const [userStatus, setUserStatus] = useState([]);
   const role = localStorage.getItem("role");
   const profileImg = localStorage.getItem("profileImg");
+  const [data, setData] = useState({
+    Status: "",
+    Hours: "",
+    Note: "",
+  });
+  const userId = localStorage.getItem("userId");
+
   useEffect(() => {
     if (!localToken) {
       navigate("/login");
       return;
     }
   }, [localToken, navigate]);
+
+  useEffect(() => {
+    const fetchChangeStatus = async () => {
+      try {
+        const response = await axios.get(`${BaseURL}/changeStatus/${userId}`);
+        setUserStatus(response.data.status);
+      } catch (error) {
+        console.error("Error fetching change status");
+      }
+    };
+    fetchChangeStatus();
+  }, [userId]);
 
   const logout = async () => {
     try {
@@ -49,6 +71,45 @@ const Header = ({ newIndex }) => {
     setShowModal(!showModal);
   };
 
+  const { Status, Hours, Note } = data;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleClose = () => setShowModal(false);
+
+  const statusid = userStatus?.map((item) => item._id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userStatus.length > 0) {
+      try {
+        await axios.put(`${BaseURL}/changeStatus/${statusid}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        handleClose();
+      } catch (error) {
+        console.error("Error updating status", error);
+      }
+    } else {
+      try {
+        await axios.post(`${BaseURL}/changeStatus/${userId}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        handleClose();
+      } catch (error) {
+        console.error("Error changing status", error);
+      }
+    }
+  };
   return (
     <>
       <div className="header-container">
@@ -299,7 +360,13 @@ const Header = ({ newIndex }) => {
         </div>
       </div>
       {showModal ? (
-        <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
+        <ChangeStatus
+          showModal={showModal}
+          setShowModal={setShowModal}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          data={data}
+        />
       ) : null}
     </>
   );
