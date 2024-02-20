@@ -100,7 +100,7 @@ export const AddHoliday = () => {
           ) : null}
           {newHolidays.map((item, index) => (
             <Form.Group className="mb-3" key={index}>
-              <Form.Text>{item.label}</Form.Text>
+              <Form.Label>{item.label}</Form.Label>
               <Form.Control
                 name={item.name}
                 type={item.type}
@@ -196,7 +196,7 @@ export const MyHolidays = ({
   ];
   return (
     <>
-      <div className="container my-4 p-0">
+      <div className="container my-5 p-0">
         <h3 className="bg text-brand px-3 py-2 m-0">
           Holiday Calendar <span>{currentYear}</span>
         </h3>

@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import projectRoutes from "./routes/projectUpdateRoutes";
 import persanalInfoRoutes from "./routes/personalInfoEditRoutes";
+import discussionDeskRoutes from "./routes/discussionDeskRoutes"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
@@ -34,6 +35,7 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
+app.use("/discussion_desk", discussionDeskRoutes);
 app.use("/leaveSection", leaveSection);
 app.use("/EditSkills", EditSkills);
 app.use("/forgotPass", ForgotPass);

@@ -279,7 +279,7 @@ const SendMyDailyStatus = () => {
                     isMulti
                     options={createEmailObjects(emailList)}
                     isSearchable
-                    is
+                    isClearable={false}
                     noOptionsMessage={() => "email not found"}
                     onChange={handleEmail}
                     styles={{
@@ -434,6 +434,7 @@ const SendMyDailyStatus = () => {
                             className="d-flex justify-content-center"
                           >
                             <RiDeleteBin6Line
+                              role="button"
                               color="red"
                               onClick={deleteTask}
                             />

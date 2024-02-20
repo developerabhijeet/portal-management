@@ -57,7 +57,7 @@ const Header = ({ newIndex }) => {
           className={toggleNav ? "sidebar pe-4 pb-3 open" : "sidebar pe-4 pb-3"}
         >
           <nav className="navbar bg-secondary navbar-dark">
-            <div className="ms-5 mt-2">
+            <div className="ms-5 mt-0">
               <img
                 src={require("../../assets/logo.png")}
                 alt="logo"

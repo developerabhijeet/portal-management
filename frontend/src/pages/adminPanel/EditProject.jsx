@@ -158,7 +158,6 @@ const EditProject = () => {
       toast.success("Project Deleted successfully!", {
         position: "top-right",
         autoClose: 2000,
-        hideProgressBar: true,
       });
       const fetchData = async () => {
         try {

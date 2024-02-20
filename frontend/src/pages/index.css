@@ -66,6 +66,31 @@ h6{
   font-size: 15px;
 }
 
+.css-166bipr-Input{
+  color: #bdb9b9 !important;
+}
+
+.css-1wa756u-control{
+  box-shadow: 0 0 0 1px #d36c6c !important;
+}
+.css-1wa756u-control:focus{
+  border-color: #d36c6c !important;
+}
+.css-1wa756u-control:hover{
+  border-color: #d36c6c !important;
+}
+
+.css-pf9847-control:focus{
+  border-color: #d36c6c !important;
+}
+
+.css-pf9847-control:hover{
+  border-color: #141414 !important;
+}
+
+.form-check-input{
+  box-shadow: 0 0 0 1px #413f3f !important;
+}
 
 @media (min-width: 900px){
 
