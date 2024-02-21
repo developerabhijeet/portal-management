@@ -48,7 +48,7 @@ const Header = ({ newIndex }) => {
       }
     };
     fetchChangeStatus();
-  }, [userId]);
+  }, [data]);
 
   const logout = async () => {
     try {
@@ -92,7 +92,12 @@ const Header = ({ newIndex }) => {
           Note: Note,
           user: userId,
         });
+        toast.success("Status Updated successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
         handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
       } catch (error) {
         console.error("Error updating status", error);
       }
@@ -104,7 +109,12 @@ const Header = ({ newIndex }) => {
           Note: Note,
           user: userId,
         });
+        toast.success("Status Added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
         handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
       } catch (error) {
         console.error("Error changing status", error);
       }

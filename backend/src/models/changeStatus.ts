@@ -13,6 +13,7 @@ const changeStatusSchema = new Schema<IChangeStatus>({
   },
   Hours: {
     type: String,
+    required: true,
   },
   Note: {
     type: String,

@@ -19,11 +19,12 @@ import {
   selectStatus,
   selectTech,
 } from "../../../Utils/constant";
+import { CiSearch } from "react-icons/ci";
 
 const TestsCalls = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,6 +56,32 @@ const TestsCalls = () => {
         </DropdownButton>
         <div className="mt-4 container bg p-3">
           <h3 className="text-brand">Assign Tests and Calls</h3>
+          <div style={{ fontSize: "1rem" }}>
+            <CiSearch
+              size={20}
+              style={{
+                position: "absolute",
+                zIndex: 1,
+                marginBlock: "8px",
+                marginLeft: "2px",
+              }}
+            />
+            <input
+              style={{
+                width: "100%",
+                backgroundColor: "black",
+                color: "#ccc",
+                padding: 7,
+                border: "2px",
+                borderRadius: "5px",
+                paddingLeft:'25px'
+              }}
+              type="text"
+              placeholder="Search Employee"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
           <div className="my-3">
             <Table striped hover>
               <thead>
@@ -64,46 +91,52 @@ const TestsCalls = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.length > 0 &&
-                  users.map((item) => (
-                    <tr key={item._id}>
-                      <td>
-                        {item.firstName} {item.lastName}
-                      </td>
-                      <td>
-                        <Button
-                          variant="outline-warning me-3"
-                          onClick={() => {
-                            navigate("/testsform", {
-                              state: {
-                                id: item._id,
-                                firstName: item.firstName,
-                                lastName: item.lastName,
-                                users: users,
-                              },
-                            });
-                          }}
-                        >
-                          Tests
-                        </Button>
-                        <Button
-                          variant="outline-success"
-                          onClick={() => {
-                            navigate("/callsform", {
-                              state: {
-                                id: item._id,
-                                firstName: item.firstName,
-                                lastName: item.lastName,
-                                users: users,
-                              },
-                            });
-                          }}
-                        >
-                          Calls
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                {users &&
+                  users
+                    .filter((item) => {
+                      return search.toLowerCase() === ""
+                        ? item
+                        : item.firstName.toLowerCase().includes(search);
+                    })
+                    .map((item) => (
+                      <tr key={item._id}>
+                        <td>
+                          {item.firstName} {item.lastName}
+                        </td>
+                        <td>
+                          <Button
+                            variant="outline-warning me-3"
+                            onClick={() => {
+                              navigate("/testsform", {
+                                state: {
+                                  id: item._id,
+                                  firstName: item.firstName,
+                                  lastName: item.lastName,
+                                  users: users,
+                                },
+                              });
+                            }}
+                          >
+                            Tests
+                          </Button>
+                          <Button
+                            variant="outline-success"
+                            onClick={() => {
+                              navigate("/callsform", {
+                                state: {
+                                  id: item._id,
+                                  firstName: item.firstName,
+                                  lastName: item.lastName,
+                                  users: users,
+                                },
+                              });
+                            }}
+                          >
+                            Calls
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </Table>
           </div>

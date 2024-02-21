@@ -24,7 +24,6 @@ const EditPersonalInfo = () => {
     dateOfBirth: "",
     birthDay: "",
     presentAddress: "",
-    dateOfMarriage: "",
     maritalStatus: "",
     permanentAddress: "",
   });

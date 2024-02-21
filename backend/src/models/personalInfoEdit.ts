@@ -51,7 +51,6 @@ const personalInfoSchema = new Schema<IPersonal_info>({
   },
   dateOfMarriage: {
     type: String,
-    required: true,
   },
   maritalStatus: {
     type: String,

@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BaseURL } from "../../../Utils/utils";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Form, InputGroup } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../../components/Layout";
+import { CiSearch } from "react-icons/ci";
+
 const ViewTests = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
+  const [search, setSearch] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,6 +28,22 @@ const ViewTests = () => {
       <Layout newIndex="6">
         <div className="my-5 container bg p-3">
           <h3 className="text-brand">Assigned Test Tasks</h3>
+          <div>
+            <Form>
+              <InputGroup className="my-3">
+                <CiSearch
+                  size={20}
+                  style={{ position: "absolute", zIndex: 1, top: 8, left: 3 }}
+                />
+                <Form.Control
+                  type="text"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search Employee"
+                  style={{ paddingLeft: 25 }}
+                />
+              </InputGroup>
+            </Form>
+          </div>
           <div className="my-3">
             <Table striped hover>
               <thead>
@@ -36,29 +54,35 @@ const ViewTests = () => {
               </thead>
               <tbody>
                 {users.length > 0 &&
-                  users.map((item) => (
-                    <tr key={item._id}>
-                      <td>
-                        {item.firstName} {item.lastName}
-                      </td>
-                      <td>
-                        <Button
-                          variant="outline-info me-2"
-                          onClick={() => {
-                            navigate("/showtests", {
-                              state: {
-                                id: item._id,
-                                firstName: item.firstName,
-                                lastName: item.lastName,
-                              },
-                            });
-                          }}
-                        >
-                          Show tests
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                  users
+                    ?.filter((item) => {
+                      return search.toLowerCase() === ""
+                        ? item
+                        : item.firstName.toLowerCase().includes(search);
+                    })
+                    ?.map((item) => (
+                      <tr key={item._id}>
+                        <td>
+                          {item.firstName} {item.lastName}
+                        </td>
+                        <td>
+                          <Button
+                            variant="outline-info me-2"
+                            onClick={() => {
+                              navigate(`${item._id}`, {
+                                state: {
+                                  id: item._id,
+                                  firstName: item.firstName,
+                                  lastName: item.lastName,
+                                },
+                              });
+                            }}
+                          >
+                            Show tests
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </Table>
           </div>
@@ -104,8 +128,8 @@ export const ShowTests = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {tests.length > 0 &&
-                    tests.map((item) => (
+                  {tests &&
+                    tests?.map((item) => (
                       <tr key={item._id}>
                         <td>{item.clientName}</td>
                         <td>{item.developerProfile}</td>
@@ -115,7 +139,10 @@ export const ShowTests = () => {
                 </tbody>
               </Table>
             ) : (
-              <p style={{fontSize:20}} className="text-brand d-flex justify-content-center">
+              <p
+                style={{ fontSize: 20, color: "#ccc" }}
+                className="d-flex justify-content-center pb-4"
+              >
                 No Test task assigned
               </p>
             )}

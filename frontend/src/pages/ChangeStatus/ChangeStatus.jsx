@@ -34,7 +34,10 @@ const ChangeStatus = ({
                 else setMoreOptions(false);
               }}
             >
-              <OptionsSelect options={changeStatus} />
+              <OptionsSelect
+                options={changeStatus}
+                defaultOption={"Select Status"}
+              />
             </Form.Select>
             {moreOptions && (
               <>

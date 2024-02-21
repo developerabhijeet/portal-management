@@ -14,6 +14,8 @@ import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
 import { ToastContainer, toast } from "react-toastify";
 import { FaPersonCircleCheck } from "react-icons/fa6";
+import { CiClock2 } from "react-icons/ci";
+import { IoIosWarning } from "react-icons/io";
 import moment from "moment";
 
 const SendMyDailyStatus = () => {
@@ -255,6 +257,8 @@ const SendMyDailyStatus = () => {
     }
   };
 
+  const status = userStatus.map((item) => item.Status).toString();
+
   useEffect(() => {
     const fetchChangeStatus = async () => {
       try {
@@ -265,7 +269,7 @@ const SendMyDailyStatus = () => {
       }
     };
     fetchChangeStatus();
-  }, [userId]);
+  }, [data]);
 
   const handleModalShow = () => {
     setShowModal(!showModal);
@@ -291,7 +295,12 @@ const SendMyDailyStatus = () => {
           Note: Note,
           user: userId,
         });
+        toast.success("Status Updated successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
         handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
       } catch (error) {
         console.error("Error updating status", error);
       }
@@ -303,7 +312,12 @@ const SendMyDailyStatus = () => {
           Note: Note,
           user: userId,
         });
+        toast.success("Status Added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
         handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
       } catch (error) {
         console.error("Error changing status", error);
       }
@@ -320,8 +334,22 @@ const SendMyDailyStatus = () => {
                 Do you want to change your availability?
               </div>
               <div className="d-flex">
-                Available
-                <FaPersonCircleCheck color="green" size={22} className="ms-2" />
+                {status === "I am avialable for any new work"
+                  ? "Available"
+                  : status === "I am busy for assigned work"
+                    ? "Busy"
+                    : "Partial"}
+                {status === "I am avialable for any new work" ? (
+                  <FaPersonCircleCheck
+                    color="green"
+                    size={22}
+                    className="ms-2"
+                  />
+                ) : status === "I am busy for assigned work" ? (
+                  <IoIosWarning color="red" size={22} className="ms-2" />
+                ) : (
+                  <CiClock2 color="yellow" size={22} className="ms-2" />
+                )}
               </div>
             </div>
             <Form className="">
