@@ -254,3 +254,14 @@ export const totalMonths = [
   "November",
   "December",
 ];
+
+export const developerProfile = [
+  "UI/UX",
+  "Django Developer",
+  "React Developer",
+  "React Native Developer",
+  "ROR Developer",
+  "Frontend Developer",
+  "Backend Developer",
+  "MERN Stack Developer"
+] 

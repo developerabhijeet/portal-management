@@ -42,12 +42,12 @@ const Users = () => {
         <div className="mt-5 container bg p-3">
           <h3 className="text-brand m-0">All Employees</h3>
           <div>
+            <CiSearch
+              size={20}
+              className="iconStyle"
+            />
             <Form>
               <InputGroup className="my-3">
-                <CiSearch
-                  size={20}
-                  style={{ position: "absolute", zIndex: 1, top: 8, left: 3 }}
-                />
                 <Form.Control
                   type="text"
                   onChange={(e) => setSearch(e.target.value)}
@@ -70,9 +70,10 @@ const Users = () => {
                 {users.length > 0 &&
                   users
                     .filter((item) => {
+                      const fullName = `${item.firstName} ${item.lastName}`;
                       return search.toLowerCase() === ""
                         ? item
-                        : item.firstName.toLowerCase().includes(search);
+                        : fullName.toLowerCase().includes(search);
                     })
                     .map((item) => (
                       <tr key={item._id}>

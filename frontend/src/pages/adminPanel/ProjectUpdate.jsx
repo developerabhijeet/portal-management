@@ -31,12 +31,9 @@ const ProjectUpdate = () => {
         <div className="mt-5 container bg p-3">
           <h3 className="text-brand">Assigned Projects</h3>
           <div>
+            <CiSearch size={20} className="iconStyle" />
             <Form>
               <InputGroup className="my-3">
-                <CiSearch
-                  size={20}
-                  style={{ position: "absolute", zIndex: 1, top: 8, left: 3 }}
-                />
                 <Form.Control
                   type="text"
                   onChange={(e) => setSearch(e.target.value)}

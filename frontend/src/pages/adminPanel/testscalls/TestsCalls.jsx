@@ -14,12 +14,14 @@ import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import OptionsSelect from "../../../components/selectOption/selectOption";
 import {
+  developerProfile,
   selectMode,
   selectPriority,
   selectStatus,
   selectTech,
 } from "../../../Utils/constant";
 import { CiSearch } from "react-icons/ci";
+import "./testcalls.css";
 
 const TestsCalls = () => {
   const [users, setUsers] = useState([]);
@@ -57,25 +59,9 @@ const TestsCalls = () => {
         <div className="mt-4 container bg p-3">
           <h3 className="text-brand">Assign Tests and Calls</h3>
           <div style={{ fontSize: "1rem" }}>
-            <CiSearch
-              size={20}
-              style={{
-                position: "absolute",
-                zIndex: 1,
-                marginBlock: "8px",
-                marginLeft: "2px",
-              }}
-            />
+            <CiSearch size={20} className="iconStyle" />
             <input
-              style={{
-                width: "100%",
-                backgroundColor: "black",
-                color: "#ccc",
-                padding: 7,
-                border: "2px",
-                borderRadius: "5px",
-                paddingLeft:'25px'
-              }}
+              className="testinput"
               type="text"
               placeholder="Search Employee"
               value={search}
@@ -94,9 +80,10 @@ const TestsCalls = () => {
                 {users &&
                   users
                     .filter((item) => {
+                      const fullName = `${item.firstName} ${item.lastName}`;
                       return search.toLowerCase() === ""
                         ? item
-                        : item.firstName.toLowerCase().includes(search);
+                        : fullName.toLowerCase().includes(search);
                     })
                     .map((item) => (
                       <tr key={item._id}>
@@ -252,7 +239,7 @@ export const TestForm = () => {
                   id="DeveloperProfile"
                 >
                   <OptionsSelect
-                    options={empolyeeName}
+                    options={developerProfile}
                     defaultOption={"Select developer profile"}
                   />
                 </SelectInput>
@@ -442,7 +429,7 @@ export const CallsForm = () => {
                   id="DeveloperProfile"
                 >
                   <OptionsSelect
-                    options={empolyeeName}
+                    options={developerProfile}
                     defaultOption={"Select developer profile"}
                   />
                 </SelectInput>

@@ -5,6 +5,7 @@ import { Table, Button, Form, InputGroup } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../../components/Layout";
 import { CiSearch } from "react-icons/ci";
+import "./testcalls.css";
 
 const ViewTests = () => {
   const [users, setUsers] = useState([]);
@@ -29,12 +30,9 @@ const ViewTests = () => {
         <div className="my-5 container bg p-3">
           <h3 className="text-brand">Assigned Test Tasks</h3>
           <div>
+            <CiSearch size={20} className="iconStyle" />
             <Form>
               <InputGroup className="my-3">
-                <CiSearch
-                  size={20}
-                  style={{ position: "absolute", zIndex: 1, top: 8, left: 3 }}
-                />
                 <Form.Control
                   type="text"
                   onChange={(e) => setSearch(e.target.value)}
@@ -56,9 +54,10 @@ const ViewTests = () => {
                 {users.length > 0 &&
                   users
                     ?.filter((item) => {
+                      const fullName = `${item.firstName} ${item.lastName}`;
                       return search.toLowerCase() === ""
                         ? item
-                        : item.firstName.toLowerCase().includes(search);
+                        : fullName.toLowerCase().includes(search);
                     })
                     ?.map((item) => (
                       <tr key={item._id}>
