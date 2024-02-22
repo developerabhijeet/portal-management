@@ -28,7 +28,7 @@ import Projects from "./pages/ProjectUpdate/Projects";
 import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
 import { AddHoliday } from "./pages/adminPanel/AddHoliday";
-import { AllLeaves } from "./pages/adminPanel/AllLeaves";
+import { AllLeaves } from "./pages/adminPanel/AllLeaves/AllLeaves";
 import TestsCalls, {
   CallsForm,
   TestForm,
