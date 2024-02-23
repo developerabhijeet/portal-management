@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import projectRoutes from "./routes/projectUpdateRoutes";
 import persanalInfoRoutes from "./routes/personalInfoEditRoutes";
+import discussionDeskRoutes from "./routes/discussionDeskRoutes"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import sendMail from "./controllers/sendEmail";
@@ -14,6 +15,9 @@ import EditSkills from "./routes/editSkillsRoutes";
 import ForgotPass from "./routes/forgotPasswordRoutes";
 import HoliDays from "./routes/holiDaysRoutes";
 import Tests from "./routes/testRoutes"
+import Calls from "./routes/callsRoutes"
+import changeStatus from "./routes/changeStatusRoutes"
+
 const app = express();
 const port = 4500;
 
@@ -32,12 +36,14 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
 app.use("/editPesonalInfo", persanalInfoRoutes);
+app.use("/discussion_desk", discussionDeskRoutes);
 app.use("/leaveSection", leaveSection);
 app.use("/EditSkills", EditSkills);
 app.use("/forgotPass", ForgotPass);
 app.use("/holiDays", HoliDays);
 app.use("/tests", Tests);
-
+app.use("/calls", Calls);
+app.use('/changeStatus', changeStatus);
 
 mongoose
   .connect(process.env.MONGODB_URL, {

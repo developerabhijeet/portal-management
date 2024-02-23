@@ -6,6 +6,7 @@
   --dark: #000000;
 }
 
+
 .bg {
   background-color: #191c24;  
 
@@ -233,4 +234,27 @@
   .content .navbar .navbar-nav {
     margin-right: -22px;
   }
+}
+
+ /* ************ Scrollbar layout ************** */
+
+ ::-webkit-scrollbar{
+  width: 8px;
+}
+
+::-webkit-scrollbar-track{
+  background-color: #ffffff2f;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background-color: #59b4bb;
+}
+
+/* ************* Table layout ************** */
+
+.table-layout{
+  width: 100%;
+  table-layout: fixed;
 }

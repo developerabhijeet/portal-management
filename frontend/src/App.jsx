@@ -28,8 +28,13 @@ import Projects from "./pages/ProjectUpdate/Projects";
 import Skills from "./pages/adminPanel/Skills";
 import ShowSkills from "./pages/adminPanel/ShowSkills";
 import { AddHoliday } from "./pages/adminPanel/AddHoliday";
-import { AllLeaves } from "./pages/adminPanel/AllLeaves";
-import TestsCalls, { CallsForm, TestForm } from "./pages/adminPanel/TestsCalls";
+import { AllLeaves } from "./pages/adminPanel/AllLeaves/AllLeaves";
+import TestsCalls, {
+  CallsForm,
+  TestForm,
+} from "./pages/adminPanel/testscalls/TestsCalls";
+import ViewTests, { ShowTests } from "./pages/adminPanel/testscalls/ViewTests";
+import ViewCalls, { ShowCalls } from "./pages/adminPanel/testscalls/ViewCalls";
 
 function App() {
   const role = localStorage.getItem("role");
@@ -56,9 +61,15 @@ function App() {
               <Route path="/All_users" element={<Users />} />
               <Route path="/skills" element={<Skills />} />
               <Route path="/show_skills" element={<ShowSkills />} />
-              <Route path="tests_calls" element={<TestsCalls />} />
-              <Route path="testsform" element={<TestForm />} />
-              <Route path="callsform" element={<CallsForm />} />
+              <Route path="/tests_calls" element={<TestsCalls />} />
+              <Route path="/testsform" element={<TestForm />} />
+              <Route path="/callsform" element={<CallsForm />} />
+              <Route path="/viewtests" element={<ViewTests />} />
+              <Route path="/viewcalls" element={<ViewCalls />} />
+              <Route path="/viewtests/:id" element={<ShowTests />} />
+              <Route path="/viewcalls/:id" element={<ShowCalls />} />
+              <Route path="/all_leaves" element={<AllLeaves />} />
+              <Route path="/add_holidays" element={<AddHoliday />} />
             </>
           )}
           <Route
@@ -76,9 +87,8 @@ function App() {
           />
           <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
           <Route path="/my_leave" element={<MyLeave />} />
-          <Route path="/all_leaves" element={<AllLeaves />} />
+
           <Route path="/holidays" element={<Holidays />} />
-          <Route path="/add_holidays" element={<AddHoliday />} />
           <Route path="/add-skills" element={<AddSkills />} />
           <Route path="/edit_skills" element={<EditSkills />} />
           <Route path="/edit_profile" element={<EditEmployeesDetails />} />

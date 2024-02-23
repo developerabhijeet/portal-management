@@ -10,11 +10,10 @@ import { totalMonths } from "../../Utils/constant";
 import { leaveType } from "../../Utils/constant";
 import "../index.css";
 
-const firstName = localStorage.getItem("firstName") || "";
-const lastName = localStorage.getItem("lastName") || "";
-const getUserID = localStorage.getItem("userId") || "";
-
 export const MyLeave = () => {
+  const firstName = localStorage.getItem("firstName");
+  const lastName = localStorage.getItem("lastName");
+  const getUserID = localStorage.getItem("userId");
   const [data, setData] = useState([]);
   const [monthlyLeave, setmonthlyLeave] = useState(0);
   const [compoff, setCompOff] = useState(0);
@@ -25,15 +24,12 @@ export const MyLeave = () => {
 
   useEffect(() => {
     getLeaves();
-  }, []);
-
-  useEffect(() => {
-    getLeaves();
-
     const leaves = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-          currentMonth && val.leaveType !== "Comp Off" && val.status === "Approved",
+          currentMonth &&
+        val.leaveType !== "Comp Off" &&
+        val.status === "Approved",
     );
     if (leaves.length !== 0) {
       const l = leaves.map((val) => val.days);
@@ -43,7 +39,9 @@ export const MyLeave = () => {
     const compoffData = data.filter(
       (val) =>
         new Date(val.fromDate).toLocaleString("default", { month: "long" }) ===
-          currentMonth && val.leaveType === "Comp Off" && val.status === "Approved",
+          currentMonth &&
+        val.leaveType === "Comp Off" &&
+        val.status === "Approved",
     );
     if (compoffData.length !== 0) {
       const l = compoffData.map((val) => val.days);
@@ -102,7 +100,7 @@ export const MyLeave = () => {
           <div className="mb-3">
             <h3 className="px-3 py-2 m-0 text-brand bg">Allotted Balance</h3>
             <div className="p-3 bg m-0">
-              <Table hover>
+              <Table className="table-layout" hover>
                 <thead>
                   <tr>
                     <th>Month</th>
@@ -142,7 +140,7 @@ export const MyLeave = () => {
               All Leaves of {firstName} {lastName}
             </h3>
             <div className="p-3 m-0 bg">
-              <Table hover>
+              <Table className="table-layout" hover>
                 <thead>
                   <tr>
                     <th>Applied By</th>
@@ -155,6 +153,7 @@ export const MyLeave = () => {
                   </tr>
                 </thead>
                 <tbody>
+
                   {data &&
                     data.map((val) => {
                       const status = val.status;

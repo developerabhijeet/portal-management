@@ -63,6 +63,10 @@ export const ApplyLeave = () => {
       newErrors.fromDate = "Date can't be earlier than today";
       isValid = false;
     }
+    if (new Date(toDate).getTime() < new Date(fromDate).getTime()) {
+      newErrors.toDate = "Date can't be earlier From Date";
+      isValid = false;
+    }
     if (!toDate.trim()) {
       isValid = false;
       newErrors.toDate = "Please select Date";

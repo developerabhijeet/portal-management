@@ -25,13 +25,13 @@ export const newHolidays = [
     name: "date",
     label: "Date",
     type: "date",
-    value: ""
+    value: "",
   },
   {
     name: "occasion",
     label: "Occasion",
     type: "text",
-    value: ""
+    value: "",
   },
 ];
 
@@ -69,6 +69,11 @@ export const leaveType = [
   "Casual Leave",
 ];
 
+export const changeStatus = [
+  "I am avialable for any new work",
+  "I am busy for assigned work",
+  "I am available partially"
+];
 export const skillOptions = [
   "Python",
   "ROR",
@@ -237,15 +242,26 @@ export const emails = [
 ];
 export const totalMonths = [
   "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-]
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const developerProfile = [
+  "UI/UX",
+  "Django Developer",
+  "React Developer",
+  "React Native Developer",
+  "ROR Developer",
+  "Frontend Developer",
+  "Backend Developer",
+  "MERN Stack Developer"
+] 

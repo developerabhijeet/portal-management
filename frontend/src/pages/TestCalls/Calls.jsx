@@ -1,213 +1,92 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { Button, Table } from "react-bootstrap";
+import { Table, Form, InputGroup } from "react-bootstrap";
 import style from "./InterviewCalls.module.css";
-import Input from "./Input";
-import SelectInput from "./SelectInput";
 import Layout from "../../components/Layout";
-import OptionsSelect from "../../components/selectOption/selectOption";
-import { selectStatus, selectPriority, selectTech } from "../../Utils/constant";
 import axios from "axios";
 import { BaseURL } from "../../Utils/utils";
+import { CiSearch } from "react-icons/ci";
+
 const Calls = () => {
-  const validationSchema = Yup.object({
-    name: Yup.string().required(),
-    DeveloperProfile: Yup.string().required(),
-    assigned: Yup.string().required(),
-    round: Yup.number().positive().integer().required(),
-    status: Yup.string().required(),
-    technology: Yup.string().required(),
-    scheduledTo: Yup.date().required(),
-    scheduledFrom: Yup.date().required(),
-    priority: Yup.string().required(),
-  });
-
-  const onSubmit = async (values, actions) => {
-  
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    actions.resetForm();
-  };
-
-  const handleReset = (values) => {
-    values = {};
-  };
-
-  const role = localStorage.getItem("role");
-
-  const [users, setUsers] = useState([]);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get(`${BaseURL}/auth/getUser`);
-      setUsers(response.data.users);
-    } catch (error) {
-      console.error("Error fetching users data", error);
-    }
-  };
+  const [calls, setCalls] = useState([]);
+  const [search, setSearch] = useState("");
+  const id = localStorage.getItem("userId");
 
   useEffect(() => {
-    fetchUsers();
-  }, [setUsers]);
+    const fetchCalls = async () => {
+      try {
+        const response = await axios.get(`${BaseURL}/calls/${id}`);
+        setCalls(response.data.calls);
+      } catch (error) {
+        console.error("Error fetching employees test tasks");
+      }
+    };
+    fetchCalls();
+  }, [id]);
 
-  const empolyeeName = [];
-  users.map((item) => {
-    const fullName = `${item.firstName} ${item.lastName}`;
-    empolyeeName.push(fullName);
-  });
   return (
     <>
       <Layout newIndex="6">
-        <div className={style.mainContainer}>
-          <div className="container  my-3" style={{ flex: 2 }}>
-            <h4 className={style.createheading}>Calls</h4>
-            <div className="bg p-2">
-              <Table striped hover>
-                <thead>
-                  <tr>
-                    <th>Client's Details</th>
-                    <th>Profile</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>one</td>
-                    <td>java</td>
-                    <td>online</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
+        <div className="container my-5 bg">
+          <h4 className={style.createheading}>Calls</h4>
+          <div className="bg">
+            <CiSearch size={20} className="iconStyle" />
+            <Form>
+              <InputGroup className="my-3" style={{ width: "55%" }}>
+                <Form.Control
+                  type="text"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search Calls by client's name, profile and priority"
+                  style={{ paddingLeft: 25 }}
+                  value={search}
+                />
+              </InputGroup>
+            </Form>
           </div>
-          <div className={style.form}>
-            <Formik
-              initialValues={{
-                name: "",
-                DeveloperProfile: "",
-                assigned: "",
-                round: "",
-                status: "",
-                technology: "",
-                scheduledTo: "",
-                scheduledFrom: "",
-                priority: "",
-              }}
-              validationSchema={validationSchema}
-              onSubmit={onSubmit}
-              onReset={handleReset}
-            >
-              <Form>
-                <Input
-                  label="By Client name"
-                  style={style}
-                  type="text"
-                  id="name"
-                  name="name"
-                />
-                <SelectInput
-                  label="By developer profile"
-                  style={style}
-                  type="text"
-                  name="DeveloperProfile"
-                  id="DeveloperProfile"
-                >
-                  <OptionsSelect
-                    options={empolyeeName}
-                    defaultOption={"Select developer profile"}
-                  />
-                </SelectInput>
-                <SelectInput
-                  label="Assigned to"
-                  style={style}
-                  type="text"
-                  name="assigned"
-                  id="assigned"
-                >
-                  <OptionsSelect
-                    options={empolyeeName}
-                    defaultOption={"Select assigned to"}
-                  />
-                </SelectInput>
-                <Input
-                  label="Round Contains"
-                  style={style}
-                  min={1}
-                  max={10}
-                  type="number"
-                  id="round"
-                  name="round"
-                />
-                <SelectInput
-                  label="Status"
-                  style={style}
-                  type="text"
-                  name="status"
-                  id="status"
-                >
-                  <OptionsSelect
-                    options={selectStatus}
-                    defaultOption={"Select Status"}
-                  />
-                </SelectInput>
-                <Input
-                  label="Scheduled at from"
-                  style={style}
-                  type="date"
-                  id="scheduledFrom"
-                  name="scheduledFrom"
-                />
-                <Input
-                  label="Scheduled at to"
-                  style={style}
-                  type="date"
-                  id="scheduledTo"
-                  name="scheduledTo"
-                />
-                <SelectInput
-                  label="Priority"
-                  id="priority"
-                  name="priority"
-                  style={style}
-                >
-                  <OptionsSelect
-                    options={selectPriority}
-                    defaultOption={"Select Priority"}
-                  />
-                </SelectInput>
-                <SelectInput
-                  label="Primary technology"
-                  id="technology"
-                  name="technology"
-                  style={style}
-                >
-                  <OptionsSelect
-                    options={selectTech}
-                    defaultOption={"Select Technology"}
-                  />
-                </SelectInput>
-                {role === "admin" ? (
-                  <Button
-                    type="submit"
-                    className="me-3"
-                    variant="outline-success"
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <Button
-                    type="submit"
-                    className="me-3"
-                    variant="outline-success"
-                  >
-                    Search
-                  </Button>
-                )}
-                <Button type="reset" variant="outline-danger">
-                  Clear Search
-                </Button>
-              </Form>
-            </Formik>
+          <div className="p-2">
+            <Table striped hover className="bg">
+              <thead>
+                <tr>
+                  <th>Client's Name</th>
+                  <th>Profile</th>
+                  <th>Status</th>
+                  <th>round</th>
+                  <th>scheduledTo</th>
+                  <th>scheduledFrom</th>
+                  <th>priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                {calls &&
+                  calls
+                    .filter((item) => {
+                      return search.toLowerCase() === ""
+                        ? item
+                        : item.clientName.toLowerCase().includes(search) ||
+                            search.toLowerCase() === ""
+                          ? item
+                          : item.developerProfile
+                                .toLowerCase()
+                                .includes(search) || search.toLowerCase() === ""
+                            ? item
+                            : item.priority.toLowerCase().includes(search);
+                    })
+                    .map((item) => (
+                      <tr key={item._id}>
+                        <td>{item.clientName}</td>
+                        <td>{item.developerProfile}</td>
+                        <td>{item.status}</td>
+                        <td>{item.round}</td>
+                        <td>
+                          {new Date(item.scheduledTo).toLocaleDateString()}
+                        </td>
+                        <td>
+                          {new Date(item.scheduledFrom).toLocaleDateString()}
+                        </td>
+                        <td>{item.priority}</td>
+                      </tr>
+                    ))}
+              </tbody>
+            </Table>
           </div>
         </div>
       </Layout>

@@ -43,3 +43,27 @@
     margin-inline: auto;
   }
 }
+
+.search-control{
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-bottom: 3px solid #080808;
+  background-color: #191c24;
+}
+.search-control:focus{
+  border: none;
+  border-bottom: 3px solid #080808;
+  background-color: #191c24;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.search-icon:hover{
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+.search-icon{
+  margin-right: 10px;
+  transition: 0.3s;
+}

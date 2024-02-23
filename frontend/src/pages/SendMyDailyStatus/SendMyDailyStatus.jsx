@@ -14,10 +14,18 @@ import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
 import { ToastContainer, toast } from "react-toastify";
 import { FaPersonCircleCheck } from "react-icons/fa6";
+import { CiClock2 } from "react-icons/ci";
+import { IoIosWarning } from "react-icons/io";
 import moment from "moment";
 
 const SendMyDailyStatus = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState({
+    Status: "",
+    Hours: "",
+    Note: "",
+  });
+  const [userStatus, setUserStatus] = useState([]);
   const [date, setDate] = useState("");
   const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState([]);
@@ -42,8 +50,8 @@ const SendMyDailyStatus = () => {
     task: "",
     index: "",
   });
-
-  const previosDate = moment().subtract(1, "days")
+  const userId = localStorage.getItem("userId");
+  const previosDate = moment().subtract(1, "days");
   const validationCheck = () => {
     let isValid = true;
     const newErrors = { errors };
@@ -62,6 +70,7 @@ const SendMyDailyStatus = () => {
           isValid = false;
           newErrors.workingHour = "workingHour is required";
         }
+        return isValid;
       })
     )
       if (
@@ -70,6 +79,7 @@ const SendMyDailyStatus = () => {
             isValid = false;
             newErrors.status = "Task Status is required";
           }
+          return isValid;
         })
       )
         if (
@@ -78,15 +88,16 @@ const SendMyDailyStatus = () => {
               isValid = false;
               newErrors.task = "Task description is required";
             }
+            return isValid;
           })
         )
-          if (new Date(date).getTime() < new Date().setHours(0,0,0,0)) {
-            if (new Date(date) < new Date(previosDate).setHours(0,0,0,0)) {
+          if (new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)) {
+            if (new Date(date) < new Date(previosDate).setHours(0, 0, 0, 0)) {
               newErrors.date = "Date can't be earlier than yesterday";
               isValid = false;
             }
           }
-    if (new Date(date).getTime() > new Date().setHours(0,0,0,0)) {
+    if (new Date(date).getTime() > new Date()) {
       newErrors.date = "Date can't be in the future";
       isValid = false;
     }
@@ -209,7 +220,6 @@ const SendMyDailyStatus = () => {
         console.error("Error fetching project data:", error);
       }
     };
-
     projectUpdate();
   }, []);
 
@@ -247,10 +257,72 @@ const SendMyDailyStatus = () => {
     }
   };
 
+  const status = userStatus.map((item) => item.Status).toString();
+
+  useEffect(() => {
+    const fetchChangeStatus = async () => {
+      try {
+        const response = await axios.get(`${BaseURL}/changeStatus/${userId}`);
+        setUserStatus(response.data.status);
+      } catch (error) {
+        console.error("Error fetching change status");
+      }
+    };
+    fetchChangeStatus();
+  }, [data]);
+
   const handleModalShow = () => {
     setShowModal(!showModal);
   };
+  const handleClose = () => setShowModal(false);
+  const { Status, Hours, Note } = data;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
+  const statusid = userStatus?.map((item) => item._id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userStatus.length > 0) {
+      try {
+        await axios.put(`${BaseURL}/changeStatus/${statusid}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        toast.success("Status Updated successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
+      } catch (error) {
+        console.error("Error updating status", error);
+      }
+    } else {
+      try {
+        await axios.post(`${BaseURL}/changeStatus/${userId}`, {
+          Status: Status,
+          Hours: Hours,
+          Note: Note,
+          user: userId,
+        });
+        toast.success("Status Added successfully", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        handleClose();
+        setData({ ...data, Status: "", Hours: "", Note: "" });
+      } catch (error) {
+        console.error("Error changing status", error);
+      }
+    }
+  };
   return (
     <>
       <Layout newIndex="1">
@@ -262,8 +334,22 @@ const SendMyDailyStatus = () => {
                 Do you want to change your availability?
               </div>
               <div className="d-flex">
-                Available
-                <FaPersonCircleCheck color="green" size={22} className="ms-2" />
+                {status === "I am avialable for any new work"
+                  ? "Available"
+                  : status === "I am busy for assigned work"
+                    ? "Busy"
+                    : "Partial"}
+                {status === "I am avialable for any new work" ? (
+                  <FaPersonCircleCheck
+                    color="green"
+                    size={22}
+                    className="ms-2"
+                  />
+                ) : status === "I am busy for assigned work" ? (
+                  <IoIosWarning color="red" size={22} className="ms-2" />
+                ) : (
+                  <CiClock2 color="yellow" size={22} className="ms-2" />
+                )}
               </div>
             </div>
             <Form className="">
@@ -276,7 +362,7 @@ const SendMyDailyStatus = () => {
                     isMulti
                     options={createEmailObjects(emailList)}
                     isSearchable
-                    is
+                    isClearable={false}
                     noOptionsMessage={() => "email not found"}
                     onChange={handleEmail}
                     styles={{
@@ -431,6 +517,7 @@ const SendMyDailyStatus = () => {
                             className="d-flex justify-content-center"
                           >
                             <RiDeleteBin6Line
+                              role="button"
                               color="red"
                               onClick={deleteTask}
                             />
@@ -482,7 +569,13 @@ const SendMyDailyStatus = () => {
           </div>
         </div>
         {showModal ? (
-          <ChangeStatus showModal={showModal} setShowModal={setShowModal} />
+          <ChangeStatus
+            showModal={showModal}
+            setShowModal={setShowModal}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            data={data}
+          />
         ) : null}
       </Layout>
       <ToastContainer />
