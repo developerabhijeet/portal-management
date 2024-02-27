@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
 import { BaseURL } from "../../Utils/utils";
 import Layout from "../../components/Layout";
@@ -9,7 +8,6 @@ import "../index.css";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { statusOption } from "../../Utils/constant";
-import { useLocation } from "react-router-dom";
 import OptionsSelect from "../../components/selectOption/selectOption";
 import ChangeStatus from "../ChangeStatus/ChangeStatus";
 import { ToastContainer, toast } from "react-toastify";
@@ -42,17 +40,11 @@ const SendMyDailyStatus = () => {
     },
   ]);
 
-  const [errors, setErrors] = useState({
-    email: "",
-    date: "",
-    workingHour: "",
-    status: "",
-    task: "",
-    index: "",
-  });
+  const [errors, setErrors] = useState({});
   const userId = localStorage.getItem("userId");
   const previosDate = moment().subtract(1, "days");
-  const validationCheck = () => {
+
+  const validationCheck = useCallback(() => {
     let isValid = true;
     const newErrors = { errors };
 
@@ -64,46 +56,34 @@ const SendMyDailyStatus = () => {
       isValid = false;
       newErrors.date = "Date is required";
     }
-    if (
-      tasks.map((item) => {
-        if (!item.workingHour || item.workingHour === "00:00") {
-          isValid = false;
-          newErrors.workingHour = "workingHour is required";
-        }
-        return isValid;
-      })
-    )
-      if (
-        tasks.map((item) => {
-          if (!item.status) {
-            isValid = false;
-            newErrors.status = "Task Status is required";
-          }
-          return isValid;
-        })
-      )
-        if (
-          tasks.map((item) => {
-            if (!item.task.trim()) {
-              isValid = false;
-              newErrors.task = "Task description is required";
-            }
-            return isValid;
-          })
-        )
-          if (new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)) {
-            if (new Date(date) < new Date(previosDate).setHours(0, 0, 0, 0)) {
-              newErrors.date = "Date can't be earlier than yesterday";
-              isValid = false;
-            }
-          }
+    tasks.forEach((item, index) => {
+      if (!item.workingHour || item.workingHour === "00:00") {
+        newErrors[`workingHour${index}`] = "workingHour is required";
+        isValid = false;
+      }
+      if (!item.status) {
+        newErrors[`status${index}`] = "Task Status is required";
+        isValid = false;
+      }
+      if (!item.task.trim()) {
+        newErrors[`task${index}`] = "Task description is required";
+        isValid = false;
+      }
+    });
+    if (new Date(date).getTime() < new Date().setHours(0, 0, 0, 0)) {
+      if (new Date(date) < new Date(previosDate).setHours(0, 0, 0, 0)) {
+        newErrors.date = "Date can't be earlier than yesterday";
+        isValid = false;
+      }
+    }
     if (new Date(date).getTime() > new Date()) {
       newErrors.date = "Date can't be in the future";
       isValid = false;
     }
     setErrors(newErrors);
     return isValid;
-  };
+  }, [date, email, tasks, previosDate, errors]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -112,6 +92,7 @@ const SendMyDailyStatus = () => {
     setEmail(usersEmail);
     setAddEmail(!addEmail);
   };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -125,22 +106,22 @@ const SendMyDailyStatus = () => {
     getData();
   }, [navigate, addEmail]);
 
-  useEffect(() => {
-    if (location.state !== null) {
-      setEditData(true);
-      setEditId(location.state.item._id);
-      updateStatus();
-    }
-  }, [location.state]);
-
-  const updateStatus = () => {
+  const updateStatus = useCallback(() => {
     const { date, tasks, email } = location.state.item;
     const newDate = moment(date);
     const myDate = newDate.format("yyyy-MM-DD");
     setDate(myDate);
     setTasks([...tasks]);
     setEmail([...email]);
-  };
+  }, [location.state]);
+
+  useEffect(() => {
+    if (location.state !== null) {
+      setEditData(true);
+      setEditId(location.state.item._id);
+      updateStatus();
+    }
+  }, [location.state, updateStatus]);
 
   const handleUpdate = async (e, completed) => {
     e.preventDefault();
@@ -269,7 +250,7 @@ const SendMyDailyStatus = () => {
       }
     };
     fetchChangeStatus();
-  }, [data]);
+  }, [data, userId]);
 
   const handleModalShow = () => {
     setShowModal(!showModal);
@@ -463,7 +444,7 @@ const SendMyDailyStatus = () => {
                             </Form.Select>
 
                             <Form.Text className="text-danger">
-                              {errors.status}
+                              {errors[`status${index}`]}
                             </Form.Text>
                           </Form.Group>
 
@@ -487,7 +468,7 @@ const SendMyDailyStatus = () => {
                               }
                             />
                             <Form.Text className="text-danger">
-                              {errors.workingHour}
+                              {errors[`workingHour${index}`]}
                             </Form.Text>
                           </Form.Group>
                         </Row>
@@ -509,7 +490,7 @@ const SendMyDailyStatus = () => {
                               }
                             />
                             <Form.Text className="text-danger">
-                              {errors.task}
+                              {errors[`task${index}`]}
                             </Form.Text>
                           </Form.Group>
                           <Form.Group

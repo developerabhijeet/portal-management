@@ -3,7 +3,7 @@ import { MyDailyStatus } from "./pages/MyDailyStatus/MyDailyStatus";
 import { MyLeave } from "./pages/Myleave/MyLeave";
 import { Holidays } from "./pages/Holidays/Holidays";
 import SendMyDailyStatus from "./pages/SendMyDailyStatus/SendMyDailyStatus";
-import { MyDailyStatusNew_id } from "./pages/MyDailyStatus/MyDailyStatusNew";
+import { MyDailyStatusNewId } from "./pages/MyDailyStatus/MyDailyStatusNew";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/notFound/NotFound";
 import ForgotPassword from "./Auth/ForgotPassword";
@@ -83,7 +83,7 @@ function App() {
           <Route path="/daily_status_updates" element={<MyDailyStatus />} />
           <Route
             path="/daily_status_updates_details/"
-            element={<MyDailyStatusNew_id />}
+            element={<MyDailyStatusNewId />}
           />
           <Route path="/send_daily_status" element={<SendMyDailyStatus />} />
           <Route path="/my_leave" element={<MyLeave />} />

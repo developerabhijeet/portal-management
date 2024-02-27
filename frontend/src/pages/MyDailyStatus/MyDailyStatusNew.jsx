@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Layout from "../../components/Layout";
 import "../index.css";
 
-export const MyDailyStatusNew_id = () => {
+export const MyDailyStatusNewId = () => {
   const { state } = useLocation();
   const data = state.item;
   return (
