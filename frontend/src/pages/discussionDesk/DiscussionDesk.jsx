@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { Table } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Table,Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
@@ -13,9 +12,10 @@ export const DiscussionDesk = () => {
   const [data, setData] = useState([]);
   const getUserID = localStorage.getItem("userId");
   const navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate("new");
-  };
+  
+  useEffect(() => {
+    getDiscussionData();
+  }, []);
 
   const getDiscussionData = async () => {
     const token = localStorage.getItem("token");
@@ -25,15 +25,20 @@ export const DiscussionDesk = () => {
       });
       setData(res.data.discussionDesk);
     } catch (error) {
-      console.log("ERR:", error);
+      console.error("Error fetching discussion data:", error);
+      toast.error("Failed to fetch discussion data", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
-
-  useEffect(() => {
-    getDiscussionData();
-  }, []);
+  
+  const handleNavigate = () => {
+    navigate("new");
+  };
 
   const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this discussion?")) {
     try {
       await axios.delete(`${BaseURL}/discussion_desk/${id}`);
       getDiscussionData();
@@ -42,10 +47,12 @@ export const DiscussionDesk = () => {
         autoClose: 1500,
       });
     } catch (error) {
-      toast.error("Something went wrong! please try again", {
-        position: "top-right",
-        autoClose: 1500,
-      });
+      console.error("Error deleting discussion:", error);
+        toast.error("Failed to delete discussion", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
     }
   };
 

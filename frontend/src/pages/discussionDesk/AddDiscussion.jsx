@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./addDiscussion.css";
@@ -29,7 +29,7 @@ export const AddDiscussion = () => {
 
   const { topic, detail, dueDate, talkWith, isItUrgent } = data;
 
-  const handleUpdate = () => {
+  const handleUpdate = useCallback(() => {
     if (editData) {
       const { topic, detail, dueDate, talkWith, isItUrgent, _id } = editData;
       setEditDataID(_id);
@@ -43,11 +43,11 @@ export const AddDiscussion = () => {
         isItUrgent,
       });
     }
-  };
+  },[editData]);
 
   useEffect(() => {
     handleUpdate();
-  }, []);
+  }, [handleUpdate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

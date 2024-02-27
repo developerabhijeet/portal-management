@@ -48,7 +48,7 @@ const Header = ({ newIndex }) => {
       }
     };
     fetchChangeStatus();
-  }, [data]);
+  }, [data, userId]);
 
   const logout = async () => {
     try {

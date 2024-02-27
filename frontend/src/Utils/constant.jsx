@@ -72,7 +72,7 @@ export const leaveType = [
 export const changeStatus = [
   "I am avialable for any new work",
   "I am busy for assigned work",
-  "I am available partially"
+  "I am available partially",
 ];
 export const skillOptions = [
   "Python",
@@ -263,5 +263,5 @@ export const developerProfile = [
   "ROR Developer",
   "Frontend Developer",
   "Backend Developer",
-  "MERN Stack Developer"
-] 
+  "MERN Stack Developer",
+];

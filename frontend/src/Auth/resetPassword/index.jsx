@@ -12,7 +12,6 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [showCPassword, setShowCPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState(false);
@@ -43,7 +42,6 @@ const ResetPassword = () => {
         const response = await axios.get(
           `${BaseURL}/forgotPass/reset-password/${id}/${token}`,
         );
-        setMessage(response.data.status);
         if (response.status === 200) {
           setData(true);
         } else if (response.status === 401) {
@@ -51,7 +49,6 @@ const ResetPassword = () => {
         }
       } catch (error) {
         console.error("Error verifying reset token:", error);
-        setMessage("Error verifying reset token");
       }
     };
     verifyResetToken();
@@ -65,7 +62,6 @@ const ResetPassword = () => {
           `${BaseURL}/forgotPass/reset-password/${id}/${token}`,
           { password },
         );
-        setMessage(response.data.status);
         if (response.status === 200) {
           setPassword("");
           toast.success("Password reset successful!", {

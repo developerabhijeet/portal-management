@@ -27,9 +27,9 @@ export const ApplyLeave = () => {
     mailTo: "",
     reason: "",
   });
-  const { fromDate, toDate, fromSession, toSession, reason, days } = data;
   useEffect(() => {
     let day;
+    const { fromDate, toDate, fromSession, toSession } = data;
     if (fromDate && toDate) {
       const fromDay = moment(fromDate).format("MM/DD/YYYY");
       const toDay = moment(toDate).format("MM/DD/YYYY");
@@ -48,8 +48,9 @@ export const ApplyLeave = () => {
     if (new Date(toDate).getTime() < new Date(fromDate).getTime()) {
       setData({ ...data, days: 0 });
     }
-  }, [data.fromDate, data.toDate, fromSession, toSession]);
-
+  }, [data]);
+  
+  const { fromDate, toDate, fromSession, toSession, reason, days } = data;
   const validationCheck = () => {
     let isValid = true;
     let todayDate = new Date().setHours(0, 0, 0, 0);
